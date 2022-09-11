@@ -1,0 +1,18 @@
+.photo-grid__like {
+  background-image: url(../../../images/white-heart.svg);
+  background-repeat: no-repeat;
+  background-color: transparent;
+
+  height: 19px;
+  width: 22px;
+  border: none;
+
+  cursor: pointer;
+
+  transition: opacity .4s ease;
+  }
+
+.photo-grid__like:hover {
+  opacity: 0.5;
+}
+

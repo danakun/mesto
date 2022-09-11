@@ -1,0 +1,47 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts/fonts.css);
+@import url(../blocks/page/page.css);
+@import url(../blocks/container/container.css);
+ /* header */
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
+ /* main */
+@import url(../blocks/main/main.css);
+ /* profile */
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__pic/profile__pic.css);
+@import url(../blocks/profile/__info/profile__info.css);
+@import url(../blocks/profile/__name/profile__name.css);
+@import url(../blocks/profile/__job/profile__job.css);
+@import url(../blocks/profile/__edit-button/profile__edit-button.css);
+@import url(../blocks/profile/__add-button/profile__add-button.css);
+ /* elements */
+@import url(../blocks/elements/elements.css);
+ /* photo-grid */
+ @import url(../blocks/photo-grid/photo-grid.css);
+ @import url(../blocks/photo-grid/__element/photo-grid__element.css);
+ @import url(../blocks/photo-grid/__image/photo-grid__image.css);
+ @import url(../blocks/photo-grid/__info/photo-grid__info.css);
+ @import url(../blocks/photo-grid/__text/photo-grid__text.css);
+ @import url(../blocks/photo-grid/__like/photo-grid__like.css);
+ @import url(../blocks/photo-grid/__like/_active/photo-grid__like_active.css);
+ /* popup */
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/__close/popup__close.css);
+ /* popup-window */
+@import url(../blocks/popup-window/popup-window.css);
+@import url(../blocks/popup-window/__form/popup-window__form.css);
+@import url(../blocks/popup-window/__title/popup-window__title.css);
+@import url(../blocks/popup-window/__job/popup-window__job.css);
+@import url(../blocks/popup-window/__name/popup-window__name.css);
+@import url(../blocks/popup-window/__input/popup-window__input.css);
+@import url(../blocks/popup-window/__input/_type/_type_name.css);
+@import url(../blocks/popup-window/__input/_type/_type_job.css);
+@import url(../blocks/popup-window/__save-button/popup-window__save-button.css);
+ /* footer */
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__copyright/footer__copyright.css);
+
+
+
