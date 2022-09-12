@@ -7,6 +7,7 @@
 @import url(../blocks/header/__logo/header__logo.css);
  /* main */
 @import url(../blocks/main/main.css);
+@import url(../blocks/main-title/main-title.css);
  /* profile */
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__pic/profile__pic.css);
