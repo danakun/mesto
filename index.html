@@ -10,21 +10,22 @@
     <link rel="stylesheet" href="pages/index.css">
   </head>
   <body class="page">
-    <h1 class="main-title"></h1>
       <!-- header -->
       <header class="header container">
-        <div class="header__logo" aria-label="Проект Место"></div>
+        <a class="header__link" href="#" target="_blank">
+          <div class="header__logo" aria-label="Проект Место"></div>
+        </a>
       </header>
       <main class="main">
         <!-- profile -->
         <section class="profile container">
-          <div class="profile__pic"></div>
+          <img class="profile__pic" src="./images/avatar-pic.jpg" alt="Аватар">
           <div class="profile__info">
-            <h2 class="profile__name">Жак-Ив Кусто</h2>
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
             <p class="profile__job">Исследователь океана</p>
-            <button class="profile__edit-button" aria-label="Изменить профиль"></button>
+            <button class="profile__edit-button" aria-label="Изменить профиль" type="button"></button>
           </div>
-          <button class="profile__add-button" aria-label="Добавить"></button>
+          <button class="profile__add-button" aria-label="Добавить" type="button"></button>
         </section>
         <!-- elements -->
         <section class="elements container">
@@ -33,62 +34,62 @@
               <img class="photo-grid__image" src="./images/nikita-tikhomirov-H56Byq5KoBE-unsplash.jpg" alt="Москва.">
               <div class="photo-grid__info">
                 <h2 class="photo-grid__text">Москва</h2>
-                <button class="photo-grid__like"></button>
+                <button class="photo-grid__like" type="button"></button>
               </div>
             </li>
             <li class="photo-grid__element">
               <img class="photo-grid__image" src="./images/elbrus.jpg" alt="Эльбрус.">
               <div class="photo-grid__info">
                 <h2 class="photo-grid__text">Эльбрус</h2>
-                <button class="photo-grid__like"></button>
+                <button class="photo-grid__like" type="button"></button>
               </div>
             </li>
             <li class="photo-grid__element">
               <img class="photo-grid__image" src="./images/konstantin-kurylev-aUKP9o71M7Y-unsplash.jpg" alt="Ладога.">
               <div class="photo-grid__info">
                 <h2 class="photo-grid__text">Ладога</h2>
-                <button class="photo-grid__like"></button>
+                <button class="photo-grid__like" type="button"></button>
               </div>
             </li>
             <li class="photo-grid__element">
               <img class="photo-grid__image" src="./images/tetiana-shyshkina-pPKDBuynI6o-unsplash.jpg" alt="Финский Залив.">
               <div class="photo-grid__info">
                 <h2 class="photo-grid__text">Финский Залив</h2>
-                <button class="photo-grid__like"></button>
+                <button class="photo-grid__like" type="button"></button>
               </div>
             </li>
             <li class="photo-grid__element">
               <img class="photo-grid__image" src="./images/andrey-svistunov-AFSBSGl1nNI-unsplash.jpg" alt="Карелия.">
               <div class="photo-grid__info">
                 <h2 class="photo-grid__text">Карелия</h2>
-                <button class="photo-grid__like"></button>
+                <button class="photo-grid__like" type="button"></button>
               </div>
             </li>
             <li class="photo-grid__element">
               <img class="photo-grid__image" src="./images/spb.jpg" alt="Санкт-Петербург.">
               <div class="photo-grid__info">
                 <h2 class="photo-grid__text">Санкт-Петербург</h2>
-                <button class="photo-grid__like"></button>
+                <button class="photo-grid__like" type="button"></button>
               </div>
             </li>
         </ul>
-        </section>
-        <section class="popup">
-          <div class="popup-window">
-            <form class="popup-window__form">
-              <p class="popup-window__title">Редактировать профиль</p>
-              <input name="name" class="popup-window__input popup-window__input_type_name" placeholder="Ваше имя" minlength="2" maxlength="30" required="">
-              <input name="job" class="popup-window__input popup-window__input_type_job" placeholder="Ваша профессия" minlength="2" maxlength="30" required="">
-              <button class="popup-window__save-button" type="submit">Сохранить</button>
-            </form>
-            <button class="popup__close"></button>
-          </div>
         </section>
     </main>
       <!-- footer -->
       <footer class="footer container">
         <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
       </footer>
+      <section class="popup">
+        <div class="popup__container">
+          <form class="popup__form">
+            <p class="popup__title">Редактировать профиль</p>
+            <input name="name" class="popup__input popup__input_type_name" placeholder="Ваше имя" minlength="2" maxlength="30" required="">
+            <input name="job" class="popup__input popup__input_type_job" placeholder="Ваша профессия" minlength="2" maxlength="30" required="">
+            <button class="popup__save-button" type="submit">Сохранить</button>
+          </form>
+          <button class="popup__close" type="button"></button>
+        </div>
+      </section>
       <script src="scripts/index.js"></script>
   </body>
 </html>
