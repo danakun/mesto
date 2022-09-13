@@ -2,13 +2,11 @@
   background-image: url(../../../images/white-heart.svg);
   background-repeat: no-repeat;
   background-color: transparent;
-
+  background-position: center;
   height: 19px;
-  width: 22px;
+  width: 23px;
   border: none;
-
   cursor: pointer;
-
   transition: opacity .4s ease;
   }
 

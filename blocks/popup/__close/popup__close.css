@@ -5,15 +5,11 @@
   background-size: cover;
   background-color: transparent;
   border: none;
-
   height: 32px;
   width: 32px;
   padding: 0;
-
   cursor: pointer;
-
   transition: opacity .4s ease;
-
   position: absolute;
   top: -40px;
   right: -40px;
@@ -23,12 +19,10 @@
   opacity: 0.6;
 }
 
-
 @media screen and (max-width: 600px) {
   .popup__close {
     height: 20px;
     width: 20px;
-
     top: -36px;
     right: 0;
   }

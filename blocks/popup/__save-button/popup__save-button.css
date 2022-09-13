@@ -4,17 +4,13 @@
   padding: 0;
   box-sizing: border-box;
   border: none;
-
   color: #fff;
   background-color: #000;
   border-radius: 2px;
-
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
-
   cursor: pointer;
-
   transition: opacity .4s ease;
 }
 
@@ -26,5 +22,7 @@
 @media screen and (max-width: 600px) {
   .popup__save-button {
     margin: 16px 0 25px;
+    font-size: 14px;
+    line-height: 17px;
   }
 }

@@ -1,6 +1,5 @@
 .profile__info {
   max-width: 520px;
-
   display: grid;
   grid-template-areas:
       "name editButton"
@@ -9,11 +8,9 @@
   column-gap: 18px;
   align-items: baseline;
   justify-self: flex-start;
-
   margin-right: auto;
   padding-left: 30px;
 }
-
 
 @media screen and (max-width: 1080px) {
   .profile__info {
@@ -23,3 +20,8 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .profile__info {
+    column-gap: 10px;
+  }
+}
