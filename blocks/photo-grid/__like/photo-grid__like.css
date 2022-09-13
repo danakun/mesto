@@ -8,6 +8,7 @@
   border: none;
   cursor: pointer;
   transition: opacity .4s ease;
+  padding: 0;
   }
 
 .photo-grid__like:hover {
