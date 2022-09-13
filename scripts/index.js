@@ -20,14 +20,10 @@ function closePopup () {
   popupOverlay.classList.remove('popup_opened');
 }
 
-openPopupButton.addEventListener('click', () => {
-  openPopup();
-  takeInfo();
-})
+openPopupButton.addEventListener('click', openPopup, takeInfo);
 
-closePopupButton.addEventListener('click', () => {
-  closePopup();
-})
+closePopupButton.addEventListener('click', closePopup);
+
 
 function formSubmitHandler(evt) {
   evt.preventDefault();
