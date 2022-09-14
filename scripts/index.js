@@ -14,20 +14,12 @@ function takeInfo () {
 
 function openPopup () {
   popupOverlay.classList.add('popup_opened');
+  takeInfo();
 }
 
 function closePopup () {
   popupOverlay.classList.remove('popup_opened');
 }
-
-openPopupButton.addEventListener('click', () => {
-  openPopup();
-  takeInfo();
-})
-
-closePopupButton.addEventListener('click', () => {
-  closePopup();
-})
 
 function formSubmitHandler(evt) {
   evt.preventDefault();
@@ -35,6 +27,11 @@ function formSubmitHandler(evt) {
   profileJob.textContent = newJob.value;
   closePopup();
 }
+
+openPopupButton.addEventListener('click', openPopup);
+
+closePopupButton.addEventListener('click', closePopup);
+
 
 popupForm.addEventListener('submit', formSubmitHandler);
 
