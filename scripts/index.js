@@ -35,7 +35,7 @@ const addPicButton = document.querySelector(".profile__add-button");
 // Переменные для кнопок закрытия попапов
 const closeProfilePopupButton = document.querySelector('.close-profile');
 const closeAddPhotoPopupButton = document.querySelector('.close-add-photo');
-const closeLightbox = document.querySelector('.close-photo')
+const closeLightboxButton = document.querySelector('.close-photo')
 // Переменные для форм попапа
 const popupForm = document.querySelector('.profile-form');
 const photoForm = document.querySelector('.add-photo-form')
@@ -153,7 +153,7 @@ closeAddPhotoPopupButton.addEventListener('click', () => {
 });
 
 // Закрытие лайтбокс попапа
-closeLightbox.addEventListener('click', () => {
+closeLightboxButton.addEventListener('click', () => {
   closePopup(popupLightbox);
 });
 
