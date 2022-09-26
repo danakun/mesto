@@ -27,6 +27,7 @@
  @import url(../blocks/photo-grid/__text/photo-grid__text.css);
  @import url(../blocks/photo-grid/__like/photo-grid__like.css);
  @import url(../blocks/photo-grid/__like/_active/photo-grid__like_active.css);
+ @import url(../blocks/photo-grid/__delete/photo-grid__delete.css);
  /* popup */
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
