@@ -40,11 +40,11 @@ const closeLightboxButton = document.querySelector('.close-photo')
 const popupForm = document.querySelector('.profile-form');
 const photoForm = document.querySelector('.add-photo-form')
 // Переменные для инфо в профиле сайта
-let profileName = document.querySelector('.profile__name');
-let profileJob = document.querySelector('.profile__job');
+const profileName = document.querySelector('.profile__name');
+const profileJob = document.querySelector('.profile__job');
 // Переменные для инпутов попапа профиль
-let newName = document.querySelector('.popup__input_type_name');
-let newJob = document.querySelector('.popup__input_type_job')
+const newName = document.querySelector('.popup__input_type_name');
+const newJob = document.querySelector('.popup__input_type_job')
 // Переменные для карточки и их массива
 const cardTemplate = document.querySelector('.card-template').content;
 const photoList = document.querySelector(".photo-grid");
