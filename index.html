@@ -30,12 +30,13 @@
         <!-- elements -->
         <section class="elements container">
           <ul class="photo-grid">
-            <li class="photo-grid__element">
+            <!--<li class="photo-grid__element">
               <img class="photo-grid__image" src="./images/nikita-tikhomirov-H56Byq5KoBE-unsplash.jpg" alt="Москва.">
               <div class="photo-grid__info">
                 <h2 class="photo-grid__text">Москва</h2>
                 <button class="photo-grid__like" type="button"></button>
               </div>
+              <button class="photo-grid__delete" type="button"></button>
             </li>
             <li class="photo-grid__element">
               <img class="photo-grid__image" src="./images/elbrus.jpg" alt="Эльбрус.">
@@ -43,6 +44,7 @@
                 <h2 class="photo-grid__text">Эльбрус</h2>
                 <button class="photo-grid__like" type="button"></button>
               </div>
+              <button class="photo-grid__delete" type="button"></button>
             </li>
             <li class="photo-grid__element">
               <img class="photo-grid__image" src="./images/konstantin-kurylev-aUKP9o71M7Y-unsplash.jpg" alt="Ладога.">
@@ -50,6 +52,7 @@
                 <h2 class="photo-grid__text">Ладога</h2>
                 <button class="photo-grid__like" type="button"></button>
               </div>
+              <button class="photo-grid__delete" type="button"></button>
             </li>
             <li class="photo-grid__element">
               <img class="photo-grid__image" src="./images/tetiana-shyshkina-pPKDBuynI6o-unsplash.jpg" alt="Финский Залив.">
@@ -57,6 +60,7 @@
                 <h2 class="photo-grid__text">Финский Залив</h2>
                 <button class="photo-grid__like" type="button"></button>
               </div>
+              <button class="photo-grid__delete" type="button"></button>
             </li>
             <li class="photo-grid__element">
               <img class="photo-grid__image" src="./images/andrey-svistunov-AFSBSGl1nNI-unsplash.jpg" alt="Карелия.">
@@ -64,6 +68,7 @@
                 <h2 class="photo-grid__text">Карелия</h2>
                 <button class="photo-grid__like" type="button"></button>
               </div>
+              <button class="photo-grid__delete" type="button"></button>
             </li>
             <li class="photo-grid__element">
               <img class="photo-grid__image" src="./images/spb.jpg" alt="Санкт-Петербург.">
@@ -71,7 +76,8 @@
                 <h2 class="photo-grid__text">Санкт-Петербург</h2>
                 <button class="photo-grid__like" type="button"></button>
               </div>
-            </li>
+              <button class="photo-grid__delete" type="button"></button>
+            </li>-->
         </ul>
         </section>
       </main>
@@ -79,17 +85,44 @@
       <footer class="footer container">
         <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
       </footer>
-      <section class="popup">
+      <section class="popup popup-profile">
         <div class="popup__container">
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form" action="#" method="post">
+          <form class="popup__form profile-form" action="#" method="post" name="profile">
             <input name="name" class="popup__input popup__input_type_name" placeholder="Ваше имя" minlength="2" required="">
             <input name="job" class="popup__input popup__input_type_job" placeholder="Ваша профессия" minlength="2" required="">
-            <button class="popup__save-button" type="submit">Сохранить</button>
+            <button class="popup__save-button" type="submit" aria-label="Сохранить профиль">Сохранить</button>
           </form>
-          <button class="popup__close" type="button"></button>
+          <button class="popup__close close-profile" type="button"></button>
         </div>
       </section>
+      <section class="popup popup-add-photo">
+        <div class="popup__container">
+          <h2 class="popup__title">Новое место</h2>
+          <form class="popup__form add-photo-form" action="#" method="post" name="add-photo">
+            <input name="title" class="popup__input popup__input_type_title" placeholder="Название" required="">
+            <input name="photo-link" class="popup__input popup__input_type_photo" placeholder="Ссылка на картинку" required="">
+            <button class="popup__save-button" type="submit" aria-label="Создать место">Создать</button>
+          </form>
+          <button class="popup__close close-add-photo" type="button" aria-label="Закрыть окно добавления фото"></button>
+        </div>
+      </section>
+      <template class="card-template">
+        <li class="photo-grid__element">
+          <!-- <button class="delete-button" type="button" aria-label="Удалить фото"></button>
+          <img class="photo-grid__image" src="#" alt="Альтернативный текст к фото">
+          <div class="card__title-and-like">
+            <h2 class="card__title"></h2>
+            <button class="like-button like-button_inactive" type="button" aria-label="Кнопка 'Нравится'"></button>
+          </div> -->
+          <img class="photo-grid__image" src="#" alt="Альтернативный текст к фото">
+          <div class="photo-grid__info">
+            <h2 class="photo-grid__text"></h2>
+            <button class="photo-grid__like" type="button" aria-label="Нравится"></button>
+          </div>
+          <button class="photo-grid__delete" type="button" aria-label="Удалить фото"></button>
+        </li>
+      </template>
       <script src="scripts/index.js"></script>
   </body>
 </html>
