@@ -3,5 +3,10 @@
   max-height: 75vh;
   max-width: 75vw;
   object-fit: cover;
-  min-width: 282px;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__container {
+    max-width: 240px;
+  }
 }

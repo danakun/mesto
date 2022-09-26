@@ -47,6 +47,12 @@ const photoList = document.querySelector(".photo-grid");
 
 const newTitle = document.querySelector('.popup__input_type_title');
 const newPhoto = document.querySelector('.popup__input_type_photo')
+<<<<<<< HEAD
+=======
+// Переменные для фото и подписи из лайтбокса
+const lightboxPhoto = document.querySelector('.popup__photo')
+const lightboxPhotoCaption = document.querySelector('.popup__caption')
+>>>>>>> main
 
 // Функция создания карточки и добавления "слушателей" ее элементам
 function createCard(name, link) {
@@ -63,7 +69,6 @@ function createCard(name, link) {
   cardImage.addEventListener("click", () => openLightbox(link, name)); //Вешаем слушатель на карточку для открытия фото
   return cardElement; //Возвращаем элемент карточки
 }
-
 
 // Функция переключения лайка
 function toggleLike(button) {
