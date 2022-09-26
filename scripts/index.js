@@ -1,30 +1,3 @@
-// Дефолтные карточки в массиве
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 // Переменные для трех попапов
 const popupProfileOverlay = document.querySelector('.popup-profile');
 const popupOverlayPhoto = document.querySelector('.popup-add-photo');
@@ -117,7 +90,7 @@ function openLightbox(link, name) {
 }
 
 // Функция передачи данных с формы в профиль
-function profileFormSubmitHandler(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = newName.value;
   profileJob.textContent = newJob.value;
@@ -125,7 +98,7 @@ function profileFormSubmitHandler(evt) {
 }
 
 // Обработчик формы добавления элемента с фото
-function PhotoFormSubmitHandler(evt) {
+function handlePhotoFormSubmit(evt) {
   evt.preventDefault();
   photoList.prepend(createCard(newTitle.value, newPhoto.value));
   evt.target.reset();
@@ -158,9 +131,9 @@ closeLightboxButton.addEventListener('click', () => {
 });
 
 // Слушатель кнопки создать профиль
-popupForm.addEventListener('submit', profileFormSubmitHandler);
+popupForm.addEventListener('submit', handleProfileFormSubmit);
 
 
 // "Слушатель" формы добавления элемента
-photoForm.addEventListener("submit", PhotoFormSubmitHandler);
+photoForm.addEventListener("submit", handlePhotoFormSubmit);
 
