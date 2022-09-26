@@ -44,15 +44,12 @@ let newJob = document.querySelector('.popup__input_type_job')
 const cardTemplate = document.querySelector('.card-template').content;
 const photoList = document.querySelector(".photo-grid");
 
-
 const newTitle = document.querySelector('.popup__input_type_title');
 const newPhoto = document.querySelector('.popup__input_type_photo')
-<<<<<<< HEAD
-=======
+
 // Переменные для фото и подписи из лайтбокса
 const lightboxPhoto = document.querySelector('.popup__photo')
 const lightboxPhotoCaption = document.querySelector('.popup__caption')
->>>>>>> main
 
 // Функция создания карточки и добавления "слушателей" ее элементам
 function createCard(name, link) {
