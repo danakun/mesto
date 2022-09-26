@@ -1,3 +1,4 @@
+// Дефолтные карточки в массиве
 const initialCards = [
   {
     name: 'Архыз',
@@ -24,29 +25,35 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-
+// Переменные для трех попапов
 const popupProfileOverlay = document.querySelector('.popup-profile');
 const popupOverlayPhoto = document.querySelector('.popup-add-photo');
-
+const popupLightbox = document.querySelector('.popup-photo')
+// Переменные для кнопок открытия попапов
 const openPopupButton = document.querySelector('.profile__edit-button');
 const addPicButton = document.querySelector(".profile__add-button");
-
+// Переменные для кнопок закрытия попапов
 const closeProfilePopupButton = document.querySelector('.close-profile');
 const closeAddPhotoPopupButton = document.querySelector('.close-add-photo');
-
+const closeLightbox = document.querySelector('.close-photo')
+// Переменные для форм попапа
 const popupForm = document.querySelector('.profile-form');
 const photoForm = document.querySelector('.add-photo-form')
+// Переменные для инфо в профиле сайта
 let profileName = document.querySelector('.profile__name');
 let profileJob = document.querySelector('.profile__job');
+// Переменные для инпутов попапа профиль
 let newName = document.querySelector('.popup__input_type_name');
 let newJob = document.querySelector('.popup__input_type_job')
-
+// Переменные для карточки и их массива
 const cardTemplate = document.querySelector('.card-template').content;
 const photoList = document.querySelector(".photo-grid");
-
-
+// Переменные для инпутов попапа фото
 const newTitle = document.querySelector('.popup__input_type_title');
 const newPhoto = document.querySelector('.popup__input_type_photo')
+// Переменные для фото и подписи из лайтбокса
+const lightboxPhoto = document.querySelector('.popup__photo')
+const lightboxPhotoCaption = document.querySelector('.popup__caption')
 
 // Функция создания карточки и добавления "слушателей" ее элементам
 function createCard(name, link) {
@@ -60,10 +67,9 @@ function createCard(name, link) {
   cardImage.src = link; // Говорим, что источник равен параметру link
   cardImage.alt = name; // Говорим, что название равно параметру name
   cardTitle.textContent = name; // Говорим, что текст из переменной cardTitle равно параметру name
-  cardImage.addEventListener("click", () => openFullPhoto(link, name)); //Вешаем слушатель на карточку для открытия фото
+  cardImage.addEventListener("click", () => openLightbox(link, name)); //Вешаем слушатель на карточку для открытия фото
   return cardElement; //Возвращаем элемент карточки
 }
-
 
 // Функция переключения лайка
 function toggleLike(button) {
@@ -102,6 +108,14 @@ function closePopup(popup) {
   popup.classList.remove("popup_opened");
 }
 
+// Функция фото в лайтбокс-попапе
+function openLightbox(link, name) {
+  openPopup(popupLightbox);
+  lightboxPhoto.src = link;
+  lightboxPhoto.alt = name;
+  lightboxPhotoCaption.textContent = name;
+}
+
 // Функция передачи данных с формы в профиль
 function profileFormSubmitHandler(evt) {
   evt.preventDefault();
@@ -136,6 +150,11 @@ closeProfilePopupButton.addEventListener('click', () => {
 // Закрытие новое место попапа
 closeAddPhotoPopupButton.addEventListener('click', () => {
   closePopup(popupOverlayPhoto);
+});
+
+// Закрытие лайтбокс попапа
+closeLightbox.addEventListener('click', () => {
+  closePopup(popupLightbox);
 });
 
 // Слушатель кнопки создать профиль
