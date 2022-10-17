@@ -29,56 +29,7 @@
         </section>
         <!-- elements -->
         <section class="elements container">
-          <ul class="photo-grid">
-            <!--<li class="photo-grid__element">
-              <img class="photo-grid__image" src="./images/nikita-tikhomirov-H56Byq5KoBE-unsplash.jpg" alt="Москва.">
-              <div class="photo-grid__info">
-                <h2 class="photo-grid__text">Москва</h2>
-                <button class="photo-grid__like" type="button"></button>
-              </div>
-              <button class="photo-grid__delete" type="button"></button>
-            </li>
-            <li class="photo-grid__element">
-              <img class="photo-grid__image" src="./images/elbrus.jpg" alt="Эльбрус.">
-              <div class="photo-grid__info">
-                <h2 class="photo-grid__text">Эльбрус</h2>
-                <button class="photo-grid__like" type="button"></button>
-              </div>
-              <button class="photo-grid__delete" type="button"></button>
-            </li>
-            <li class="photo-grid__element">
-              <img class="photo-grid__image" src="./images/konstantin-kurylev-aUKP9o71M7Y-unsplash.jpg" alt="Ладога.">
-              <div class="photo-grid__info">
-                <h2 class="photo-grid__text">Ладога</h2>
-                <button class="photo-grid__like" type="button"></button>
-              </div>
-              <button class="photo-grid__delete" type="button"></button>
-            </li>
-            <li class="photo-grid__element">
-              <img class="photo-grid__image" src="./images/tetiana-shyshkina-pPKDBuynI6o-unsplash.jpg" alt="Финский Залив.">
-              <div class="photo-grid__info">
-                <h2 class="photo-grid__text">Финский Залив</h2>
-                <button class="photo-grid__like" type="button"></button>
-              </div>
-              <button class="photo-grid__delete" type="button"></button>
-            </li>
-            <li class="photo-grid__element">
-              <img class="photo-grid__image" src="./images/andrey-svistunov-AFSBSGl1nNI-unsplash.jpg" alt="Карелия.">
-              <div class="photo-grid__info">
-                <h2 class="photo-grid__text">Карелия</h2>
-                <button class="photo-grid__like" type="button"></button>
-              </div>
-              <button class="photo-grid__delete" type="button"></button>
-            </li>
-            <li class="photo-grid__element">
-              <img class="photo-grid__image" src="./images/spb.jpg" alt="Санкт-Петербург.">
-              <div class="photo-grid__info">
-                <h2 class="photo-grid__text">Санкт-Петербург</h2>
-                <button class="photo-grid__like" type="button"></button>
-              </div>
-              <button class="photo-grid__delete" type="button"></button>
-            </li>-->
-        </ul>
+          <ul class="photo-grid"></ul>
         </section>
       </main>
       <!-- footer -->
@@ -88,9 +39,15 @@
       <section class="popup popup-profile">
         <div class="popup__container">
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form profile-form" action="#" method="post" name="profile">
-            <input name="name" class="popup__input popup__input_type_name" placeholder="Ваше имя" minlength="2" required="">
-            <input name="job" class="popup__input popup__input_type_job" placeholder="Ваша профессия" minlength="2" required="">
+          <form class="popup__form profile-form" action="#" method="post" name="profile" novalidate>
+            <label class="popup__input-label">
+              <input name="name" id="name" type="text" class="popup__input popup__input_type_name" placeholder="Ваше имя" minlength="2" maxlength="40" required="">
+              <span class="popup__error name-error" id="name-error"></span>
+            </label>
+            <label class="popup__input-label">
+              <input name="job" id="job" type="text" class="popup__input popup__input_type_job" placeholder="Ваша профессия" minlength="2" maxlength="200" required="">
+              <span class="popup__error job-error" id="job-error"></span>
+          </label>
             <button class="popup__save-button" type="submit" aria-label="Сохранить профиль">Сохранить</button>
           </form>
           <button class="popup__close close-profile" type="button"></button>
@@ -99,9 +56,15 @@
       <section class="popup popup-add-photo">
         <div class="popup__container">
           <h2 class="popup__title">Новое место</h2>
-          <form class="popup__form add-photo-form" action="#" method="post" name="add-photo">
-            <input name="title" class="popup__input popup__input_type_title" placeholder="Название" required="">
-            <input name="photo-link" class="popup__input popup__input_type_photo" placeholder="Ссылка на картинку" required="">
+          <form class="popup__form add-photo-form" action="#" method="post" name="add-photo" novalidate>
+            <label class="popup__input-label">
+              <input name="title" id="title" type="text" class="popup__input popup__input_type_title" placeholder="Название"  minlength="2" maxlength="30" required="">
+              <span class="popup__error title-error" id="title-error"></span>
+            </label>
+            <label class="popup__input-label">
+              <input name="photo-link" id="photo-link" type= "url" class="popup__input popup__input_type_photo" placeholder="Ссылка на картинку" required="">
+              <span class="popup__error photo-link-error" id="photo-link-error"></span>
+            </label>
             <button class="popup__save-button" type="submit" aria-label="Создать место">Создать</button>
           </form>
           <button class="popup__close close-add-photo" type="button" aria-label="Закрыть окно добавления фото"></button>
@@ -117,13 +80,15 @@
           <button class="photo-grid__delete" type="button" aria-label="Удалить фото"></button>
         </li>
       </template>
-      <section class="popup popup-photo">
+      <section class="popup popup-photo popup_type_photo">
           <figure class="popup__lightbox">
             <img class="popup__photo" src="#" alt="Альтернативный текст к фото">
             <figcaption class="popup__caption"></figcaption>
             <button class="popup__close close-photo" type="button" aria-label="Закрыть полноразмерное фото"></button>
           </figure>
       </section>
+      <script src="scripts/cards.js"></script>
+      <script src="scripts/validate.js"></script>
       <script src="scripts/index.js"></script>
   </body>
 </html>

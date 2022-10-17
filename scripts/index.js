@@ -1,46 +1,24 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
+// Переменные для трех попапов
 const popupProfileOverlay = document.querySelector('.popup-profile');
 const popupOverlayPhoto = document.querySelector('.popup-add-photo');
-
-const openPopupButton = document.querySelector('.profile__edit-button');
-const addPicButton = document.querySelector(".profile__add-button");
-
-const closeProfilePopupButton = document.querySelector('.close-profile');
-const closeAddPhotoPopupButton = document.querySelector('.close-add-photo');
-
+const popupLightbox = document.querySelector('.popup-photo')
+// Переменные для кнопок открытия попапов
+const buttonProfileEditing = document.querySelector('.profile__edit-button');
+const buttonPicAddition = document.querySelector(".profile__add-button");
+// Переменные для кнопок закрытия попапов
+const closureProfilePopupButton = document.querySelector('.close-profile');
+const closureAddPhotoPopupButton = document.querySelector('.close-add-photo');
+const closureLightboxButton = document.querySelector('.close-photo')
+// Переменные для форм попапа
 const popupForm = document.querySelector('.profile-form');
 const photoForm = document.querySelector('.add-photo-form')
-let profileName = document.querySelector('.profile__name');
-let profileJob = document.querySelector('.profile__job');
-let newName = document.querySelector('.popup__input_type_name');
-let newJob = document.querySelector('.popup__input_type_job')
-
+// Переменные для инфо в профиле сайта
+const profileName = document.querySelector('.profile__name');
+const profileJob = document.querySelector('.profile__job');
+// Переменные для инпутов попапа профиль
+const newName = document.querySelector('.popup__input_type_name');
+const newJob = document.querySelector('.popup__input_type_job')
+// Переменные для карточки и их массива
 const cardTemplate = document.querySelector('.card-template').content;
 const photoList = document.querySelector(".photo-grid");
 
@@ -97,15 +75,33 @@ function takeInfo () {
 // Функция открытия попапа
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  document.addEventListener('keydown', handleEscUp);
 }
 
 // Функция закрытия попапа
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  document.removeEventListener('keydown', handleEscUp);  // удаляем событие keydown
+}
+
+// Функция закрытия по esc
+function handleEscUp(evt) { // узнаем в каком месте произошел клик:
+  const activePopup = document.querySelector('.popup_opened');
+  if (evt.key === "Escape") {
+    closePopup(activePopup);
+  };
+ };
+
+// Функция фото в лайтбокс-попапе
+function openLightbox(link, name) {
+  openPopup(popupLightbox);
+  lightboxPhoto.src = link;
+  lightboxPhoto.alt = name;
+  lightboxPhotoCaption.textContent = name;
 }
 
 // Функция передачи данных с формы в профиль
-function profileFormSubmitHandler(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = newName.value;
   profileJob.textContent = newJob.value;
@@ -113,7 +109,7 @@ function profileFormSubmitHandler(evt) {
 }
 
 // Обработчик формы добавления элемента с фото
-function PhotoFormSubmitHandler(evt) {
+function handlePhotoFormSubmit(evt) {
   evt.preventDefault();
   photoList.prepend(createCard(newTitle.value, newPhoto.value));
   evt.target.reset();
@@ -121,29 +117,59 @@ function PhotoFormSubmitHandler(evt) {
 }
 
 // Слушатель кнопки открытия редактирования профиля
-openPopupButton.addEventListener('click', () => {
+buttonProfileEditing.addEventListener('click', () => {
   openPopup(popupProfileOverlay);
   takeInfo();
  });
 
 // Слушатель кнопки открытия добавления фото
- addPicButton.addEventListener('click', () => {
+ buttonPicAddition.addEventListener('click', () => {
    openPopup(popupOverlayPhoto);
  });
 
 // Закрытие профайл попапа
-closeProfilePopupButton.addEventListener('click', () => {
+closureProfilePopupButton.addEventListener('click', () => {
   closePopup(popupProfileOverlay);
 });
 // Закрытие новое место попапа
-closeAddPhotoPopupButton.addEventListener('click', () => {
+closureAddPhotoPopupButton.addEventListener('click', () => {
   closePopup(popupOverlayPhoto);
 });
 
+// Закрытие лайтбокс попапа
+closureLightboxButton.addEventListener('click', () => {
+  closePopup(popupLightbox);
+});
+
+// Слушатель закрытия попапа профиля по клику на оверлей
+popupProfileOverlay.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+      // Закрываем попап только при клике по нужному элементу
+    closePopup(popupProfileOverlay);
+  }
+});
+
+// Слушатель закрытия попапа фото по клику на оверлей
+popupOverlayPhoto.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+      // Закрываем попап только при клике по нужному элементу
+    closePopup(popupOverlayPhoto);
+  }
+});
+
+// Слушатель закрытия попапа лайтбокс по клику на оверлей
+popupLightbox.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+      // Закрываем попап только при клике по нужному элементу
+    closePopup(popupLightbox);
+  }
+});
+
+
 // Слушатель кнопки создать профиль
-popupForm.addEventListener('submit', profileFormSubmitHandler);
+popupForm.addEventListener('submit', handleProfileFormSubmit);
 
 
 // "Слушатель" формы добавления элемента
-photoForm.addEventListener("submit", PhotoFormSubmitHandler);
+photoForm.addEventListener("submit", handlePhotoFormSubmit);
 
