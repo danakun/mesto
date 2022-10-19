@@ -76,7 +76,9 @@ function takeInfo () {
 function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener('keydown', handleEscUp);
-  toggleButtonState(inputList, buttonElement, obj); // Функция для сброса состояния кнопки на дезактивирована
+  const inputList = Array.from(popup.querySelectorAll(validationObject.submitButtonSelector)); // Находим нужные инпуты и кнопки
+  const buttonElement = popup.querySelector(validationObject.inputSelector);
+  toggleButtonState(inputList, buttonElement, validationObject); // Функция для сброса состояния кнопки на дезактивирована
 }
 
 // Функция закрытия попапа
