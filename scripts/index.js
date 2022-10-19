@@ -36,8 +36,8 @@ function createCard(name, link) {
   const cardImage = cardElement.querySelector(".photo-grid__image"); // Объявляем переменную картинке
   const likeButton = cardElement.querySelector(".photo-grid__like"); // Объявляем переменную лайку
   likeButton.addEventListener("click", () => toggleLike(likeButton)); // Вешаем слушатель на кнопку лайка
-  const deleteButton = cardElement.querySelector(".photo-grid__delete"); // Объявляем переменную урне
-  deleteButton.addEventListener("click", () => deleteCard(deleteButton)); // Вешаем слушатель на кнопку удаления
+  const buttonDelete = cardElement.querySelector(".photo-grid__delete"); // Объявляем переменную урне
+  buttonDelete.addEventListener("click", () => deleteCard(buttonDelete)); // Вешаем слушатель на кнопку удаления
   cardImage.src = link; // Говорим, что источник равен параметру link
   cardImage.alt = name; // Говорим, что название равно параметру name
   cardTitle.textContent = name; // Говорим, что текст из переменной cardTitle равно параметру name
@@ -86,8 +86,8 @@ function closePopup(popup) {
 
 // Функция закрытия по esc
 function handleEscUp(evt) { // узнаем в каком месте произошел клик:
-  const activePopup = document.querySelector('.popup_opened');
   if (evt.key === "Escape") {
+    const activePopup = document.querySelector('.popup_opened');
     closePopup(activePopup);
   };
  };
@@ -108,13 +108,16 @@ function handleProfileFormSubmit(evt) {
   closePopup(popupProfileOverlay);
 }
 
+
 // Обработчик формы добавления элемента с фото
 function handlePhotoFormSubmit(evt) {
   evt.preventDefault();
   photoList.prepend(createCard(newTitle.value, newPhoto.value));
   evt.target.reset();
   closePopup(popupOverlayPhoto);
+  toggleButtonState(inputList, buttonElement, obj)
 }
+
 
 // Слушатель кнопки открытия редактирования профиля
 buttonProfileEditing.addEventListener('click', () => {
