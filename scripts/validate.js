@@ -62,6 +62,7 @@ function hasInvalidInput(inputList) {
   });
 }
 
+
 // Функция, переключающая состояние кнопки
 function toggleButtonState(inputList, buttonElement, obj) {
   const { inactiveButtonClass } = obj; // Достаём нужные ключи из объекта
@@ -73,7 +74,6 @@ function toggleButtonState(inputList, buttonElement, obj) {
     buttonElement.disabled = false;
   }
 }
-
 
 // Функция проставление слушателей
   function setEventListeners(formElement, obj) {

@@ -2,6 +2,7 @@
 const popupProfileOverlay = document.querySelector('.popup-profile');
 const popupOverlayPhoto = document.querySelector('.popup-add-photo');
 const popupLightbox = document.querySelector('.popup-photo')
+const popups = document.querySelectorAll(".popup");
 // Переменные для кнопок открытия попапов
 const buttonProfileEditing = document.querySelector('.profile__edit-button');
 const buttonPicAddition = document.querySelector(".profile__add-button");
@@ -76,10 +77,13 @@ function takeInfo () {
 function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener('keydown', handleEscUp);
-  const inputList = Array.from(popup.querySelectorAll(validationObject.inputSelector)); // Находим нужные инпуты и кнопки
+  //const inputList = Array.from(popup.querySelectorAll(validationObject.inputSelector)); // Находим нужные инпуты и кнопки
   const buttonElement = popup.querySelector(validationObject.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement, validationObject); // Функция для сброса состояния кнопки на дезактивирована
+  //toggleButtonState(inputList, buttonElement, validationObject); // Функция для сброса состояния кнопки на дезактивирована
+  buttonElement.classList.add(validationObject.inactiveButtonClass); // Добавляем класс
+  buttonElement.disabled = true;
 }
+
 
 // Функция закрытия попапа
 function closePopup(popup) {
@@ -121,6 +125,7 @@ function handlePhotoFormSubmit(evt) {
 }
 
 
+
 // Слушатель кнопки открытия редактирования профиля
 buttonProfileEditing.addEventListener('click', () => {
   openPopup(popupProfileOverlay);
@@ -146,29 +151,17 @@ closureLightboxButton.addEventListener('click', () => {
   closePopup(popupLightbox);
 });
 
-// Слушатель закрытия попапа профиля по клику на оверлей
-popupProfileOverlay.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
-      // Закрываем попап только при клике по нужному элементу
-    closePopup(popupProfileOverlay);
-  }
+
+// Закрытие попапа по клику на оверлей
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+        // Закрываем попап только при клике по нужному элементу
+      closePopup(popup);
+}
+});
 });
 
-// Слушатель закрытия попапа фото по клику на оверлей
-popupOverlayPhoto.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
-      // Закрываем попап только при клике по нужному элементу
-    closePopup(popupOverlayPhoto);
-  }
-});
-
-// Слушатель закрытия попапа лайтбокс по клику на оверлей
-popupLightbox.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
-      // Закрываем попап только при клике по нужному элементу
-    closePopup(popupLightbox);
-  }
-});
 
 
 // Слушатель кнопки создать профиль
