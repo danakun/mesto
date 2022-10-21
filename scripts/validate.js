@@ -43,15 +43,10 @@ function hideInputError(formElement, inputElement, obj) {
 
 // Функция сброса ошибок
 function resetErrors(formElement, inputElement, obj) {
-  const { inputErrorClass } = obj;  // Достаём нужные ключи из объекта
-  const { errorClass } = obj;
   const { inputSelector } = obj;
   const inputs = Array.from(formElement.querySelectorAll(inputSelector));
-  inputs.forEach((input) => {
-    const errorElement = formElement.querySelector(`.${input.id}-error`);
-    inputElement.classList.remove(inputErrorClass); // Убираем присвоенные классы и значение errorElement
-    errorElement.classList.remove(errorClass);
-    errorElement.textContent = '';
+  inputs.forEach((inputElement) => {
+    hideInputError(formElement, inputElement, obj)
 })
 }
 
