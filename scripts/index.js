@@ -6,10 +6,12 @@ const popups = document.querySelectorAll(".popup");
 // Переменные для кнопок открытия попапов
 const buttonProfileEditing = document.querySelector('.profile__edit-button');
 const buttonPicAddition = document.querySelector(".profile__add-button");
-// Переменные для кнопок закрытия попапов
+// Переменные для кнопок закрытия попапов !!!!
 const closureProfilePopupButton = document.querySelector('.close-profile');
 const closureAddPhotoPopupButton = document.querySelector('.close-add-photo');
 const closureLightboxButton = document.querySelector('.close-photo')
+// Переменная на все кнопки закрытия попапов
+const closurePopupButtons = document.querySelector('.popup__close');
 // Переменные для форм попапа
 const popupForm = document.querySelector('.profile-form');
 const photoForm = document.querySelector('.add-photo-form')
@@ -73,16 +75,12 @@ function takeInfo () {
   newJob.value = profileJob.textContent;
 }
 
+
 // Функция открытия попапа
 function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener('keydown', handleEscUp);
-  //const inputList = Array.from(popup.querySelectorAll(validationObject.inputSelector)); // Находим нужные инпуты и кнопки
-  const buttonElement = popup.querySelector(validationObject.submitButtonSelector);
-  //toggleButtonState(inputList, buttonElement, validationObject); // Функция для сброса состояния кнопки на дезактивирована
-  buttonElement.classList.add(validationObject.inactiveButtonClass); // Добавляем класс
-  buttonElement.disabled = true;
-}
+ }
 
 
 // Функция закрытия попапа
@@ -121,9 +119,11 @@ function handlePhotoFormSubmit(evt) {
   evt.preventDefault();
   photoList.prepend(createCard(newTitle.value, newPhoto.value));
   evt.target.reset();
+  // деактивируем кнопку submit для предотвращения добавления пустой карточки
+  const currentButton = popupOverlayPhoto.querySelector(validationObject.submitButtonSelector);
+  deactivateButton(currentButton, validationObject)
   closePopup(popupOverlayPhoto);
 }
-
 
 
 // Слушатель кнопки открытия редактирования профиля
@@ -137,31 +137,28 @@ buttonProfileEditing.addEventListener('click', () => {
    openPopup(popupOverlayPhoto);
  });
 
-// Закрытие профайл попапа
-closureProfilePopupButton.addEventListener('click', () => {
-  closePopup(popupProfileOverlay);
-});
-// Закрытие новое место попапа
-closureAddPhotoPopupButton.addEventListener('click', () => {
-  closePopup(popupOverlayPhoto);
-});
+ // Функция клика по кнопке и по оверлей
+function handleClickOverlay(evt) {
+  if (evt.target.classList.contains('popup')) {
+  closePopup(evt.target);
+}
+}
 
-// Закрытие лайтбокс попапа
-closureLightboxButton.addEventListener('click', () => {
-  closePopup(popupLightbox);
-});
+// Слушатели закрытия попапов по кликам на оверлей
+popupProfileOverlay.addEventListener('click', handleClickOverlay);
+popupOverlayPhoto.addEventListener('click', handleClickOverlay);
+popupLightbox.addEventListener('click', handleClickOverlay);
 
 
-// Закрытие попапа по клику на оверлей
+// Закрытие попапа по клику на кнопку
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+    if (evt.target.classList.contains('popup__close')) {
         // Закрываем попап только при клике по нужному элементу
       closePopup(popup);
 }
 });
 });
-
 
 
 // Слушатель кнопки создать профиль

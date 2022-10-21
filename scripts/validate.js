@@ -65,15 +65,26 @@ function hasInvalidInput(inputList) {
 
 // Функция, переключающая состояние кнопки
 function toggleButtonState(inputList, buttonElement, obj) {
-  const { inactiveButtonClass } = obj; // Достаём нужные ключи из объекта
   if (hasInvalidInput(inputList)) {    // Прописываем условие, используя функцию hasInvalidInput
-    buttonElement.classList.add(inactiveButtonClass); // Добавляем класс
-    buttonElement.disabled = true;// Добавляем disabled
+    deactivateButton(buttonElement, obj)
   } else {
-    buttonElement.classList.remove(inactiveButtonClass);
-    buttonElement.disabled = false;
+    activateButton(buttonElement, obj)
   }
 }
+// Функция деактивации кнопки
+function deactivateButton(buttonElement, obj) {
+  const { inactiveButtonClass } = obj;
+  buttonElement.classList.add(inactiveButtonClass); // Добавляем класс
+  buttonElement.disabled = true;// Добавляем disabled
+}
+
+// Функция активации кнопки
+function activateButton(buttonElement, obj) {
+  const { inactiveButtonClass } = obj;
+  buttonElement.classList.remove(inactiveButtonClass); // Снимаем класс
+  buttonElement.disabled = false;// убираем disabled
+}
+
 
 // Функция проставление слушателей
   function setEventListeners(formElement, obj) {
