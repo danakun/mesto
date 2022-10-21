@@ -130,7 +130,14 @@ function handlePhotoFormSubmit(evt) {
 buttonProfileEditing.addEventListener('click', () => {
   openPopup(popupProfileOverlay);
   takeInfo();
- });
+  const inputElement = popupProfileOverlay.querySelector(validationObject.inputSelector);
+  const formElement = popupProfileOverlay.querySelector(validationObject.formSelector);
+  resetErrors(formElement, inputElement, validationObject);
+});
+
+
+const currentButton = popupOverlayPhoto.querySelector(validationObject.submitButtonSelector);
+
 
 // Слушатель кнопки открытия добавления фото
  buttonPicAddition.addEventListener('click', () => {
