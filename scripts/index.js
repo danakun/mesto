@@ -12,6 +12,8 @@ const closureAddPhotoPopupButton = document.querySelector('.close-add-photo');
 const closureLightboxButton = document.querySelector('.close-photo')
 // Переменная на все кнопки закрытия попапов
 const closurePopupButtons = document.querySelector('.popup__close');
+// Переменная на все кнопки закрытия попапов
+const currentButton = popupOverlayPhoto.querySelector(validationObject.submitButtonSelector);
 // Переменные для форм попапа
 const popupForm = document.querySelector('.profile-form');
 const photoForm = document.querySelector('.add-photo-form')
@@ -31,6 +33,9 @@ const newPhoto = document.querySelector('.popup__input_type_photo')
 // Переменные для фото и подписи из лайтбокса
 const lightboxPhoto = document.querySelector('.popup__photo')
 const lightboxPhotoCaption = document.querySelector('.popup__caption')
+// Переменные для инпута и формы
+const inputElement = popupProfileOverlay.querySelector(validationObject.inputSelector);
+const formElement = popupProfileOverlay.querySelector(validationObject.formSelector);
 
 // Функция создания карточки и добавления "слушателей" ее элементам
 function createCard(name, link) {
@@ -120,7 +125,6 @@ function handlePhotoFormSubmit(evt) {
   photoList.prepend(createCard(newTitle.value, newPhoto.value));
   evt.target.reset();
   // деактивируем кнопку submit для предотвращения добавления пустой карточки
-  const currentButton = popupOverlayPhoto.querySelector(validationObject.submitButtonSelector);
   deactivateButton(currentButton, validationObject)
   closePopup(popupOverlayPhoto);
 }
@@ -130,13 +134,8 @@ function handlePhotoFormSubmit(evt) {
 buttonProfileEditing.addEventListener('click', () => {
   openPopup(popupProfileOverlay);
   takeInfo();
-  const inputElement = popupProfileOverlay.querySelector(validationObject.inputSelector);
-  const formElement = popupProfileOverlay.querySelector(validationObject.formSelector);
   resetErrors(formElement, inputElement, validationObject);
 });
-
-
-const currentButton = popupOverlayPhoto.querySelector(validationObject.submitButtonSelector);
 
 
 // Слушатель кнопки открытия добавления фото
