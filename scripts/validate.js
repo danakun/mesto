@@ -42,7 +42,7 @@ function hideInputError(formElement, inputElement, obj) {
 };
 
 // Функция сброса ошибок
-function resetErrors(formElement, inputElement, obj) {
+function resetErrors(formElement, obj) {
   const { inputSelector } = obj;
   const inputs = Array.from(formElement.querySelectorAll(inputSelector));
   inputs.forEach((inputElement) => {

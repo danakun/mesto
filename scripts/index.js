@@ -134,7 +134,7 @@ function handlePhotoFormSubmit(evt) {
 buttonProfileEditing.addEventListener('click', () => {
   openPopup(popupProfileOverlay);
   takeInfo();
-  resetErrors(formElement, inputElement, validationObject);
+  resetErrors(formElement, validationObject);
 });
 
 
