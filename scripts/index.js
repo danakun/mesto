@@ -1,22 +1,37 @@
+
+import { Card } from './card.js'
+import { FormValidator } from './formvalidator.js'
+import { initialCards } from './cards.js';
+
+const validationObject = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_active'
+};
+
+
 // Переменные для трех попапов
 const popupProfileOverlay = document.querySelector('.popup-profile');
 const popupOverlayPhoto = document.querySelector('.popup-add-photo');
-const popupLightbox = document.querySelector('.popup-photo')
+const popupLightbox = document.querySelector('.popup-photo');
 const popups = document.querySelectorAll(".popup");
 // Переменные для кнопок открытия попапов
 const buttonProfileEditing = document.querySelector('.profile__edit-button');
 const buttonPicAddition = document.querySelector(".profile__add-button");
 // Переменные для кнопок закрытия попапов !!!!
-const closureProfilePopupButton = document.querySelector('.close-profile');
-const closureAddPhotoPopupButton = document.querySelector('.close-add-photo');
-const closureLightboxButton = document.querySelector('.close-photo')
+//const closureProfilePopupButton = document.querySelector('.close-profile');
+//const closureAddPhotoPopupButton = document.querySelector('.close-add-photo');
+//const closureLightboxButton = document.querySelector('.close-photo')
 // Переменная на все кнопки закрытия попапов
-const closurePopupButtons = document.querySelector('.popup__close');
+//const closurePopupButtons = document.querySelector('.popup__close');
 // Переменная на все кнопки закрытия попапов
-const currentButton = popupOverlayPhoto.querySelector(validationObject.submitButtonSelector);
+//const currentButton = popupOverlayPhoto.querySelector(validationObject.submitButtonSelector);
 // Переменные для форм попапа
-const popupForm = document.querySelector('.profile-form');
-const photoForm = document.querySelector('.add-photo-form')
+const profileForm = popupProfileOverlay.querySelector('.popup__form');
+const photoForm = popupOverlayPhoto.querySelector('.popup__form')
 // Переменные для инфо в профиле сайта
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
@@ -24,69 +39,58 @@ const profileJob = document.querySelector('.profile__job');
 const newName = document.querySelector('.popup__input_type_name');
 const newJob = document.querySelector('.popup__input_type_job')
 // Переменные для карточки и их массива
-const cardTemplate = document.querySelector('.card-template').content;
+//const cardTemplate = document.querySelector('.card-template').content;
 const photoList = document.querySelector(".photo-grid");
 
 const newTitle = document.querySelector('.popup__input_type_title');
 const newPhoto = document.querySelector('.popup__input_type_photo')
 
+
 // Переменные для фото и подписи из лайтбокса
 const lightboxPhoto = document.querySelector('.popup__photo')
 const lightboxPhotoCaption = document.querySelector('.popup__caption')
 // Переменные для инпута и формы
-const inputElement = popupProfileOverlay.querySelector(validationObject.inputSelector);
-const formElement = popupProfileOverlay.querySelector(validationObject.formSelector);
+//const inputElement = popupProfileOverlay.querySelector(validationObject.inputSelector);
+//const formElement = popupProfileOverlay.querySelector(validationObject.formSelector);
 
-// Функция создания карточки и добавления "слушателей" ее элементам
-function createCard(name, link) {
-  const cardElement = cardTemplate.querySelector(".photo-grid__element").cloneNode(true); // Копируем темплейт
-  const cardTitle = cardElement.querySelector(".photo-grid__text"); // Объявляем переменную названию
-  const cardImage = cardElement.querySelector(".photo-grid__image"); // Объявляем переменную картинке
-  const likeButton = cardElement.querySelector(".photo-grid__like"); // Объявляем переменную лайку
-  likeButton.addEventListener("click", () => toggleLike(likeButton)); // Вешаем слушатель на кнопку лайка
-  const buttonDelete = cardElement.querySelector(".photo-grid__delete"); // Объявляем переменную урне
-  buttonDelete.addEventListener("click", () => deleteCard(buttonDelete)); // Вешаем слушатель на кнопку удаления
-  cardImage.src = link; // Говорим, что источник равен параметру link
-  cardImage.alt = name; // Говорим, что название равно параметру name
-  cardTitle.textContent = name; // Говорим, что текст из переменной cardTitle равно параметру name
-  cardImage.addEventListener("click", () => openLightbox(link, name)); //Вешаем слушатель на карточку для открытия фото
-  return cardElement; //Возвращаем элемент карточки
+// Функция фото в лайтбокс-попапе
+const openLightbox = (name, link) => {
+  lightboxPhoto.src = link;
+  lightboxPhoto.alt = name;
+  lightboxPhotoCaption.textContent = name;
+  openPopup(popupLightbox);
 }
 
-// Функция переключения лайка
-function toggleLike(button) {
-  button.classList.toggle("photo-grid__like_active");
+// Объявляем по отдельности валидаторы для обеих форм
+const profileValidator = new FormValidator(validationObject, profileForm);
+const addPhotoValidator = new FormValidator(validationObject, photoForm);
+
+// Запускаем валидацию
+profileValidator.enableValidation();
+addPhotoValidator.enableValidation();
+
+// Функция рендер карточек
+const renderCard = (card, container) => {
+  container.prepend(card);
 }
 
-// Функция удаления карточки
-function deleteCard(button) {
-  const cardItem = button.closest(".photo-grid__element");
-  cardItem.remove();
-}
-
-// Функция отрисовки массива карточек
-function renderCards(array) {
-  array.forEach((el) => {
-    photoList.append(createCard(el.name, el.link));
-  });
-}
-
-renderCards(initialCards);
-
+// Функция рендер дефолтных карточек
+initialCards.forEach( cardData => {
+  const card = new Card(cardData, '.card-template', openLightbox);
+  renderCard(card.createCard(), photoList);
+});
 
 // Функция принятия значения в профиль из импута
-function takeInfo () {
+function takeInfo() {
   newName.value = profileName.textContent;
   newJob.value = profileJob.textContent;
 }
 
-
 // Функция открытия попапа
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener('keydown', handleEscUp);
  }
-
 
 // Функция закрытия попапа
 function closePopup(popup) {
@@ -102,44 +106,40 @@ function handleEscUp(evt) { // узнаем в каком месте произ�
   };
  };
 
-// Функция фото в лайтбокс-попапе
-function openLightbox(link, name) {
-  openPopup(popupLightbox);
-  lightboxPhoto.src = link;
-  lightboxPhoto.alt = name;
-  lightboxPhotoCaption.textContent = name;
-}
-
 // Функция передачи данных с формы в профиль
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = newName.value;
   profileJob.textContent = newJob.value;
+  profileValidator.deactivateButton();   // добавила в пт
   closePopup(popupProfileOverlay);
 }
-
 
 // Обработчик формы добавления элемента с фото
 function handlePhotoFormSubmit(evt) {
   evt.preventDefault();
-  photoList.prepend(createCard(newTitle.value, newPhoto.value));
+  const cardData = {
+    name: newTitle.value, //newTitle newFoto
+    link: newPhoto.value
+}
+  const card = new Card(cardData, '.card-template');
+  renderCard(card.createCard(), photoList);
   evt.target.reset();
   // деактивируем кнопку submit для предотвращения добавления пустой карточки
-  deactivateButton(currentButton, validationObject)
+  addPhotoValidator.deactivateButton();
   closePopup(popupOverlayPhoto);
 }
 
-
 // Слушатель кнопки открытия редактирования профиля
 buttonProfileEditing.addEventListener('click', () => {
-  openPopup(popupProfileOverlay);
   takeInfo();
-  resetErrors(formElement, validationObject);
+  profileValidator.resetErrors();
+  openPopup(popupProfileOverlay);
 });
-
 
 // Слушатель кнопки открытия добавления фото
  buttonPicAddition.addEventListener('click', () => {
+   addPhotoValidator.resetErrors();
    openPopup(popupOverlayPhoto);
  });
 
@@ -168,9 +168,54 @@ popups.forEach((popup) => {
 
 
 // Слушатель кнопки создать профиль
-popupForm.addEventListener('submit', handleProfileFormSubmit);
-
+profileForm.addEventListener('submit', handleProfileFormSubmit);
 
 // "Слушатель" формы добавления элемента
 photoForm.addEventListener("submit", handlePhotoFormSubmit);
 
+
+
+// Функция создания карточки и добавления "слушателей" ее элементам
+// function createCard(name, link) {
+//   const cardElement = cardTemplate.querySelector(".photo-grid__element").cloneNode(true); // Копируем темплейт
+//   const cardTitle = cardElement.querySelector(".photo-grid__text"); // Объявляем переменную названию
+//   const cardImage = cardElement.querySelector(".photo-grid__image"); // Объявляем переменную картинке
+//   const buttonLike = cardElement.querySelector(".photo-grid__like"); // Объявляем переменную лайку
+//   buttonLike.addEventListener("click", () => toggleLike(buttonLike)); // Вешаем слушатель на кнопку лайка
+//   const buttonDelete = cardElement.querySelector(".photo-grid__delete"); // Объявляем переменную урне
+//   buttonDelete.addEventListener("click", () => deleteCard(buttonDelete)); // Вешаем слушатель на кнопку удаления
+//   cardImage.src = link; // Говорим, что источник равен параметру link
+//   cardImage.alt = name; // Говорим, что название равно параметру name
+//   cardTitle.textContent = name; // Говорим, что текст из переменной cardTitle равно параметру name
+//   cardImage.addEventListener("click", () => openLightbox(link, name)); //Вешаем слушатель на карточку для открытия фото
+//   return cardElement; //Возвращаем элемент карточки
+// }
+
+// Функция переключения лайка
+// function toggleLike(button) {
+//   button.classList.toggle("photo-grid__like_active");
+// }
+
+// Функция удаления карточки
+// function deleteCard(button) {
+//   const cardItem = button.closest(".photo-grid__element");
+//   cardItem.remove();
+// }
+
+// Функция отрисовки массива карточек
+//function renderCards(array) {
+  //array.forEach((el) => {
+  //  photoList.append(createCard(el.name, el.link));
+  //});
+//}
+
+//renderCards(initialCards);
+
+//const renderCard = (card, container) => {
+
+  //const cardElement = card.createCard()
+
+ // container.append(createCard(cardElement));
+//}
+
+//renderCard(cardElement, photoList);
