@@ -56,14 +56,15 @@ profileValidator.enableValidation();
 photoAddValidator.enableValidation();
 
 // Функция рендер карточек
-const renderCard = (card, container) => {
-  container.prepend(card);
+const renderCard = (cardData, container) => {
+  const card = new Card(cardData, '.card-template', openLightbox);
+  const element = card.createCard()
+  container.prepend(element);
 }
 
 // Функция рендер дефолтных карточек
 initialCards.forEach( cardData => {
-  const card = new Card(cardData, '.card-template', openLightbox);
-  renderCard(card.createCard(), photoList);
+  renderCard(cardData, photoList);
 });
 
 // Функция принятия значения в профиль из импута
@@ -108,8 +109,8 @@ function handlePhotoFormSubmit(evt) {
     name: newTitle.value,
     link: newPhoto.value
 }
-  const card = new Card(cardData, '.card-template', openLightbox);
-  renderCard(card.createCard(), photoList);
+  //const card = new Card(cardData, '.card-template', openLightbox);
+  renderCard(cardData, photoList);
   evt.target.reset();
   // деактивируем кнопку submit для предотвращения добавления пустой карточки
   photoAddValidator.deactivateButton();
