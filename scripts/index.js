@@ -109,7 +109,7 @@ function handlePhotoFormSubmit(evt) {
     name: newTitle.value,
     link: newPhoto.value
 }
-  //const card = new Card(cardData, '.card-template', openLightbox);
+
   renderCard(cardData, photoList);
   evt.target.reset();
   // деактивируем кнопку submit для предотвращения добавления пустой карточки
