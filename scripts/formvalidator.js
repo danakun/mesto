@@ -87,10 +87,6 @@ export class FormValidator {
 
   // публичный метод для валидации
   enableValidation() {
-    this._form.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
-    // Прописываем условие, используя функцию hasInvalidInput
     this._setEventListeners();
   }
 

@@ -49,11 +49,11 @@ const openLightbox = (name, link) => {
 
 // Объявляем по отдельности валидаторы для обеих форм
 const profileValidator = new FormValidator(validationObject, profileForm);
-const addPhotoValidator = new FormValidator(validationObject, photoForm);
+const photoAddValidator = new FormValidator(validationObject, photoForm);
 
 // Запускаем валидацию
 profileValidator.enableValidation();
-addPhotoValidator.enableValidation();
+photoAddValidator.enableValidation();
 
 // Функция рендер карточек
 const renderCard = (card, container) => {
@@ -73,7 +73,7 @@ function takeInfo() {
 }
 
 // Функция открытия попапа
-export function openPopup(popup) {
+function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener('keydown', handleEscUp);
  }
@@ -112,7 +112,7 @@ function handlePhotoFormSubmit(evt) {
   renderCard(card.createCard(), photoList);
   evt.target.reset();
   // деактивируем кнопку submit для предотвращения добавления пустой карточки
-  addPhotoValidator.deactivateButton();
+  photoAddValidator.deactivateButton();
   closePopup(popupOverlayPhoto);
 }
 
@@ -125,7 +125,7 @@ buttonProfileEditing.addEventListener('click', () => {
 
 // Слушатель кнопки открытия добавления фото
  buttonPicAddition.addEventListener('click', () => {
-   addPhotoValidator.resetErrors();
+   photoAddValidator.resetErrors();
    openPopup(popupOverlayPhoto);
  });
 

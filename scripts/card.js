@@ -10,6 +10,7 @@ export class Card {
    // метод обработки клика по кнопке удаления
    _handleDeleteCard = () => {
     this._element.remove();
+    this._element = null;
   }
 
   // метод обработки клика по кнопке лайка
