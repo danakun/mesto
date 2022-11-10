@@ -1,6 +1,6 @@
 
-import { Card } from './card.js'
-import { FormValidator } from './formvalidator.js'
+import { Card } from './Card.js'
+import { FormValidator } from './FormValidator.js'
 import { initialCards } from './cards.js';
 
 const validationObject = {
