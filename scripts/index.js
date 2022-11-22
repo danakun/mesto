@@ -1,6 +1,6 @@
 
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
+import  Card  from './Card.js';
+import  FormValidator  from './FormValidator.js';
 import { initialCards } from './cards.js';
 import  PopupWithImage  from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
