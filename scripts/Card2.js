@@ -1,4 +1,4 @@
-export default class Card {
+export class Card {
   constructor(cardData, templateSelector, handlePhotoClick) {
     this._cardData = cardData;
     this._templateSelector = templateSelector;
@@ -56,5 +56,3 @@ export default class Card {
   }
 
 }
-
-
