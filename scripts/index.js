@@ -1,6 +1,6 @@
 
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
+import  Card  from './Card.js';
+import  FormValidator  from './FormValidator.js';
 import { initialCards } from './cards.js';
 import  PopupWithImage  from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
@@ -93,8 +93,8 @@ popupLightbox.setEventListeners();
 
 // userInfo создаем экземпляр класса инфо профиля
 const userInfo = new UserInfo({
-  profileNameSelector: '.profile__name',
-  profileJobSelector: '.profile__job',
+  profileNameSelector: '.popup__input_type_name',
+  profileJobSelector: '.popup__input_type_job',
 });
 
 // Слушатель кнопки открытия редактирования профиля
