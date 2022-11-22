@@ -93,8 +93,8 @@ popupLightbox.setEventListeners();
 
 // userInfo создаем экземпляр класса инфо профиля
 const userInfo = new UserInfo({
-  profileNameSelector: '.profile__name',
-  profileJobSelector: '.profile__job',
+  profileNameSelector: '.popup__input_type_name',
+  profileJobSelector: '.popup__input_type_job',
 });
 
 // Слушатель кнопки открытия редактирования профиля
