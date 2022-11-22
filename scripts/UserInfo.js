@@ -16,7 +16,7 @@ this._jobInput = document.querySelector(this._job);
     //  newName.value = profileName.textContent;
     //  newJob.value = profileJob.textContent;
 
-  setUserInfo({profileName, profileJob}) {
+  setUserInfo(profileName, profileJob) {
     //принимает новые данные пользователя и добавляет их на страницу
     profileName.textContent = this._nameInput.value;
     profileJob.textContent = this._jobInput.value;
