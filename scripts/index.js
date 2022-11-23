@@ -55,7 +55,7 @@ const newSection = new Section({
 
 // Функция создания карточек
 const createNewCard = (cardData) => {
-  const card = new Card(cardData, '.card-template',  (data) => popupLightbox.open(data)); //(imageData) => { popupZoom.open(imageData) }
+  const card = new Card(cardData, '.card-template',  (data) => popupLightbox.open(data)); //(data) => { popupLightbox.open(data) }
   return card.createCard()
 }
 
@@ -79,8 +79,12 @@ popupProfileEdit.setEventListeners();
 
 
 // popup OverlayPhoto добавляем новое фото и подпись
-const popupAddPhoto = new PopupWithForm('.popup-add-photo', (inputsValues) => {
-  const card = createNewCard(inputsValues);
+const popupAddPhoto = new PopupWithForm('.popup-add-photo', () => {
+  const cardData = {
+         name: newTitle.value,
+         link: newPhoto.value
+     }
+  const card = createNewCard(cardData);
   newSection.addItem(card);
   popupAddPhoto.close();
   photoAddValidator.deactivateButton(); //проверить
@@ -115,8 +119,6 @@ buttonProfileEditing.addEventListener('click', () => {
 // const renderCard = (element, container) => {
 //   container.prepend(element);
 // }
-
-
 
 // Функция принятия значения в профиль из импута
 // function takeInfo() {
