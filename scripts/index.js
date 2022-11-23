@@ -38,8 +38,8 @@ const newJob = document.querySelector('.popup__input_type_job')
 // Переменные для карточки и их массива
 const photoList = document.querySelector(".photo-grid");
 
-// const newTitle = document.querySelector('.popup__input_type_title');
-// const newPhoto = document.querySelector('.popup__input_type_photo')
+ const newTitle = document.querySelector('.popup__input_type_title');
+ const newPhoto = document.querySelector('.popup__input_type_photo')
 
 // Функция создания секции карточек по новому заданию
 // где-то тут мне надо использовать рендерер для связи двух классов
@@ -55,7 +55,7 @@ const newSection = new Section({
 
 // Функция создания карточек
 const createNewCard = (cardData) => {
-  const card = new Card(cardData, '.card-template',  (data) => popupLightbox.open(data)); //(imageData) => { popupZoom.open(imageData) }
+  const card = new Card(cardData, '.card-template',  (data) => popupLightbox.open(data)); //(data) => { popupLightbox.open(data) }
   return card.createCard()
 }
 
@@ -79,8 +79,8 @@ popupProfileEdit.setEventListeners();
 
 
 // popup OverlayPhoto добавляем новое фото и подпись
-const popupAddPhoto = new PopupWithForm('.popup-add-photo', (inputsValues) => {
-  const card = createNewCard(inputsValues);
+const popupAddPhoto = new PopupWithForm('.popup-add-photo', (cardData) => {
+  const card = createNewCard(cardData);
   newSection.addItem(card);
   popupAddPhoto.close();
   photoAddValidator.deactivateButton(); //проверить
@@ -115,8 +115,6 @@ buttonProfileEditing.addEventListener('click', () => {
 // const renderCard = (element, container) => {
 //   container.prepend(element);
 // }
-
-
 
 // Функция принятия значения в профиль из импута
 // function takeInfo() {
