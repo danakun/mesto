@@ -38,8 +38,8 @@ const newJob = document.querySelector('.popup__input_type_job')
 // Переменные для карточки и их массива
 const photoList = document.querySelector(".photo-grid");
 
-// const newTitle = document.querySelector('.popup__input_type_title');
-// const newPhoto = document.querySelector('.popup__input_type_photo')
+ const newTitle = document.querySelector('.popup__input_type_title');
+ const newPhoto = document.querySelector('.popup__input_type_photo')
 
 // Функция создания секции карточек по новому заданию
 // где-то тут мне надо использовать рендерер для связи двух классов
@@ -79,11 +79,7 @@ popupProfileEdit.setEventListeners();
 
 
 // popup OverlayPhoto добавляем новое фото и подпись
-const popupAddPhoto = new PopupWithForm('.popup-add-photo', () => {
-  const cardData = {
-         name: newTitle.value,
-         link: newPhoto.value
-     }
+const popupAddPhoto = new PopupWithForm('.popup-add-photo', (cardData) => {
   const card = createNewCard(cardData);
   newSection.addItem(card);
   popupAddPhoto.close();
