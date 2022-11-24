@@ -70,10 +70,17 @@ const photoAddValidator = new FormValidator(validationObject, photoForm);
 profileValidator.enableValidation();
 photoAddValidator.enableValidation();
 
+// userInfo создаем экземпляр класса инфо профиля
+const userInfo = new UserInfo({
+  profileNameSelector: '.profile__name',
+  profileJobSelector: '.profile__job',
+});
+
+
 // popup ProfileOverlay редактируем профиль
-const popupProfileEdit = new PopupWithForm('.popup-profile', () => {
+const popupProfileEdit = new PopupWithForm('.popup-profile', (inputValues) => {
   popupProfileEdit.close();
-  userInfo.setUserInfo(profileName, profileJob);
+  userInfo.setUserInfo(inputValues);
 });
 popupProfileEdit.setEventListeners();
 
@@ -91,16 +98,11 @@ popupAddPhoto.setEventListeners();
 const popupLightbox = new PopupWithImage('.popup-photo');
 popupLightbox.setEventListeners();
 
-// userInfo создаем экземпляр класса инфо профиля
-const userInfo = new UserInfo({
-  profileNameSelector: '.popup__input_type_name',
-  profileJobSelector: '.popup__input_type_job',
-});
 
 // Слушатель кнопки открытия редактирования профиля
 buttonProfileEditing.addEventListener('click', () => {
-  //popupProfileEdit.setInputsValue(userInfo.getUserInfo());
-  userInfo.getUserInfo(profileName, profileJob);
+  popupProfileEdit.setInputValues(userInfo.getUserInfo());
+  userInfo.getUserInfo();
   profileValidator.resetErrors();
   popupProfileEdit.open();
 });
