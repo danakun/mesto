@@ -55,7 +55,7 @@ const newSection = new Section({
 
 // Функция создания карточек
 const createNewCard = (cardData) => {
-  const card = new Card(cardData, '.card-template',  (data) => popupLightbox.open(data)); //(data) => { popupLightbox.open(data) }
+  const card = new Card(cardData, '.card-template',  (name, link) => { popupLightbox.open(name, link) });
   return card.createCard()
 }
 
@@ -103,6 +103,7 @@ popupLightbox.setEventListeners();
 buttonProfileEditing.addEventListener('click', () => {
   popupProfileEdit.setInputValues(userInfo.getUserInfo());
   userInfo.getUserInfo();
+  profileValidator.deactivateButton();
   profileValidator.resetErrors();
   popupProfileEdit.open();
 });
