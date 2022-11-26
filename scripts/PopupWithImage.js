@@ -8,9 +8,9 @@ export default class PopupWithImage extends Popup {
   }
   // Функция фото в лайтбокс-попапе
 open(name, link)  {
-  lightboxPhoto.src = link;
-  lightboxPhoto.alt = name;
-  lightboxPhotoCaption.textContent = name;
+  this._lightboxPhoto.src = link;
+  this._lightboxPhoto.alt = name;
+  this._lightboxPhotoCaption.textContent = name;
   super.open();
 }
 }

@@ -38,8 +38,8 @@ const newJob = document.querySelector('.popup__input_type_job')
 // Переменные для карточки и их массива
 const photoList = document.querySelector(".photo-grid");
 
-// const newTitle = document.querySelector('.popup__input_type_title');
-// const newPhoto = document.querySelector('.popup__input_type_photo')
+ const newTitle = document.querySelector('.popup__input_type_title');
+ const newPhoto = document.querySelector('.popup__input_type_photo')
 
 // Функция создания секции карточек по новому заданию
 // где-то тут мне надо использовать рендерер для связи двух классов
@@ -55,7 +55,7 @@ const newSection = new Section({
 
 // Функция создания карточек
 const createNewCard = (cardData) => {
-  const card = new Card(cardData, '.card-template',  (data) => popupLightbox.open(data)); //(imageData) => { popupZoom.open(imageData) }
+  const card = new Card(cardData, '.card-template',  (name, link) => { popupLightbox.open(name, link) });
   return card.createCard()
 }
 
@@ -70,17 +70,24 @@ const photoAddValidator = new FormValidator(validationObject, photoForm);
 profileValidator.enableValidation();
 photoAddValidator.enableValidation();
 
+// userInfo создаем экземпляр класса инфо профиля
+const userInfo = new UserInfo({
+  profileNameSelector: '.profile__name',
+  profileJobSelector: '.profile__job',
+});
+
+
 // popup ProfileOverlay редактируем профиль
-const popupProfileEdit = new PopupWithForm('.popup-profile', () => {
+const popupProfileEdit = new PopupWithForm('.popup-profile', (inputValues) => {
   popupProfileEdit.close();
-  userInfo.setUserInfo(profileName, profileJob);
+  userInfo.setUserInfo(inputValues);
 });
 popupProfileEdit.setEventListeners();
 
 
 // popup OverlayPhoto добавляем новое фото и подпись
-const popupAddPhoto = new PopupWithForm('.popup-add-photo', (inputsValues) => {
-  const card = createNewCard(inputsValues);
+const popupAddPhoto = new PopupWithForm('.popup-add-photo', (cardData) => {
+  const card = createNewCard(cardData);
   newSection.addItem(card);
   popupAddPhoto.close();
   photoAddValidator.deactivateButton(); //проверить
@@ -91,16 +98,12 @@ popupAddPhoto.setEventListeners();
 const popupLightbox = new PopupWithImage('.popup-photo');
 popupLightbox.setEventListeners();
 
-// userInfo создаем экземпляр класса инфо профиля
-const userInfo = new UserInfo({
-  profileNameSelector: '.popup__input_type_name',
-  profileJobSelector: '.popup__input_type_job',
-});
 
 // Слушатель кнопки открытия редактирования профиля
 buttonProfileEditing.addEventListener('click', () => {
-  //popupProfileEdit.setInputsValue(userInfo.getUserInfo());
-  userInfo.getUserInfo(profileName, profileJob);
+  popupProfileEdit.setInputValues(userInfo.getUserInfo());
+  userInfo.getUserInfo();
+  profileValidator.deactivateButton();
   profileValidator.resetErrors();
   popupProfileEdit.open();
 });
@@ -115,8 +118,6 @@ buttonProfileEditing.addEventListener('click', () => {
 // const renderCard = (element, container) => {
 //   container.prepend(element);
 // }
-
-
 
 // Функция принятия значения в профиль из импута
 // function takeInfo() {
