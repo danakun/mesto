@@ -15,7 +15,6 @@ this._job = document.querySelector( profileJobSelector);
     //принимает новые данные пользователя и добавляет их на страницу
     this._name.textContent = user.name;
     this._job.textContent = user.job;
-    console.log(user);
   }
 }
 

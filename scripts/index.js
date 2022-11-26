@@ -103,6 +103,7 @@ popupLightbox.setEventListeners();
 buttonProfileEditing.addEventListener('click', () => {
   popupProfileEdit.setInputValues(userInfo.getUserInfo());
   userInfo.getUserInfo();
+  profileValidator.deactivateButton();
   profileValidator.resetErrors();
   popupProfileEdit.open();
 });
