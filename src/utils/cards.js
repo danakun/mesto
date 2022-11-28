@@ -1,27 +1,37 @@
 // Дефолтные карточки в массиве
+
+const moscow = new URL("../images/moscow.jpg", import.meta.url);
+const spb= new URL("../images/spb.jpg", import.meta.url);
+const ural = new URL("../images/ural.jpg", import.meta.url);
+const karelia = new URL("../images/karelia.jpg", import.meta.url);
+const elbrus = new URL("../images/elbrus.jpg", import.meta.url);
+const finskizaliv = new URL("../images/finskizaliv.jpg", import.meta.url);
+
 export const initialCards = [
   {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    name: 'Москва',
+    link: moscow,
   },
   {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    name: 'Урал',
+    link: ural,
   },
   {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    name: 'Санкт-Петербург',
+    link: spb,
   },
   {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    name: 'Карелия',
+    link: karelia,
   },
   {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    name: 'Эльбрус',
+    link: elbrus,
   },
   {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    name: 'Финский Залив',
+    link: finskizaliv,
   }
 ];
+
+
