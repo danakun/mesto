@@ -41,7 +41,7 @@
 /*!*******************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/profile/__pic/profile__pic.css ***!
   \*******************************************************************************************************************************************************************/
-.profile__pic{border-radius:100%;height:100%;max-height:120px;max-width:120px;-o-object-fit:cover;object-fit:cover;-o-object-position:0;object-position:0;position:relative;width:100%}
+.profile__pic{border-radius:100%;height:100%;max-height:120px;max-width:120px;-o-object-fit:cover;object-fit:cover;-o-object-position:0;object-position:0;position:relative;width:100%}.profile__pic:hover:before{background-color:rgba(0,0,0,.8);background-image:url(a086f758840ae814ecde.svg);background-position:50%;background-repeat:no-repeat;background-size:26px;content:"";cursor:pointer;height:100%;left:0;position:absolute;top:0;width:100%}
 /*!*********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/profile/__info/profile__info.css ***!
   \*********************************************************************************************************************************************************************/
@@ -86,13 +86,21 @@
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/photo-grid/__text/photo-grid__text.css ***!
   \***************************************************************************************************************************************************************************/
 .photo-grid__text{font-family:Inter,‘Arial’,sans-serif;font-size:24px;font-style:normal;font-weight:900;line-height:29px;margin:0;max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-/*!***************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/photo-grid/__like/photo-grid__like.css ***!
-  \***************************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/photo-grid/counter/counter.css ***!
+  \*******************************************************************************************************************************************************************/
+.counter{align-items:center;display:flex;flex-direction:column}
+/*!***************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/photo-grid/counter/__like-counter/photo-grid__like-counter.css ***!
+  \***************************************************************************************************************************************************************************************************/
+.photo-grid__like-counter{font-size:13px;font-weight:400;line-height:16px;padding-top:3px}
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/photo-grid/counter/__like/photo-grid__like.css ***!
+  \***********************************************************************************************************************************************************************************/
 .photo-grid__like{background-color:transparent;background-image:url(1ad06e85f169668a1f36.svg);background-position:50%;background-repeat:no-repeat;border:none;cursor:pointer;height:19px;padding:0;transition:opacity .4s ease;width:23px}.photo-grid__like:hover{opacity:.5}
-/*!******************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/photo-grid/__like/_active/photo-grid__like_active.css ***!
-  \******************************************************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/photo-grid/counter/__like/_active/photo-grid__like_active.css ***!
+  \**************************************************************************************************************************************************************************************************/
 .photo-grid__like_active{background-image:url(35948469632d0421d697.svg)}
 /*!*******************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/photo-grid/__delete/photo-grid__delete.css ***!
@@ -186,3 +194,5 @@
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/pages/index.css ***!
   \*********************************************************************************************************************************************/
 
+
+/*# sourceMappingURL=main.css.map*/
