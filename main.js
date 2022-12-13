@@ -207,8 +207,8 @@ var Card = /*#__PURE__*/function () {
       this._setLikes(); // Ставим счетсчик лайков
       if (this._ownerId !== this._userId) {
         // Проверяем, кто оунер, чтобы поставить корзинку удаления
-        this._buttonDelete.remove;
-        //this._buttonDelete.style.display = 'none';
+        //this._buttonDelete.remove;
+        this._buttonDelete.style.display = 'none';
         this._buttonDelete = null;
       }
       ;
