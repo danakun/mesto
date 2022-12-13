@@ -206,21 +206,19 @@ var Card = /*#__PURE__*/function () {
       this._setEventListeners(); // Ставим слушатели
       this._setLikes(); // Ставим счетсчик лайков
       if (this._ownerId !== this._userId) {
+        // Проверяем, кто оунер, чтобы поставить корзинку удаления
         this._buttonDelete.remove;
-        this._buttonDelete.style.display = 'none';
+        //this._buttonDelete.style.display = 'none';
         this._buttonDelete = null;
-      } else {
-        console.log('no result');
-        console.log(this._buttonDelete);
-        console.log(this._ownerId + 'ownerVSuser' + this._userId);
       }
       ;
       var userLikeApplied = this._likes.find(function (user) {
         return user._id === _this3._userId;
-      });
+      }); // Проверяем, пролайкал ли юзер карточку и закрашиваем сердечко
       if (userLikeApplied) {
         this._handleLikeCard();
       }
+      ;
       return this._element;
     }
   }]);
@@ -963,7 +961,6 @@ _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getUserProfile().then(functi
   };
   userInfo.setUserInfo(newRes);
   userId = res._id;
-  console.log('userID!!!', res._id);
 });
 _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getInitialCards().then(function (cardList) {
   cardList.forEach(function (cardData) {
@@ -1012,7 +1009,7 @@ var createNewCard = function createNewCard(cardData) {
     });
   }, function (id) {
     _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.addLike(id).then(function (res) {
-      console.log('res', res);
+      //console.log('res', res)
     });
   });
   return card.createCard();
