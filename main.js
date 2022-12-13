@@ -81,6 +81,26 @@ var Api = /*#__PURE__*/function () {
         return res.ok ? res.json() : Promise.reject(res.status);
       }).catch(console.log);
     }
+  }, {
+    key: "deleteLike",
+    value: function deleteLike(id) {
+      return fetch("".concat(this._baseUrl, "/cards/").concat(id, "/likes"), {
+        method: "DELETE",
+        headers: this._headers
+      }).then(function (res) {
+        return res.ok ? res.json() : Promise.reject(res.status);
+      }).catch(console.log);
+    }
+  }, {
+    key: "addLike",
+    value: function addLike(id) {
+      return fetch("".concat(this._baseUrl, "/cards/").concat(id, "/likes"), {
+        method: "PUT",
+        headers: this._headers
+      }).then(function (res) {
+        return res.ok ? res.json() : Promise.reject(res.status);
+      }).catch(console.log);
+    }
   }]);
   return Api;
 }();
@@ -109,10 +129,10 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 var Card = /*#__PURE__*/function () {
-  function Card(cardData, templateSelector, handlePhotoClick, handleDeleteClick) {
+  function Card(cardData, templateSelector, handlePhotoClick, handleDeleteClick, handleLikeClick) {
     var _this = this;
     _classCallCheck(this, Card);
-    _defineProperty(this, "deleteCard", function () {
+    _defineProperty(this, "deleteThisCard", function () {
       _this._element.remove();
       _this._element = null;
     });
@@ -125,8 +145,11 @@ var Card = /*#__PURE__*/function () {
     this._link = cardData.link;
     this._likes = cardData.likes;
     this._id = cardData.id;
+    this._userId = cardData.userId;
+    this._ownerId = cardData.ownerId;
     this._handlePhotoClick = handlePhotoClick;
     this._handleDeleteClick = handleDeleteClick;
+    this._handleLikeClick = handleLikeClick;
   }
 
   // метод обработки клика по кнопке удаления
@@ -141,8 +164,12 @@ var Card = /*#__PURE__*/function () {
       this._cardImage.addEventListener('click', function () {
         return _this2._handlePhotoClick(_this2._name, _this2._link);
       });
-      this._buttonLike.addEventListener('click', this._handleLikeCard);
-      this._buttonDelete.addEventListener('click', this._handleDeleteClick);
+      this._buttonLike.addEventListener('click', function () {
+        return _this2._handleLikeClick(_this2._id);
+      });
+      this._buttonDelete.addEventListener('click', function () {
+        return _this2._handleDeleteClick(_this2._id);
+      });
     }
 
     // метод простановки лайков на счетчике
@@ -167,16 +194,33 @@ var Card = /*#__PURE__*/function () {
   }, {
     key: "createCard",
     value: function createCard() {
+      var _this3 = this;
       this._element = this._getTemplate();
       this._cardTitle = this._element.querySelector('.photo-grid__text');
       this._cardImage = this._element.querySelector('.photo-grid__image');
+      this._buttonDelete = this._element.querySelector('.photo-grid__delete');
       this._cardImage.src = this._link; // Говорим, что источник равен параметру link
       this._cardImage.alt = this._name; // Говорим, что название равно параметру name
       this._cardTitle.textContent = this._name; // Говорим, что текст из переменной cardTitle равно параметру name
 
       this._setEventListeners(); // Ставим слушатели
       this._setLikes(); // Ставим счетсчик лайков
-
+      if (this._ownerId !== this._userId) {
+        this._buttonDelete.remove;
+        this._buttonDelete.style.display = 'none';
+        this._buttonDelete = null;
+      } else {
+        console.log('no result');
+        console.log(this._buttonDelete);
+        console.log(this._ownerId + 'ownerVSuser' + this._userId);
+      }
+      ;
+      var userLikeApplied = this._likes.find(function (user) {
+        return user._id === _this3._userId;
+      });
+      if (userLikeApplied) {
+        this._handleLikeCard();
+      }
       return this._element;
     }
   }]);
@@ -910,6 +954,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var userId;
 _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getUserProfile().then(function (res) {
   // console.log('responce', res)
   var newRes = {
@@ -917,13 +962,18 @@ _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getUserProfile().then(functi
     job: res.about
   };
   userInfo.setUserInfo(newRes);
+  userId = res._id;
+  console.log('userID!!!', res._id);
 });
 _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getInitialCards().then(function (cardList) {
   cardList.forEach(function (cardData) {
     var card = createNewCard({
       name: cardData.name,
       link: cardData.link,
-      likes: cardData.likes
+      likes: cardData.likes,
+      id: cardData._id,
+      userId: userId,
+      ownerId: cardData.owner._id
     });
     newSection.addItem(card);
   });
@@ -935,7 +985,14 @@ var newSection = new _components_Section_js__WEBPACK_IMPORTED_MODULE_6__["defaul
   items: [],
   //initialCards
   renderer: function renderer(cardData) {
-    var card = createNewCard(cardData);
+    var card = createNewCard({
+      name: cardData.name,
+      link: cardData.link,
+      likes: cardData.likes,
+      id: cardData._id,
+      userId: userId,
+      ownerId: cardData.owner._id
+    });
     newSection.addItem(card);
   }
 }, '.photo-grid');
@@ -947,16 +1004,17 @@ var createNewCard = function createNewCard(cardData) {
   }, function (id) {
     popupConfirmDelete.open();
     popupConfirmDelete.changeSubmitHandlers(function () {
-      console.log(id);
-      //   api.deleteCard(id)
-      // .then(res => {
-      //   card.deleteCard()
-      //   popupConfirmDelete.close()
-      //   console.log(res)
-      // })
+      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.deleteCard(id).then(function (res) {
+        card.deleteThisCard();
+        popupConfirmDelete.close();
+        //console.log(res)
+      });
+    });
+  }, function (id) {
+    _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.addLike(id).then(function (res) {
+      console.log('res', res);
     });
   });
-
   return card.createCard();
 };
 
@@ -999,7 +1057,9 @@ var popupAddPhoto = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5_
       name: newCardData.name,
       link: newCardData.link,
       likes: newCardData.likes,
-      id: newCardData._id
+      id: newCardData._id,
+      userId: userId,
+      ownerId: newCardData.owner._id
     });
     newSection.addItem(card);
     popupAddPhoto.close();
@@ -1011,9 +1071,18 @@ popupAddPhoto.setEventListeners();
 //popup Lightbox создаем экземпдяр попапа с фото
 var popupLightbox = new _components_PopupWithImage_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.popup-photo');
 popupLightbox.setEventListeners();
-var popupConfirmDelete = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-confirm-del', function () {
-  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.deleteCard();
-});
+
+//popup Подтверждение удаления карточки
+var popupConfirmDelete = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-confirm-del') // () => {
+//   api.deleteCard(id)
+//   .then(res => {
+//     card.deleteThisCard()
+//     popupConfirmDelete.close()
+//     console.log(res)
+//   })
+// }
+;
+
 popupConfirmDelete.setEventListeners();
 
 // Слушатель кнопки открытия редактирования профиля

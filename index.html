@@ -75,7 +75,20 @@
           <form class="popup__form add-photo-form" action="#" method="post" name="add-photo" novalidate>
             <button class="popup__save-button" type="submit" aria-label="Подтвердить удаление">Да</button>
           </form>
-          <button class="popup__close close-add-photo" type="button" aria-label="Закрыть окно подтверждения"></button>
+          <button class="popup__close close-confirm-del" type="button" aria-label="Закрыть окно подтверждения"></button>
+        </div>
+      </section>
+      <section class="popup popup-change-avatar">
+        <div class="popup__container">
+          <h2 class="popup__title">Обновить аватар</h2>
+          <form class="popup__form add-photo-form" action="#" method="post" name="add-photo" novalidate>
+            <label class="popup__input-label">
+              <input name="link" id="photo-link" type= "url" class="popup__input popup__input_type_photo" placeholder="Ссылка на аватар" required="">
+              <span class="popup__error photo-link-error" id="photo-link-error"></span>
+            </label>
+            <button class="popup__save-button" type="submit" aria-label="Обновить и сохранить" disabled>Сохранить</button>
+          </form>
+          <button class="popup__close close-change-avatar" type="button" aria-label="Закрыть окно смены аватара"></button>
         </div>
       </section>
       <template class="card-template">
