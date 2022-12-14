@@ -103,8 +103,8 @@ var Api = /*#__PURE__*/function () {
     }
   }, {
     key: "updateProfilePicture",
-    value: function updateProfilePicture() {
-      return fetch("".concat(this._baseUrl, "/users/me"), {
+    value: function updateProfilePicture(avatar) {
+      return fetch("".concat(this._baseUrl, "/users/me/avatar"), {
         method: "PATCH",
         headers: this._headers,
         body: JSON.stringify({
@@ -464,6 +464,83 @@ var Popup = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./src/components/PopupWithConfirm.js":
+/*!********************************************!*\
+  !*** ./src/components/PopupWithConfirm.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ PopupWithConfirm)
+/* harmony export */ });
+/* harmony import */ var _components_Popup_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Popup.js */ "./src/components/Popup.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _get() { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get.bind(); } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(arguments.length < 3 ? target : receiver); } return desc.value; }; } return _get.apply(this, arguments); }
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var PopupWithConfirm = /*#__PURE__*/function (_Popup) {
+  _inherits(PopupWithConfirm, _Popup);
+  var _super = _createSuper(PopupWithConfirm);
+  function PopupWithConfirm(popupSelector) {
+    var _this;
+    _classCallCheck(this, PopupWithConfirm);
+    _this = _super.call(this, popupSelector);
+    _this._confirmButton = _this._popup.querySelector('popup__save-button');
+    _this._form = _this._popup.querySelector('.popup__form');
+    return _this;
+  }
+  _createClass(PopupWithConfirm, [{
+    key: "changeSubmitHandlers",
+    value:
+    // публичный метод задания колбека для слушателя кнопки
+    function changeSubmitHandlers(newSubmitHandler) {
+      this._handleFormSubmit = newSubmitHandler;
+    }
+  }, {
+    key: "setEventListeners",
+    value: function setEventListeners() {
+      var _this2 = this;
+      // наследует логику родителя и обрабатывает также сабмит формы
+      _get(_getPrototypeOf(PopupWithConfirm.prototype), "setEventListeners", this).call(this);
+      this._form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        _this2._handleFormSubmit();
+        //this.close();
+      });
+    }
+  }, {
+    key: "showLoading",
+    value: function showLoading(loading) {
+      if (loading) {
+        this._confirmButton.textContent = "Удаление...";
+      } else {
+        this._confirmButton.textContent = "Да";
+      }
+    }
+
+    //   close() {
+    // // сбрасывает форму и потом выполняет логику родительского класса
+    //     this._form.reset();
+    //     super.close();
+    //   }
+  }]);
+  return PopupWithConfirm;
+}(_components_Popup_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+/***/ }),
+
 /***/ "./src/components/PopupWithForm.js":
 /*!*****************************************!*\
   !*** ./src/components/PopupWithForm.js ***!
@@ -769,6 +846,8 @@ var initialCards = [{
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "avatar": () => (/* binding */ avatar),
+/* harmony export */   "avatarForm": () => (/* binding */ avatarForm),
 /* harmony export */   "buttonAvatarEditing": () => (/* binding */ buttonAvatarEditing),
 /* harmony export */   "buttonPicAddition": () => (/* binding */ buttonPicAddition),
 /* harmony export */   "buttonProfileEditing": () => (/* binding */ buttonProfileEditing),
@@ -802,6 +881,8 @@ var buttonAvatarEditing = document.querySelector('.profile__change-avatar-button
 // Переменные для форм попапа
 var profileForm = popupProfileOverlay.querySelector('.popup__form');
 var photoForm = popupOverlayPhoto.querySelector('.popup__form');
+var avatarForm = popupChangeAvatar.querySelector('.popup__form');
+var avatar = document.querySelector('.profile__change-avatar-button');
 
 
 /***/ }),
@@ -981,10 +1062,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_cards_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/cards.js */ "./src/utils/cards.js");
 /* harmony import */ var _components_PopupWithImage_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/PopupWithImage.js */ "./src/components/PopupWithImage.js");
 /* harmony import */ var _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/PopupWithForm.js */ "./src/components/PopupWithForm.js");
-/* harmony import */ var _components_Section_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Section.js */ "./src/components/Section.js");
-/* harmony import */ var _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/UserInfo.js */ "./src/components/UserInfo.js");
-/* harmony import */ var _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/constants.js */ "./src/utils/constants.js");
-/* harmony import */ var _components_Api_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/Api.js */ "./src/components/Api.js");
+/* harmony import */ var _components_PopupWithConfirm_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/PopupWithConfirm.js */ "./src/components/PopupWithConfirm.js");
+/* harmony import */ var _components_Section_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/Section.js */ "./src/components/Section.js");
+/* harmony import */ var _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/UserInfo.js */ "./src/components/UserInfo.js");
+/* harmony import */ var _utils_constants_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/constants.js */ "./src/utils/constants.js");
+/* harmony import */ var _components_Api_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/Api.js */ "./src/components/Api.js");
+
 
 
 
@@ -996,7 +1079,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var userId;
-_components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getUserProfile().then(function (res) {
+_components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.getUserProfile().then(function (res) {
   // console.log('responce', res)
   var newRes = {
     name: res.name,
@@ -1005,7 +1088,7 @@ _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getUserProfile().then(functi
   userInfo.setUserInfo(newRes);
   userId = res._id;
 });
-_components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getInitialCards().then(function (cardList) {
+_components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.getInitialCards().then(function (cardList) {
   cardList.forEach(function (cardData) {
     var card = createNewCard({
       name: cardData.name,
@@ -1021,7 +1104,7 @@ _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getInitialCards().then(funct
 
 // Функция создания секции карточек по новому заданию
 
-var newSection = new _components_Section_js__WEBPACK_IMPORTED_MODULE_6__["default"]({
+var newSection = new _components_Section_js__WEBPACK_IMPORTED_MODULE_7__["default"]({
   items: [],
   //initialCards
   renderer: function renderer(cardData) {
@@ -1044,7 +1127,7 @@ var createNewCard = function createNewCard(cardData) {
   }, function (id) {
     popupConfirmDelete.open();
     popupConfirmDelete.changeSubmitHandlers(function () {
-      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.deleteCard(id).then(function (res) {
+      _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.deleteCard(id).then(function (res) {
         card.deleteThisCard();
         popupConfirmDelete.close();
         //console.log(res)
@@ -1052,11 +1135,11 @@ var createNewCard = function createNewCard(cardData) {
     });
   }, function (id) {
     if (card.isLiked()) {
-      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.deleteLike(id).then(function (res) {
+      _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.deleteLike(id).then(function (res) {
         card.setLikes(res.likes);
       });
     } else {
-      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.addLike(id).then(function (res) {
+      _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.addLike(id).then(function (res) {
         card.setLikes(res.likes);
       });
     }
@@ -1068,9 +1151,9 @@ var createNewCard = function createNewCard(cardData) {
 newSection.renderItems();
 
 // Объявляем по отдельности валидаторы для необходимых форм
-var profileValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.profileForm);
-var photoAddValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.photoForm);
-var avatarValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.popupChangeAvatar);
+var profileValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.profileForm);
+var photoAddValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.photoForm);
+var avatarValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.avatarForm);
 
 // Запускаем валидацию
 profileValidator.enableValidation();
@@ -1078,19 +1161,19 @@ photoAddValidator.enableValidation();
 avatarValidator.enableValidation();
 
 // userInfo создаем экземпляр класса инфо профиля
-var userInfo = new _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_7__["default"]({
+var userInfo = new _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_8__["default"]({
   profileNameSelector: '.profile__name',
   profileJobSelector: '.profile__job',
-  profilePictureSelector: '.profile__pic'
+  profilePictureSelector: '.profile__change-avatar-button'
 });
 
 // popup ProfileOverlay редактируем профиль
-var popupProfileEdit = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-profile', function (inputValues) {
-  var name = inputValues.name,
-    job = inputValues.job;
-  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.editProfile(name, job).then(function (res) {
+var popupProfileEdit = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-profile', function (values) {
+  var name = values.name,
+    job = values.job;
+  _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.editProfile(name, job).then(function (res) {
     console.log('res', res);
-    userInfo.setUserInfo(inputValues);
+    userInfo.setUserInfo(values);
     popupProfileEdit.close();
   });
 });
@@ -1101,7 +1184,7 @@ var popupAddPhoto = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5_
   //const card = createNewCard(cardData);
   var name = cardData.name,
     link = cardData.link;
-  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.addCard(name, link).then(function (newCardData) {
+  _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.addCard(name, link).then(function (newCardData) {
     var card = createNewCard({
       name: newCardData.name,
       link: newCardData.link,
@@ -1122,7 +1205,8 @@ var popupLightbox = new _components_PopupWithImage_js__WEBPACK_IMPORTED_MODULE_4
 popupLightbox.setEventListeners();
 
 //popup Подтверждение удаления карточки
-var popupConfirmDelete = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-confirm-del') // () => {
+var popupConfirmDelete = new _components_PopupWithConfirm_js__WEBPACK_IMPORTED_MODULE_6__["default"]('.popup-confirm-del');
+// () => {
 //   api.deleteCard(id)
 //   .then(res => {
 //     card.deleteThisCard()
@@ -1130,7 +1214,6 @@ var popupConfirmDelete = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODU
 //     console.log(res)
 //   })
 // }
-;
 
 popupConfirmDelete.setEventListeners(); //проставляем слушатель на попап подтверждения удаления
 
@@ -1146,24 +1229,32 @@ popupConfirmDelete.setEventListeners(); //проставляем слушате�
 // )
 
 //dopisat func suda!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// const popupProfileEdit = new PopupWithForm('.popup-profile', (values) => {
+//   const { name, job } = values
+//   api.editProfile(name, job)
+//    .then(res => {
+//     console.log('res', res);
+//     userInfo.setUserInfo(values);
+//     popupProfileEdit.close();
+//    })
+// });
 
-var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-change-avatar', function (inputValues) {
-  var avatar = inputValues.avatar;
-  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.updateProfilePicture(avatar).then(function (res) {
-    console.log('res', res);
-    userInfo.setUserInfo(inputValues);
+var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-change-avatar', function (value) {
+  _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.updateProfilePicture(value).then(function (res) {
+    userInfo.setUserInfo(res);
     popupProfilePicture.close();
   });
 });
 popupProfilePicture.setEventListeners(); //проставляем слушатель на попап аватара
 
 // Слушатель кнопки открытия редактирования аватара
-_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonAvatarEditing.addEventListener('click', function () {
+_utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.buttonAvatarEditing.addEventListener('click', function () {
+  avatarValidator.resetErrors();
   popupProfilePicture.open();
 }); // dodelat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // Слушатель кнопки открытия редактирования профиля
-_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonProfileEditing.addEventListener('click', function () {
+_utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.buttonProfileEditing.addEventListener('click', function () {
   popupProfileEdit.setInputValues(userInfo.getUserInfo());
   profileValidator.deactivateButton();
   profileValidator.resetErrors();
@@ -1171,7 +1262,7 @@ _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonProfileEditing.addEventLi
 });
 
 // Слушатель кнопки открытия добавления фото
-_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonPicAddition.addEventListener('click', function () {
+_utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.buttonPicAddition.addEventListener('click', function () {
   photoAddValidator.resetErrors();
   popupAddPhoto.open();
 });
