@@ -524,7 +524,7 @@ var PopupWithConfirm = /*#__PURE__*/function (_Popup) {
       var _this2 = this;
       // наследует логику родителя и обрабатывает также сабмит формы
       _get(_getPrototypeOf(PopupWithConfirm.prototype), "setEventListeners", this).call(this);
-      this._confirmButton.addEventListener('submit', function (event) {
+      this._form.addEventListener('submit', function (event) {
         event.preventDefault();
         _this2._handleFormSubmit();
         //this.close();
