@@ -496,15 +496,26 @@ var PopupWithConfirm = /*#__PURE__*/function (_Popup) {
     var _this;
     _classCallCheck(this, PopupWithConfirm);
     _this = _super.call(this, popupSelector);
-    _this._confirmButton = _this._popup.querySelector('popup__save-button');
+    _this._confirmButton = _this._popup.querySelector('.popup__save-button');
     _this._form = _this._popup.querySelector('.popup__form');
     return _this;
   }
   _createClass(PopupWithConfirm, [{
-    key: "changeSubmitHandlers",
+    key: "showLoading",
     value:
+    // публичный метод изменения текста при лоадинге после нажатия кнопки
+    function showLoading(loading) {
+      if (loading) {
+        this._confirmButton.textContent = "Удаление...";
+      } else {
+        this._confirmButton.textContent = "Да";
+      }
+    }
+
     // публичный метод задания колбека для слушателя кнопки
-    function changeSubmitHandlers(newSubmitHandler) {
+  }, {
+    key: "changeSubmitHandlers",
+    value: function changeSubmitHandlers(newSubmitHandler) {
       this._handleFormSubmit = newSubmitHandler;
     }
   }, {
@@ -513,20 +524,11 @@ var PopupWithConfirm = /*#__PURE__*/function (_Popup) {
       var _this2 = this;
       // наследует логику родителя и обрабатывает также сабмит формы
       _get(_getPrototypeOf(PopupWithConfirm.prototype), "setEventListeners", this).call(this);
-      this._form.addEventListener('submit', function (event) {
+      this._confirmButton.addEventListener('submit', function (event) {
         event.preventDefault();
         _this2._handleFormSubmit();
         //this.close();
       });
-    }
-  }, {
-    key: "showLoading",
-    value: function showLoading(loading) {
-      if (loading) {
-        this._confirmButton.textContent = "Удаление...";
-      } else {
-        this._confirmButton.textContent = "Да";
-      }
     }
 
     //   close() {
@@ -576,13 +578,25 @@ var PopupWithForm = /*#__PURE__*/function (_Popup) {
     _this._handleFormSubmit = handleFormSubmit;
     _this._form = _this._popup.querySelector('.popup__form');
     _this._inputList = _this._form.querySelectorAll('.popup__input');
+    _this._submitButton = _this._form.querySelector('.popup__save-button');
     return _this;
   }
   _createClass(PopupWithForm, [{
-    key: "_getInputValues",
+    key: "showLoading",
     value:
+    // публичный метод изменения текста при лоадинге после нажатия кнопки
+    function showLoading(loading) {
+      if (loading) {
+        this._submitButton.textContent = "Сохранение...";
+      } else {
+        this._submitButton.textContent = "Сохранить";
+      }
+    }
+
     // собирает данные всех полей формы
-    function _getInputValues() {
+  }, {
+    key: "_getInputValues",
+    value: function _getInputValues() {
       var _this2 = this;
       this._inputsValues = {};
       this._inputList.forEach(function (input) {
@@ -610,11 +624,6 @@ var PopupWithForm = /*#__PURE__*/function (_Popup) {
         _this3._handleFormSubmit(_this3._getInputValues());
         _this3.close();
       });
-    }
-  }, {
-    key: "changeSubmitHandlers",
-    value: function changeSubmitHandlers(newSubmitHandler) {
-      this._handleFormSubmit = newSubmitHandler;
     }
   }, {
     key: "close",
@@ -1214,7 +1223,6 @@ var popupConfirmDelete = new _components_PopupWithConfirm_js__WEBPACK_IMPORTED_M
 //     console.log(res)
 //   })
 // }
-
 popupConfirmDelete.setEventListeners(); //проставляем слушатель на попап подтверждения удаления
 
 //popup Смены Аватара
