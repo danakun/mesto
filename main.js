@@ -101,6 +101,19 @@ var Api = /*#__PURE__*/function () {
         return res.ok ? res.json() : Promise.reject(res.status);
       }).catch(console.log);
     }
+  }, {
+    key: "updateProfilePicture",
+    value: function updateProfilePicture() {
+      return fetch("".concat(this._baseUrl, "/users/me"), {
+        method: "PATCH",
+        headers: this._headers,
+        body: JSON.stringify({
+          avatar: avatar
+        })
+      }).then(function (res) {
+        return res.ok ? res.json() : Promise.reject(res.status);
+      }).catch(console.log);
+    }
   }]);
   return Api;
 }();
@@ -136,9 +149,6 @@ var Card = /*#__PURE__*/function () {
       _this._element.remove();
       _this._element = null;
     });
-    _defineProperty(this, "_handleLikeCard", function () {
-      _this._buttonLike.classList.toggle('photo-grid__like_active');
-    });
     this._cardData = cardData;
     this._templateSelector = templateSelector;
     this._name = cardData.name;
@@ -154,10 +164,26 @@ var Card = /*#__PURE__*/function () {
 
   // метод обработки клика по кнопке удаления
   _createClass(Card, [{
-    key: "_setEventListeners",
+    key: "_activateLike",
     value:
+    // метод обработки клика по кнопке лайка
+    // _handleLikeCard = () => {
+    //   this._buttonLike.classList.toggle('photo-grid__like_active');
+    // }
+
+    function _activateLike() {
+      this._buttonLike.classList.add('photo-grid__like_active');
+    }
+  }, {
+    key: "_deactivateLike",
+    value: function _deactivateLike() {
+      this._buttonLike.classList.remove('photo-grid__like_active');
+    }
+
     // ставим слушатели на все кнопку лайка и удаления, и на картинку
-    function _setEventListeners() {
+  }, {
+    key: "_setEventListeners",
+    value: function _setEventListeners() {
       var _this2 = this;
       this._buttonDelete = this._element.querySelector('.photo-grid__delete');
       this._buttonLike = this._element.querySelector('.photo-grid__like');
@@ -171,13 +197,30 @@ var Card = /*#__PURE__*/function () {
         return _this2._handleDeleteClick(_this2._id);
       });
     }
+  }, {
+    key: "isLiked",
+    value: function isLiked() {
+      var _this3 = this;
+      var userLikeApplied = this._likes.find(function (user) {
+        return user._id === _this3._userId;
+      });
+      return userLikeApplied;
+    }
 
     // метод простановки лайков на счетчике
   }, {
-    key: "_setLikes",
-    value: function _setLikes() {
+    key: "setLikes",
+    value: function setLikes(newLikes) {
+      this._likes = newLikes;
       var likeCounter = this._element.querySelector('.photo-grid__like-counter');
       likeCounter.textContent = this._likes.length;
+
+      // Проверяем, пролайкал ли юзер карточку и закрашиваем сердечко
+      if (this.isLiked()) {
+        this._activateLike();
+      } else {
+        this._deactivateLike();
+      }
     }
 
     // метод вызова темплейта для новой карточки
@@ -194,7 +237,6 @@ var Card = /*#__PURE__*/function () {
   }, {
     key: "createCard",
     value: function createCard() {
-      var _this3 = this;
       this._element = this._getTemplate();
       this._cardTitle = this._element.querySelector('.photo-grid__text');
       this._cardImage = this._element.querySelector('.photo-grid__image');
@@ -204,19 +246,11 @@ var Card = /*#__PURE__*/function () {
       this._cardTitle.textContent = this._name; // Говорим, что текст из переменной cardTitle равно параметру name
 
       this._setEventListeners(); // Ставим слушатели
-      this._setLikes(); // Ставим счетсчик лайков
+      this.setLikes(this._likes); // Ставим счетсчик лайков
       if (this._ownerId !== this._userId) {
         // Проверяем, кто оунер, чтобы поставить корзинку удаления
-        //this._buttonDelete.remove;
         this._buttonDelete.style.display = 'none';
         this._buttonDelete = null;
-      }
-      ;
-      var userLikeApplied = this._likes.find(function (user) {
-        return user._id === _this3._userId;
-      }); // Проверяем, пролайкал ли юзер карточку и закрашиваем сердечко
-      if (userLikeApplied) {
-        this._handleLikeCard();
       }
       ;
       return this._element;
@@ -633,10 +667,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var UserInfo = /*#__PURE__*/function () {
   function UserInfo(_ref) {
     var profileNameSelector = _ref.profileNameSelector,
-      profileJobSelector = _ref.profileJobSelector;
+      profileJobSelector = _ref.profileJobSelector,
+      profilePictureSelector = _ref.profilePictureSelector;
     _classCallCheck(this, UserInfo);
     this._name = document.querySelector(profileNameSelector);
     this._job = document.querySelector(profileJobSelector);
+    this._avatar = document.querySelector(profilePictureSelector);
   }
   _createClass(UserInfo, [{
     key: "getUserInfo",
@@ -653,6 +689,7 @@ var UserInfo = /*#__PURE__*/function () {
       //принимает новые данные пользователя и добавляет их на страницу
       this._name.textContent = user.name;
       this._job.textContent = user.job;
+      this._avatar.src = user.avatar; //dopilit tut!!!!!!
     }
   }]);
   return UserInfo;
@@ -732,9 +769,11 @@ var initialCards = [{
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "buttonAvatarEditing": () => (/* binding */ buttonAvatarEditing),
 /* harmony export */   "buttonPicAddition": () => (/* binding */ buttonPicAddition),
 /* harmony export */   "buttonProfileEditing": () => (/* binding */ buttonProfileEditing),
 /* harmony export */   "photoForm": () => (/* binding */ photoForm),
+/* harmony export */   "popupChangeAvatar": () => (/* binding */ popupChangeAvatar),
 /* harmony export */   "popupOverlayPhoto": () => (/* binding */ popupOverlayPhoto),
 /* harmony export */   "popupProfileOverlay": () => (/* binding */ popupProfileOverlay),
 /* harmony export */   "profileForm": () => (/* binding */ profileForm),
@@ -753,9 +792,13 @@ var validationObject = {
 // Переменные для попапов
 var popupProfileOverlay = document.querySelector('.popup-profile');
 var popupOverlayPhoto = document.querySelector('.popup-add-photo');
+var popupChangeAvatar = document.querySelector('.popup-change-avatar');
+
 // Переменные для кнопок открытия попапов
 var buttonProfileEditing = document.querySelector('.profile__edit-button');
 var buttonPicAddition = document.querySelector(".profile__add-button");
+var buttonAvatarEditing = document.querySelector('.profile__change-avatar-button');
+
 // Переменные для форм попапа
 var profileForm = popupProfileOverlay.querySelector('.popup__form');
 var photoForm = popupOverlayPhoto.querySelector('.popup__form');
@@ -1008,9 +1051,15 @@ var createNewCard = function createNewCard(cardData) {
       });
     });
   }, function (id) {
-    _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.addLike(id).then(function (res) {
-      //console.log('res', res)
-    });
+    if (card.isLiked()) {
+      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.deleteLike(id).then(function (res) {
+        card.setLikes(res.likes);
+      });
+    } else {
+      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.addLike(id).then(function (res) {
+        card.setLikes(res.likes);
+      });
+    }
   });
   return card.createCard();
 };
@@ -1018,18 +1067,21 @@ var createNewCard = function createNewCard(cardData) {
 // Рендер начальных карточек с использованием публичного метода из класса Section
 newSection.renderItems();
 
-// Объявляем по отдельности валидаторы для обеих форм
+// Объявляем по отдельности валидаторы для необходимых форм
 var profileValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.profileForm);
 var photoAddValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.photoForm);
+var avatarValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.popupChangeAvatar);
 
 // Запускаем валидацию
 profileValidator.enableValidation();
 photoAddValidator.enableValidation();
+avatarValidator.enableValidation();
 
 // userInfo создаем экземпляр класса инфо профиля
 var userInfo = new _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_7__["default"]({
   profileNameSelector: '.profile__name',
-  profileJobSelector: '.profile__job'
+  profileJobSelector: '.profile__job',
+  profilePictureSelector: '.profile__pic'
 });
 
 // popup ProfileOverlay редактируем профиль
@@ -1080,7 +1132,35 @@ var popupConfirmDelete = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODU
 // }
 ;
 
-popupConfirmDelete.setEventListeners();
+popupConfirmDelete.setEventListeners(); //проставляем слушатель на попап подтверждения удаления
+
+//popup Смены Аватара
+
+// const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
+// api.updateProfilePicture(avatar)
+//   .then(res => {
+//     console.log('res eto', res)
+//     userInfo.setUserInfo(res.name, res.about, res.avatar);
+//     popupProfilePicture.close()
+//   })
+// )
+
+//dopisat func suda!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-change-avatar', function (inputValues) {
+  var avatar = inputValues.avatar;
+  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.updateProfilePicture(avatar).then(function (res) {
+    console.log('res', res);
+    userInfo.setUserInfo(inputValues);
+    popupProfilePicture.close();
+  });
+});
+popupProfilePicture.setEventListeners(); //проставляем слушатель на попап аватара
+
+// Слушатель кнопки открытия редактирования аватара
+_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonAvatarEditing.addEventListener('click', function () {
+  popupProfilePicture.open();
+}); // dodelat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // Слушатель кнопки открытия редактирования профиля
 _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonProfileEditing.addEventListener('click', function () {
