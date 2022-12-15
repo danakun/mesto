@@ -108,7 +108,7 @@ var Api = /*#__PURE__*/function () {
         method: "PATCH",
         headers: this._headers,
         body: JSON.stringify({
-          avatar: avatar
+          avatar: avatar.link
         })
       }).then(function (res) {
         return res.ok ? res.json() : Promise.reject(res.status);
@@ -776,7 +776,6 @@ var UserInfo = /*#__PURE__*/function () {
       this._name.textContent = user.name;
       this._job.textContent = user.job;
       this._avatar.src = user.avatar;
-      //dopilit tut!!!!!!
     }
   }]);
   return UserInfo;
@@ -1265,7 +1264,7 @@ popupConfirmDelete.setEventListeners(); //проставляем слушате�
 var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-change-avatar', function (value) {
   popupProfilePicture.showLoading(true);
   _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.updateProfilePicture(value).then(function (res) {
-    userInfo.setUserInfo(res.avatar);
+    userInfo.setUserInfo(res);
     popupProfilePicture.close();
   }).catch(function (err) {
     return console.log(err);
