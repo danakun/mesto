@@ -1136,10 +1136,15 @@ var createNewCard = function createNewCard(cardData) {
   }, function (id) {
     popupConfirmDelete.open();
     popupConfirmDelete.changeSubmitHandlers(function () {
+      popupConfirmDelete.showLoading(true);
       _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.deleteCard(id).then(function (res) {
         card.deleteThisCard();
         popupConfirmDelete.close();
         //console.log(res)
+      }).catch(function (err) {
+        return console.log(err);
+      }).finally(function () {
+        return popupConfirmDelete.showLoading(false);
       });
     });
   }, function (id) {
@@ -1215,14 +1220,6 @@ popupLightbox.setEventListeners();
 
 //popup Подтверждение удаления карточки
 var popupConfirmDelete = new _components_PopupWithConfirm_js__WEBPACK_IMPORTED_MODULE_6__["default"]('.popup-confirm-del');
-// () => {
-//   api.deleteCard(id)
-//   .then(res => {
-//     card.deleteThisCard()
-//     popupConfirmDelete.close()
-//     console.log(res)
-//   })
-// }
 popupConfirmDelete.setEventListeners(); //проставляем слушатель на попап подтверждения удаления
 
 //popup Смены Аватара
