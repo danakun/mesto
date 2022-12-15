@@ -1185,6 +1185,7 @@ var userInfo = new _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_8__["default
 var popupProfileEdit = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-profile', function (values) {
   var name = values.name,
     job = values.job;
+  console.log('values', values);
   popupProfileEdit.showLoading(true);
   _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.editProfile(name, job).then(function (res) {
     console.log('res', res);
