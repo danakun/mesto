@@ -1,8 +1,8 @@
 export default class UserInfo {
-  constructor({ profileNameSelector, profileJobSelector }) {
+  constructor({ profileNameSelector, profileJobSelector, profilePictureSelector }) {
 this._name = document.querySelector(profileNameSelector);
-this._job = document.querySelector( profileJobSelector);
-
+this._job = document.querySelector(profileJobSelector);
+this._avatar = document.querySelector(profilePictureSelector)
   }
   getUserInfo() {
 //возвращает объект с данными пользователя, используется при открытие попапа
@@ -15,6 +15,7 @@ this._job = document.querySelector( profileJobSelector);
     //принимает новые данные пользователя и добавляет их на страницу
     this._name.textContent = user.name;
     this._job.textContent = user.job;
+    this._avatar.style.backgroundImage = `url(${user.avatar})`;
   }
 }
 

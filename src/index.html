@@ -7,7 +7,6 @@
     <meta name="keywords" content="html, css, Практикум, путешествия">
     <meta name="author" content="Dana Kun">
     <title>Mesto</title>
-    <!--<link rel="stylesheet" href="pages/index.css">-->
   </head>
   <body class="page">
       <!-- header -->
@@ -19,7 +18,9 @@
       <main class="main">
         <!-- profile -->
         <section class="profile container">
-          <img class="profile__pic" src="<%=require('./images/avatar-pic.jpg')%>" alt="Аватар">
+          <div class="profile__change-avatar-button" aria-label="Открыть попап редактирования аватара" tabindex="1">
+            <!--<img class="profile__pic" src="<%=require('./images/avatar-pic.jpg')%>" alt="Аватар">-->
+          </div>
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <p class="profile__job">Исследователь океана</p>
@@ -70,12 +71,37 @@
           <button class="popup__close close-add-photo" type="button" aria-label="Закрыть окно добавления фото"></button>
         </div>
       </section>
+      <section class="popup popup-confirm-del">
+        <div class="popup__container">
+          <h2 class="popup__title">Bы уверены?</h2>
+          <form class="popup__form add-photo-form" action="#" method="post" name="add-photo" novalidate>
+            <button class="popup__save-button" type="submit" aria-label="Подтвердить удаление">Да</button>
+          </form>
+          <button class="popup__close close-confirm-del" type="button" aria-label="Закрыть окно подтверждения"></button>
+        </div>
+      </section>
+      <section class="popup popup-change-avatar">
+        <div class="popup__container">
+          <h2 class="popup__title">Обновить аватар</h2>
+          <form class="popup__form add-photo-form" action="#" method="post" name="add-photo" novalidate>
+            <label class="popup__input-label">
+              <input name="link" id="photo-link" type= "url" class="popup__input popup__input_type_photo" placeholder="Ссылка на аватар" required="">
+              <span class="popup__error photo-link-error" id="photo-link-error"></span>
+            </label>
+            <button class="popup__save-button" type="submit" aria-label="Обновить и сохранить" disabled>Сохранить</button>
+          </form>
+          <button class="popup__close close-change-avatar" type="button" aria-label="Закрыть окно смены аватара"></button>
+        </div>
+      </section>
       <template class="card-template">
         <li class="photo-grid__element">
           <img class="photo-grid__image" src="#" alt="Альтернативный текст к фото">
           <div class="photo-grid__info">
             <h2 class="photo-grid__text"></h2>
-            <button class="photo-grid__like" type="button" aria-label="Нравится"></button>
+            <div class="counter">
+              <button class="photo-grid__like" type="button" aria-label="Нравится"></button>
+              <span class="photo-grid__like-counter"></span>
+            </div>
           </div>
           <button class="photo-grid__delete" type="button" aria-label="Удалить фото"></button>
         </li>

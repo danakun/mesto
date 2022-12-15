@@ -11,6 +11,7 @@
 @import url(../blocks/main/main.css);
  /* profile */
 @import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__change-avatar-button/profile__change-avatar-button.css);
 @import url(../blocks/profile/__pic/profile__pic.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__name/profile__name.css);
@@ -25,8 +26,10 @@
  @import url(../blocks/photo-grid/__image/photo-grid__image.css);
  @import url(../blocks/photo-grid/__info/photo-grid__info.css);
  @import url(../blocks/photo-grid/__text/photo-grid__text.css);
- @import url(../blocks/photo-grid/__like/photo-grid__like.css);
- @import url(../blocks/photo-grid/__like/_active/photo-grid__like_active.css);
+ @import url(../blocks/photo-grid/counter/counter.css);
+ @import url(../blocks/photo-grid/counter/__like-counter/photo-grid__like-counter.css);
+ @import url(../blocks/photo-grid/counter/__like/photo-grid__like.css);
+ @import url(../blocks/photo-grid/counter/__like/_active/photo-grid__like_active.css);
  @import url(../blocks/photo-grid/__delete/photo-grid__delete.css);
  /* popup */
 @import url(../blocks/popup/popup.css);
