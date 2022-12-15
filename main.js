@@ -45,14 +45,13 @@ var Api = /*#__PURE__*/function () {
     }
   }, {
     key: "editProfile",
-    value: function editProfile(name, job, avatar) {
+    value: function editProfile(name, about) {
       return fetch("".concat(this._baseUrl, "/users/me"), {
         method: "PATCH",
         headers: this._headers,
         body: JSON.stringify({
           name: name,
-          about: job,
-          avatar: avatar
+          about: about
         })
       }).then(function (res) {
         return res.ok ? res.json() : Promise.reject(res.status);
@@ -1185,7 +1184,6 @@ var userInfo = new _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_8__["default
 var popupProfileEdit = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-profile', function (values) {
   var name = values.name,
     job = values.job;
-  console.log('values', values);
   popupProfileEdit.showLoading(true);
   _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.editProfile(name, job).then(function (res) {
     console.log('res', res);
@@ -1235,6 +1233,20 @@ var popupConfirmDelete = new _components_PopupWithConfirm_js__WEBPACK_IMPORTED_M
 popupConfirmDelete.setEventListeners(); //проставляем слушатель на попап подтверждения удаления
 
 //popup Смены Аватара
+var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-change-avatar', function (value) {
+  console.log(value);
+  popupProfilePicture.showLoading(true);
+  _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.updateProfilePicture(value).then(function (userData) {
+    console.log(userData);
+    userInfo.setUserInfo(userData);
+    popupProfilePicture.close();
+  }).catch(function (err) {
+    return console.log(err);
+  }).finally(function () {
+    return popupProfilePicture.showLoading(false);
+  });
+});
+popupProfilePicture.setEventListeners(); //проставляем слушатель на попап аватара
 
 // const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
 // api.updateProfilePicture(avatar)
@@ -1263,21 +1275,6 @@ popupConfirmDelete.setEventListeners(); //проставляем слушате�
 //     popupProfilePicture.close();
 //  })
 // })
-
-var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-change-avatar', function (value) {
-  console.log(value);
-  popupProfilePicture.showLoading(true);
-  _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.updateProfilePicture(value).then(function (res) {
-    console.log(res);
-    userInfo.setUserInfo(res);
-    popupProfilePicture.close();
-  }).catch(function (err) {
-    return console.log(err);
-  }).finally(function () {
-    return popupProfilePicture.showLoading(false);
-  });
-});
-popupProfilePicture.setEventListeners(); //проставляем слушатель на попап аватара
 
 // Слушатель кнопки открытия редактирования аватара
 _utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.buttonAvatarEditing.addEventListener('click', function () {
