@@ -45,13 +45,14 @@ var Api = /*#__PURE__*/function () {
     }
   }, {
     key: "editProfile",
-    value: function editProfile(name, about) {
+    value: function editProfile(name, job, avatar) {
       return fetch("".concat(this._baseUrl, "/users/me"), {
         method: "PATCH",
         headers: this._headers,
         body: JSON.stringify({
           name: name,
-          about: about
+          about: job,
+          avatar: avatar
         })
       }).then(function (res) {
         return res.ok ? res.json() : Promise.reject(res.status);
@@ -142,7 +143,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 var Card = /*#__PURE__*/function () {
-  function Card(cardData, templateSelector, handlePhotoClick, handleDeleteClick, handleLikeClick) {
+  function Card(cardData, templateSelector, handlePhotoClick, handleDeleteClick, handleLikeClick, userId) {
     var _this = this;
     _classCallCheck(this, Card);
     _defineProperty(this, "deleteThisCard", function () {
@@ -154,9 +155,9 @@ var Card = /*#__PURE__*/function () {
     this._name = cardData.name;
     this._link = cardData.link;
     this._likes = cardData.likes;
-    this._id = cardData.id;
-    this._userId = cardData.userId;
-    this._ownerId = cardData.ownerId;
+    this._id = cardData._id;
+    this._userId = userId;
+    this._ownerId = cardData.owner._id;
     this._handlePhotoClick = handlePhotoClick;
     this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
@@ -773,8 +774,9 @@ var UserInfo = /*#__PURE__*/function () {
     key: "setUserInfo",
     value: function setUserInfo(user) {
       //принимает новые данные пользователя и добавляет их на страницу
+      console.log(user);
       this._name.textContent = user.name;
-      this._job.textContent = user.job;
+      this._job.textContent = user.about;
       this._avatar.style.backgroundImage = "url(".concat(user.avatar, ")");
     }
   }]);
@@ -1088,25 +1090,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var userId;
-_components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.getUserProfile().then(function (res) {
+_components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.getUserProfile().then(function (userData) {
   // console.log('responce', res)
-  var newRes = {
-    name: res.name,
-    job: res.about
-  };
-  userInfo.setUserInfo(newRes);
-  userId = res._id;
+  // const newRes = {
+  //   name: userData.name,
+  //   job: userData.about,
+  //   avatar: userData.avatar
+  // }
+  userInfo.setUserInfo(userData);
+  userId = userData._id;
+  console.log(userData);
 });
 _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.getInitialCards().then(function (cardList) {
   cardList.forEach(function (cardData) {
-    var card = createNewCard({
-      name: cardData.name,
-      link: cardData.link,
-      likes: cardData.likes,
-      id: cardData._id,
-      userId: userId,
-      ownerId: cardData.owner._id
-    });
+    var card = createNewCard(cardData);
     newSection.addItem(card);
   });
 });
@@ -1117,14 +1114,17 @@ var newSection = new _components_Section_js__WEBPACK_IMPORTED_MODULE_7__["defaul
   items: [],
   //initialCards
   renderer: function renderer(cardData) {
-    var card = createNewCard({
-      name: cardData.name,
-      link: cardData.link,
-      likes: cardData.likes,
-      id: cardData._id,
-      userId: userId,
-      ownerId: cardData.owner._id
-    });
+    var card = createNewCard(cardData
+    //   {
+    //   name: cardData.name,
+    //   link: cardData.link,
+    //   likes: cardData.likes,
+    //   id: cardData._id,
+    //   userId: userId,
+    //   ownerId: cardData.owner._id
+    // }
+    );
+
     newSection.addItem(card);
   }
 }, '.photo-grid');
@@ -1157,7 +1157,7 @@ var createNewCard = function createNewCard(cardData) {
         card.setLikes(res.likes);
       });
     }
-  });
+  }, userId);
   return card.createCard();
 };
 
@@ -1205,14 +1205,16 @@ var popupAddPhoto = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5_
   var name = cardData.name,
     link = cardData.link;
   _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.addCard(name, link).then(function (newCardData) {
-    var card = createNewCard({
-      name: newCardData.name,
-      link: newCardData.link,
-      likes: newCardData.likes,
-      id: newCardData._id,
-      userId: userId,
-      ownerId: newCardData.owner._id
-    });
+    var card = createNewCard(
+    //   {
+    //   name: newCardData.name,
+    //   link: newCardData.link,
+    //   likes: newCardData.likes,
+    //   id: newCardData._id,
+    //   userId: userId,
+    //   ownerId: newCardData.owner._id
+    // }
+    newCardData);
     newSection.addItem(card);
     popupAddPhoto.close();
     photoAddValidator.deactivateButton();
@@ -1263,8 +1265,10 @@ popupConfirmDelete.setEventListeners(); //проставляем слушате�
 // })
 
 var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-change-avatar', function (value) {
+  console.log(value);
   popupProfilePicture.showLoading(true);
   _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.updateProfilePicture(value).then(function (res) {
+    console.log(res);
     userInfo.setUserInfo(res);
     popupProfilePicture.close();
   }).catch(function (err) {
