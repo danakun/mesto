@@ -128,7 +128,7 @@ const userInfo = new UserInfo({
 
 // popup ProfileOverlay редактируем профиль
 const popupProfileEdit = new PopupWithForm('.popup-profile', (values) => {
-  const { name, job } = values
+  //const { name, job } = values
   popupProfileEdit.showLoading(true);
   api.editProfile(name, job)
    .then(res => {
