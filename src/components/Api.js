@@ -21,14 +21,13 @@ class Api {
     .catch(console.log)
   }
 
-  editProfile(name, job, avatar) {
+  editProfile(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        about: job,
-     avatar: avatar
+        name,
+        about
       })
     })
     .then(res => res.ok ? res.json() : Promise.reject(res.status))

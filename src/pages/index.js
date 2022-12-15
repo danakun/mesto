@@ -124,7 +124,6 @@ const userInfo = new UserInfo({
 // popup ProfileOverlay редактируем профиль
 const popupProfileEdit = new PopupWithForm('.popup-profile', (values) => {
   const { name, job } = values
-  console.log('values', values)
   popupProfileEdit.showLoading(true);
   api.editProfile(name, job)
    .then(res => {
@@ -174,6 +173,21 @@ const popupConfirmDelete = new PopupWithConfirm('.popup-confirm-del');
 popupConfirmDelete.setEventListeners(); //проставляем слушатель на попап подтверждения удаления
 
 //popup Смены Аватара
+const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
+  (value) => {
+    console.log(value)
+    popupProfilePicture.showLoading(true);
+      api.updateProfilePicture(value)
+        .then(userData => {
+          console.log(userData)
+        userInfo.setUserInfo(userData);
+        popupProfilePicture.close();
+    })
+        .catch((err) => console.log(err))
+        .finally(() => popupProfilePicture.showLoading(false));
+    })
+
+popupProfilePicture.setEventListeners();  //проставляем слушатель на попап аватара
 
 // const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
 // api.updateProfilePicture(avatar)
@@ -203,21 +217,6 @@ popupConfirmDelete.setEventListeners(); //проставляем слушате�
 //  })
 // })
 
-const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
-  (value) => {
-    console.log(value)
-    popupProfilePicture.showLoading(true);
-      api.updateProfilePicture(value)
-        .then(res => {
-          console.log(res)
-        userInfo.setUserInfo(res);
-        popupProfilePicture.close();
-    })
-        .catch((err) => console.log(err))
-        .finally(() => popupProfilePicture.showLoading(false));
-    })
-
-popupProfilePicture.setEventListeners();  //проставляем слушатель на попап аватара
 
 // Слушатель кнопки открытия редактирования аватара
 buttonAvatarEditing.addEventListener('click', () => {
