@@ -775,7 +775,7 @@ var UserInfo = /*#__PURE__*/function () {
       //принимает новые данные пользователя и добавляет их на страницу
       this._name.textContent = user.name;
       this._job.textContent = user.job;
-      //this._avatar.src = user.avatar;
+      this._avatar.src = user.avatar;
       //dopilit tut!!!!!!
     }
   }]);
