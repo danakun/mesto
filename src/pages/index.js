@@ -18,34 +18,28 @@ import {
   photoForm,
   popupChangeAvatar,
   avatarForm,
-  avatar
 } from '../utils/constants.js';
 import { api } from '../components/Api.js'
 
 let userId
 
 api.getUserProfile()
-.then(res => {
+.then(userData => {
   // console.log('responce', res)
-  const newRes = {
-    name: res.name,
-    job: res.about,
-  }
-  userInfo.setUserInfo(newRes)
-  userId = res._id;
+  // const newRes = {
+  //   name: userData.name,
+  //   job: userData.about,
+  //   avatar: userData.avatar
+  // }
+  userInfo.setUserInfo(userData)
+  userId = userData._id;
+  console.log(userData)
 });
 
 api.getInitialCards()
 .then(cardList => {
   cardList.forEach(cardData => {
-    const card = createNewCard({
-      name: cardData.name,
-      link: cardData.link,
-      likes: cardData.likes,
-      id: cardData._id,
-      userId: userId,
-      ownerId: cardData.owner._id
-    });
+    const card = createNewCard(cardData);
     newSection.addItem(card);
   });
 })
@@ -55,14 +49,16 @@ api.getInitialCards()
 const newSection = new Section({
   items: [], //initialCards
     renderer: (cardData) => {
-    const card = createNewCard({
-      name: cardData.name,
-      link: cardData.link,
-      likes: cardData.likes,
-      id: cardData._id,
-      userId: userId,
-      ownerId: cardData.owner._id
-    });
+    const card = createNewCard( cardData
+    //   {
+    //   name: cardData.name,
+    //   link: cardData.link,
+    //   likes: cardData.likes,
+    //   id: cardData._id,
+    //   userId: userId,
+    //   ownerId: cardData.owner._id
+    // }
+    );
     newSection.addItem(card);
     }
 }, '.photo-grid'
@@ -99,7 +95,8 @@ const createNewCard = (cardData) => {
       card.setLikes(res.likes)
     })
   }
-}
+},
+userId,
 )
 return card.createCard()
 }
@@ -126,7 +123,8 @@ const userInfo = new UserInfo({
 
 // popup ProfileOverlay редактируем профиль
 const popupProfileEdit = new PopupWithForm('.popup-profile', (values) => {
-  //const { name, job } = values
+  const { name, job } = values
+  console.log('values', values)
   popupProfileEdit.showLoading(true);
   api.editProfile(name, job)
    .then(res => {
@@ -146,14 +144,17 @@ const popupAddPhoto = new PopupWithForm('.popup-add-photo', (cardData) => {
   const { name, link } = cardData
   api.addCard(name, link)
     .then(newCardData => {
-      const card = createNewCard({
-        name: newCardData.name,
-        link: newCardData.link,
-        likes: newCardData.likes,
-        id: newCardData._id,
-        userId: userId,
-        ownerId: newCardData.owner._id
-      });
+      const card = createNewCard(
+      //   {
+      //   name: newCardData.name,
+      //   link: newCardData.link,
+      //   likes: newCardData.likes,
+      //   id: newCardData._id,
+      //   userId: userId,
+      //   ownerId: newCardData.owner._id
+      // }
+      newCardData
+      );
       newSection.addItem(card);
    popupAddPhoto.close();
   photoAddValidator.deactivateButton();
@@ -204,10 +205,11 @@ popupConfirmDelete.setEventListeners(); //проставляем слушате�
 
 const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
   (value) => {
-
+    console.log(value)
     popupProfilePicture.showLoading(true);
       api.updateProfilePicture(value)
         .then(res => {
+          console.log(res)
         userInfo.setUserInfo(res);
         popupProfilePicture.close();
     })

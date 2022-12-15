@@ -13,8 +13,9 @@ this._avatar = document.querySelector(profilePictureSelector)
 
   setUserInfo(user) {
     //принимает новые данные пользователя и добавляет их на страницу
+    console.log(user)
     this._name.textContent = user.name;
-    this._job.textContent = user.job;
+    this._job.textContent = user.about;
     this._avatar.style.backgroundImage = `url(${user.avatar})`;
   }
 }
