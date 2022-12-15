@@ -775,7 +775,8 @@ var UserInfo = /*#__PURE__*/function () {
       //принимает новые данные пользователя и добавляет их на страницу
       this._name.textContent = user.name;
       this._job.textContent = user.job;
-      this._avatar.src = user.avatar; //dopilit tut!!!!!!
+      //this._avatar.src = user.avatar;
+      //dopilit tut!!!!!!
     }
   }]);
   return UserInfo;
@@ -1253,10 +1254,23 @@ popupConfirmDelete.setEventListeners(); //проставляем слушате�
 //    })
 // });
 
+// const popupProfilePicture = new PopupWithForm('.popup-change-avatar', (value) => {
+//   api.updateProfilePicture(value)
+//     .then(res => {
+//     userInfo.setUserInfo(res);
+//     popupProfilePicture.close();
+//  })
+// })
+
 var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-change-avatar', function (value) {
+  popupProfilePicture.showLoading(true);
   _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.updateProfilePicture(value).then(function (res) {
-    userInfo.setUserInfo(res);
+    userInfo.setUserInfo(res.avatar);
     popupProfilePicture.close();
+  }).catch(function (err) {
+    return console.log(err);
+  }).finally(function () {
+    return popupProfilePicture.showLoading(false);
   });
 });
 popupProfilePicture.setEventListeners(); //проставляем слушатель на попап аватара
