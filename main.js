@@ -1185,17 +1185,22 @@ var userInfo = new _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_8__["default
 var popupProfileEdit = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-profile', function (values) {
   var name = values.name,
     job = values.job;
+  popupProfileEdit.showLoading(true);
   _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.editProfile(name, job).then(function (res) {
     console.log('res', res);
     userInfo.setUserInfo(values);
     popupProfileEdit.close();
+  }).catch(function (err) {
+    return console.log(err);
+  }).finally(function () {
+    return popupProfileEdit.showLoading(false);
   });
 });
 popupProfileEdit.setEventListeners();
 
 // popup OverlayPhoto добавляем новое фото и подпись
 var popupAddPhoto = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-add-photo', function (cardData) {
-  //const card = createNewCard(cardData);
+  popupAddPhoto.showLoading(true);
   var name = cardData.name,
     link = cardData.link;
   _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.addCard(name, link).then(function (newCardData) {
@@ -1210,6 +1215,10 @@ var popupAddPhoto = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5_
     newSection.addItem(card);
     popupAddPhoto.close();
     photoAddValidator.deactivateButton();
+  }).catch(function (err) {
+    return console.log(err);
+  }).finally(function () {
+    return popupAddPhoto.showLoading(false);
   });
 });
 popupAddPhoto.setEventListeners();
