@@ -771,11 +771,14 @@ var UserInfo = /*#__PURE__*/function () {
     }
   }, {
     key: "setUserInfo",
-    value: function setUserInfo(user) {
+    value: function setUserInfo(_ref2) {
+      var name = _ref2.name,
+        job = _ref2.job,
+        avatar = _ref2.avatar;
       //принимает новые данные пользователя и добавляет их на страницу
-      this._name.textContent = user.name;
-      this._job.textContent = user.job;
-      this._avatar.src = user.avatar;
+      this._name.textContent = name;
+      this._job.textContent = job;
+      this._avatar.style.backgroundImage = "url(".concat(avatar, ")");
     }
   }]);
   return UserInfo;
@@ -1262,8 +1265,9 @@ popupConfirmDelete.setEventListeners(); //проставляем слушате�
 // })
 
 var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-change-avatar', function (value) {
+  var avatar = value.avatar;
   popupProfilePicture.showLoading(true);
-  _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.updateProfilePicture(value).then(function (res) {
+  _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.updateProfilePicture(avatar).then(function (res) {
     userInfo.setUserInfo(res);
     popupProfilePicture.close();
   }).catch(function (err) {
