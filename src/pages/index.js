@@ -166,7 +166,7 @@ popupProfilePicture.setEventListeners();  //проставляем слушат�
 buttonAvatarEditing.addEventListener('click', () => {
   avatarValidator.resetErrors()
   popupProfilePicture.open();
-});  // dodelat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+});
 
 // Слушатель кнопки открытия редактирования профиля
 buttonProfileEditing.addEventListener('click', () => {
