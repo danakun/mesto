@@ -4,6 +4,7 @@ this._name = document.querySelector(profileNameSelector);
 this._job = document.querySelector(profileJobSelector);
 this._avatar = document.querySelector(profilePictureSelector)
   }
+
   getUserInfo() {
 //возвращает объект с данными пользователя, используется при открытие попапа
     return {
@@ -18,6 +19,10 @@ this._avatar = document.querySelector(profilePictureSelector)
     this._avatar.style.backgroundImage = `url(${user.avatar})`;
   }
 }
+
+
+
+
 
 
 

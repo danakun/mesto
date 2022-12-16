@@ -2,7 +2,6 @@ import "./index.css";
 
 import  Card  from '../components/Card.js';
 import  FormValidator  from '../components/FormValidator.js';
-import { initialCards } from '../utils/cards.js';
 import  PopupWithImage  from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithConfirm from '../components/PopupWithConfirm.js'
@@ -16,7 +15,6 @@ import {
   buttonAvatarEditing,
   profileForm,
   photoForm,
-  popupChangeAvatar,
   avatarForm,
 } from '../utils/constants.js';
 import { api } from '../components/Api.js'
@@ -129,14 +127,6 @@ const popupAddPhoto = new PopupWithForm('.popup-add-photo', (cardData) => {
   api.addCard(name, link)
     .then(newCardData => {
       const card = createNewCard(
-      //   {
-      //   name: newCardData.name,
-      //   link: newCardData.link,
-      //   likes: newCardData.likes,
-      //   id: newCardData._id,
-      //   userId: userId,
-      //   ownerId: newCardData.owner._id
-      // }
       newCardData
       );
       newSection.addItem(card);
@@ -171,35 +161,6 @@ const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
     })
 
 popupProfilePicture.setEventListeners();  //проставляем слушатель на попап аватара
-
-// const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
-// api.updateProfilePicture(avatar)
-//   .then(res => {
-//     console.log('res eto', res)
-//     userInfo.setUserInfo(res.name, res.about, res.avatar);
-//     popupProfilePicture.close()
-//   })
-// )
-
-//dopisat func suda!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// const popupProfileEdit = new PopupWithForm('.popup-profile', (values) => {
-//   const { name, job } = values
-//   api.editProfile(name, job)
-//    .then(res => {
-//     console.log('res', res);
-//     userInfo.setUserInfo(values);
-//     popupProfileEdit.close();
-//    })
-// });
-
-// const popupProfilePicture = new PopupWithForm('.popup-change-avatar', (value) => {
-//   api.updateProfilePicture(value)
-//     .then(res => {
-//     userInfo.setUserInfo(res);
-//     popupProfilePicture.close();
-//  })
-// })
-
 
 // Слушатель кнопки открытия редактирования аватара
 buttonAvatarEditing.addEventListener('click', () => {
