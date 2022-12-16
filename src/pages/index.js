@@ -21,6 +21,18 @@ import { api } from '../components/Api.js'
 
 let userId
 
+Promise.all([api.getUserProfile(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    userId = userData._id;
+    userInfo.setUserInfo(userData);
+
+    cards.forEach((card) => {
+
+          newSection.addItem(card);
+        });
+  })
+  .catch((err) => console.log(err))
+  .finally(() => {})
 
 
 // Вызов api для инфы профиля
