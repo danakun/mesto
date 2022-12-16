@@ -4,7 +4,6 @@ import "./index.css";
 
 import  Card  from '../components/Card.js';
 import  FormValidator  from '../components/FormValidator.js';
-import { initialCards } from '../utils/cards.js';
 import  PopupWithImage  from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithConfirm from '../components/PopupWithConfirm.js'
@@ -18,26 +17,20 @@ import {
   buttonAvatarEditing,
   profileForm,
   photoForm,
-  popupChangeAvatar,
   avatarForm,
 } from '../utils/constants.js';
 import { api } from '../components/Api.js'
 
 let userId
 
+// Вызов api для инфы профиля
 api.getUserProfile()
 .then(userData => {
-  // console.log('responce', res)
-  // const newRes = {
-  //   name: userData.name,
-  //   job: userData.about,
-  //   avatar: userData.avatar
-  // }
   userInfo.setUserInfo(userData)
   userId = userData._id;
-  console.log(userData)
 });
 
+// Вызов api для начальных карточек
 api.getInitialCards()
 .then(cardList => {
   cardList.forEach(cardData => {
@@ -46,21 +39,11 @@ api.getInitialCards()
   });
 })
 
-// Функция создания секции карточек по новому заданию
-
+// Функция создания секции карточек
 const newSection = new Section({
   items: [], //initialCards
     renderer: (cardData) => {
-    const card = createNewCard( cardData
-    //   {
-    //   name: cardData.name,
-    //   link: cardData.link,
-    //   likes: cardData.likes,
-    //   id: cardData._id,
-    //   userId: userId,
-    //   ownerId: cardData.owner._id
-    // }
-    );
+    const card = createNewCard( cardData);
     newSection.addItem(card);
     }
 }, '.photo-grid'
@@ -78,7 +61,6 @@ const createNewCard = (cardData) => {
   .then(res => {
     card.deleteThisCard()
     popupConfirmDelete.close()
-    //console.log(res)
     })
     .catch((err) => console.log(err))
     .finally(() => popupConfirmDelete.showLoading(false))
@@ -129,8 +111,7 @@ const popupProfileEdit = new PopupWithForm('.popup-profile', (values) => {
   popupProfileEdit.showLoading(true);
   api.editProfile(name, job)
    .then(res => {
-    console.log('res', res);
-    userInfo.setUserInfo(values);
+    userInfo.setUserInfo(res);
     popupProfileEdit.close();
    })
     .catch((err) => console.log(err))
@@ -146,19 +127,11 @@ const popupAddPhoto = new PopupWithForm('.popup-add-photo', (cardData) => {
   api.addCard(name, link)
     .then(newCardData => {
       const card = createNewCard(
-      //   {
-      //   name: newCardData.name,
-      //   link: newCardData.link,
-      //   likes: newCardData.likes,
-      //   id: newCardData._id,
-      //   userId: userId,
-      //   ownerId: newCardData.owner._id
-      // }
       newCardData
       );
       newSection.addItem(card);
-   popupAddPhoto.close();
-  photoAddValidator.deactivateButton();
+      popupAddPhoto.close();
+      photoAddValidator.deactivateButton();
     })
     .catch((err) => console.log(err))
     .finally(() => popupAddPhoto.showLoading(false));
@@ -177,11 +150,9 @@ popupConfirmDelete.setEventListeners(); //проставляем слушате�
 //popup Смены Аватара
 const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
   (value) => {
-    console.log(value)
     popupProfilePicture.showLoading(true);
       api.updateProfilePicture(value)
         .then(userData => {
-          console.log(userData)
         userInfo.setUserInfo(userData);
         popupProfilePicture.close();
     })
@@ -190,35 +161,6 @@ const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
     })
 
 popupProfilePicture.setEventListeners();  //проставляем слушатель на попап аватара
-
-// const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
-// api.updateProfilePicture(avatar)
-//   .then(res => {
-//     console.log('res eto', res)
-//     userInfo.setUserInfo(res.name, res.about, res.avatar);
-//     popupProfilePicture.close()
-//   })
-// )
-
-//dopisat func suda!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// const popupProfileEdit = new PopupWithForm('.popup-profile', (values) => {
-//   const { name, job } = values
-//   api.editProfile(name, job)
-//    .then(res => {
-//     console.log('res', res);
-//     userInfo.setUserInfo(values);
-//     popupProfileEdit.close();
-//    })
-// });
-
-// const popupProfilePicture = new PopupWithForm('.popup-change-avatar', (value) => {
-//   api.updateProfilePicture(value)
-//     .then(res => {
-//     userInfo.setUserInfo(res);
-//     popupProfilePicture.close();
-//  })
-// })
-
 
 // Слушатель кнопки открытия редактирования аватара
 buttonAvatarEditing.addEventListener('click', () => {

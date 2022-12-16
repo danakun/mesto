@@ -61,7 +61,6 @@ export default class Card {
     }
   }
 
-
   // метод вызова темплейта для новой карточки
   _getTemplate() {
     const cardElement = document
