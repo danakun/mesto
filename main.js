@@ -1088,7 +1088,7 @@ popupProfilePicture.setEventListeners(); //проставляем слушате
 _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonAvatarEditing.addEventListener('click', function () {
   avatarValidator.resetErrors();
   popupProfilePicture.open();
-}); // dodelat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+});
 
 // Слушатель кнопки открытия редактирования профиля
 _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonProfileEditing.addEventListener('click', function () {
