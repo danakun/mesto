@@ -87,6 +87,7 @@ return card.createCard()
 
 // Рендер начальных карточек с использованием публичного метода из класса Section
 newSection.renderItems()
+// eto nado dodelat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! newSection.renderItems(cards)
 
 // Объявляем по отдельности валидаторы для необходимых форм
 const profileValidator = new FormValidator(validationObject, profileForm);
