@@ -128,7 +128,7 @@ const popupProfileEdit = new PopupWithForm('.popup-profile', (values) => {
   api.editProfile(name, job)
    .then(res => {
     console.log('res', res);
-    userInfo.setUserInfo(values);
+    userInfo.setUserInfo(res);
     popupProfileEdit.close();
    })
     .catch((err) => console.log(err))
