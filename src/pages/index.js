@@ -32,57 +32,138 @@ profileValidator.enableValidation();
 photoAddValidator.enableValidation();
 avatarValidator.enableValidation();
 
-// пример!!
+// пример промиса
 // Promise.all([ //в Promise.all передаем массив промисов которые нужно выполнить
-
 //     api.getUserData(),
 //     api.getInitialCards()
 // ])
-
 // .then((values)=>{ //попадаем сюда когда оба промиса будут выполнены
 //     // у нас есть все нужные данные, отрисовываем страницу
 // })
-
 // .catch((err)=>{ //попадаем сюда если один из промисов завершаться ошибкой
 //     console.log(err);
 // })
 
 let userId;
 
-// Promise.all([api.getUserProfile(), api.getInitialCards()])
-//   .then(([userData, cards]) => {
-//     userId = userData._id;
-//     userInfo.setUserInfo(userData);
-//     //cardsList.addItems(cards);
-//     newSection.renderItems(cards);
-//   })
-//   .catch((err) => console.log(err))
-//   .finally(() => {})
+Promise.all([api.getUserProfile(), api.getInitialCards()])    //промис гарантирует, что карточки придут после профиля
+  .then(([userData, cards]) => {                                  //после получения ответа возьми id и проставь инфо о юзере,
+    userId = userData._id;                                        //после отрендери карточки
+    userInfo.setUserInfo(userData);
 
-
-// Вызов api для инфы профиля
-api.getUserProfile()
-.then(userData => {
-  userInfo.setUserInfo(userData)
-  userId = userData._id;
-})
-//.catch(err => console.log(`Ошибка.....: ${err}`))
-
-// Вызов api для начальных карточек
-api.getInitialCards()
-.then(cardList => {
-  cardList.forEach(cardData => {
-    const card = createNewCard(cardData);
-    newSection.addItem(card);
+    //cardsList.addItems(cards);
+    newSection.renderItems(cards);
   })
-})
+  .catch((err) => console.log(err))                               //выведи ошибку если не пришла инфо
+  .finally(() => {})
+
+
+// // Вызов api для инфы профиля
+// api.getUserProfile()
+// .then(userData => {
+//   userInfo.setUserInfo(userData)
+//   userId = userData._id;
+// })
+// //.catch(err => console.log(`Ошибка.....: ${err}`))
+
+// // Вызов api для начальных карточек
+// api.getInitialCards()
+// .then(cardList => {
+//   cardList.forEach(cardData => {
+//     const card = createNewCard(cardData);
+//     newSection.addItem(card);
+//   })
+// })
 //.catch(err => console.log(`Ошибка.....: ${err}`))
 
+
+//Функция создания секции карточек
+const newSection = new Section((card) =>
+createNewCard(card),
+'.photo-grid'
+);
+
+//   {
+//   items: [], //initialCards
+//     renderer: (cardData) => {
+//     const card = createNewCard( cardData);
+//     newSection.addItem(card);
+//     }
+// }
+
+// Рендер начальных карточек с использованием публичного метода из класса Section
+//newSection.renderItems()
+                                                  // eto nado dodelat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // newSection.renderItems(cards) убираем это в промис? !!!!!!!!!!!!
+
+// userInfo создаем экземпляр класса инфо профиля
+const userInfo = new UserInfo({
+  profileNameSelector: '.profile__name',
+  profileJobSelector: '.profile__job',
+  profilePictureSelector: '.profile__change-avatar-button'
+});
+
+// popup ProfileOverlay редактируем профиль
+const popupProfileEdit = new PopupWithForm('.popup-profile', (data) => {
+  const { name, job } = data
+  popupProfileEdit.showLoading(true);
+  api.editProfile(name, job)
+   .then(data => {
+    userInfo.setUserInfo(data);
+    popupProfileEdit.close();
+   })
+     .catch((err) => console.log(err))
+     .finally(() => popupProfileEdit.showLoading(false));
+});
+
+popupProfileEdit.setEventListeners();
+
+
+// popup OverlayPhoto добавляем новое фото и подпись
+const popupAddPhoto = new PopupWithForm('.popup-add-photo', (cardData) => {
+ popupAddPhoto.showLoading(true);
+  const { name, link } = cardData          //сначала собираем из формы инфо и посылаем на сервер
+  api.addCard(name, link)
+    .then(newCardData => {
+      const card = createNewCard(newCardData); //потом, когда вернется, присваиваются данные и создается новая карточка
+      newSection.addItem(card);                //метод добавляет карточку в разметку
+      popupAddPhoto.close();
+      photoAddValidator.deactivateButton();
+    })
+     .catch((err) => console.log(err))
+     .finally(() => popupAddPhoto.showLoading(false));
+});
+
+popupAddPhoto.setEventListeners();
+
+//popup Lightbox создаем экземпдяр попапа с фото
+const popupLightbox = new PopupWithImage('.popup-photo');
+popupLightbox.setEventListeners();
+
+//popup Подтверждение удаления карточки
+const popupConfirmDelete = new PopupWithConfirm('.popup-confirm-del');
+
+popupConfirmDelete.setEventListeners(); //проставляем слушатель на попап подтверждения удаления
+
+//popup Смены Аватара
+const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
+  (data) => {
+    popupProfilePicture.showLoading(true);
+      api.updateProfilePicture(data)
+        .then(userData => {
+        userInfo.setUserInfo(userData);
+        popupProfilePicture.close();
+    })
+         .catch((err) => console.log(err))
+         .finally(() => popupProfilePicture.showLoading(false));
+    })
+
+popupProfilePicture.setEventListeners();  //проставляем слушатель на попап аватара
 
 // Функция создания карточек
 const createNewCard = (cardData) => {
   const card = new Card(cardData, '.card-template',
-  (userData, link) => { popupLightbox.open(userData, link)
+  (name, link) => { popupLightbox.open(name, link)
   },
   (id) => {
     popupConfirmDelete.open();
@@ -117,88 +198,6 @@ userId,
 )
 return card.createCard()
 }
-
-// Функция создания секции карточек
-const newSection = new Section((card) =>
-createNewCard(card),
-'.photo-grid'
-);
-//   {
-//   items: [], //initialCards
-//     renderer: (cardData) => {
-//     const card = createNewCard( cardData);
-//     newSection.addItem(card);
-//     }
-// }
-
-// Рендер начальных карточек с использованием публичного метода из класса Section
-//newSection.renderItems()
-                                                  // eto nado dodelat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // newSection.renderItems(cards) убираем это в промис? !!!!!!!!!!!!
-
-// userInfo создаем экземпляр класса инфо профиля
-const userInfo = new UserInfo({
-  profileNauserDataSelector: '.profile__nauserData',
-  profileJobSelector: '.profile__job',
-  profilePictureSelector: '.profile__change-avatar-button'
-});
-
-// popup ProfileOverlay редактируем профиль
-const popupProfileEdit = new PopupWithForm('.popup-profile', (data) => {
-  const { userData, job } = data
-  popupProfileEdit.showLoading(true);
-  api.editProfile(userData, job)
-   .then(data => {
-    userInfo.setUserInfo(data);
-    popupProfileEdit.close();
-   })
-    .catch((err) => console.log(err))
-    .finally(() => popupProfileEdit.showLoading(false));
-});
-
-popupProfileEdit.setEventListeners();
-
-
-// popup OverlayPhoto добавляем новое фото и подпись
-const popupAddPhoto = new PopupWithForm('.popup-add-photo', (cardData) => {
- popupAddPhoto.showLoading(true);
-  const { userData, link } = cardData          //сначала собираем из формы инфо и посылаем на сервер
-  api.addCard(userData, link)
-    .then(newCardData => {
-      const card = createNewCard(newCardData); //потом, когда вернется, присваиваются данные и создается новая карточка
-      newSection.addItem(card);                //метод добавляет карточку в разметку
-      popupAddPhoto.close();
-      photoAddValidator.deactivateButton();
-    })
-    .catch((err) => console.log(err))
-    .finally(() => popupAddPhoto.showLoading(false));
-});
-
-popupAddPhoto.setEventListeners();
-
-//popup Lightbox создаем экземпдяр попапа с фото
-const popupLightbox = new PopupWithImage('.popup-photo');
-popupLightbox.setEventListeners();
-
-//popup Подтверждение удаления карточки
-const popupConfirmDelete = new PopupWithConfirm('.popup-confirm-del');
-
-popupConfirmDelete.setEventListeners(); //проставляем слушатель на попап подтверждения удаления
-
-//popup Смены Аватара
-const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
-  (data) => {
-    popupProfilePicture.showLoading(true);
-      api.updateProfilePicture(data)
-        .then(userData => {
-        userInfo.setUserInfo(userData);
-        popupProfilePicture.close();
-    })
-        .catch((err) => console.log(err))
-        .finally(() => popupProfilePicture.showLoading(false));
-    })
-
-popupProfilePicture.setEventListeners();  //проставляем слушатель на попап аватара
 
 // Слушатель кнопки открытия редактирования аватара
 buttonAvatarEditing.addEventListener('click', () => {

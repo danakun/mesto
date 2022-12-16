@@ -35,7 +35,7 @@ export default class Card {
   // ставим слушатели на все кнопку лайка и удаления, и на картинку
   _setEventListeners() {
     //this._buttonDelete = this._element.querySelector('.photo-grid__delete');
-    this._buttonLike = this._element.querySelector('.photo-grid__like');
+    //this._buttonLike = this._element.querySelector('.photo-grid__like');
     this._cardImage.addEventListener('click', () =>  this._handlePhotoClick(this._name, this._link));
     this._buttonLike.addEventListener('click', () => this._handleLikeClick(this._id));
     this._buttonDelete.addEventListener('click', () => this._handleDeleteClick(this._id));
@@ -80,6 +80,7 @@ export default class Card {
     this._cardTitle = this._element.querySelector('.photo-grid__text');
     this._cardImage = this._element.querySelector('.photo-grid__image');
     this._buttonDelete = this._element.querySelector('.photo-grid__delete');
+    this._buttonLike = this._element.querySelector('.photo-grid__like');
 
     this._cardImage.src = this._link; // Говорим, что источник равен параметру link
     this._cardImage.alt = this._name; // Говорим, что название равно параметру name
