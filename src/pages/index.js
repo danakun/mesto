@@ -23,19 +23,16 @@ import { api } from '../components/Api.js'
 
 let userId
 
+
+
+// Вызов api для инфы профиля
 api.getUserProfile()
 .then(userData => {
-  // console.log('responce', res)
-  // const newRes = {
-  //   name: userData.name,
-  //   job: userData.about,
-  //   avatar: userData.avatar
-  // }
   userInfo.setUserInfo(userData)
   userId = userData._id;
-  console.log(userData)
 });
 
+// Вызов api для начальных карточек
 api.getInitialCards()
 .then(cardList => {
   cardList.forEach(cardData => {
@@ -44,21 +41,11 @@ api.getInitialCards()
   });
 })
 
-// Функция создания секции карточек по новому заданию
-
+// Функция создания секции карточек
 const newSection = new Section({
   items: [], //initialCards
     renderer: (cardData) => {
-    const card = createNewCard( cardData
-    //   {
-    //   name: cardData.name,
-    //   link: cardData.link,
-    //   likes: cardData.likes,
-    //   id: cardData._id,
-    //   userId: userId,
-    //   ownerId: cardData.owner._id
-    // }
-    );
+    const card = createNewCard( cardData);
     newSection.addItem(card);
     }
 }, '.photo-grid'
@@ -76,7 +63,6 @@ const createNewCard = (cardData) => {
   .then(res => {
     card.deleteThisCard()
     popupConfirmDelete.close()
-    //console.log(res)
     })
     .catch((err) => console.log(err))
     .finally(() => popupConfirmDelete.showLoading(false))
@@ -127,7 +113,6 @@ const popupProfileEdit = new PopupWithForm('.popup-profile', (values) => {
   popupProfileEdit.showLoading(true);
   api.editProfile(name, job)
    .then(res => {
-    console.log('res', res);
     userInfo.setUserInfo(res);
     popupProfileEdit.close();
    })
@@ -175,11 +160,9 @@ popupConfirmDelete.setEventListeners(); //проставляем слушате�
 //popup Смены Аватара
 const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
   (value) => {
-    console.log(value)
     popupProfilePicture.showLoading(true);
       api.updateProfilePicture(value)
         .then(userData => {
-          console.log(userData)
         userInfo.setUserInfo(userData);
         popupProfilePicture.close();
     })
