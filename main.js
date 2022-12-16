@@ -45,13 +45,13 @@ var Api = /*#__PURE__*/function () {
     }
   }, {
     key: "editProfile",
-    value: function editProfile(name, about) {
+    value: function editProfile(name, job) {
       return fetch("".concat(this._baseUrl, "/users/me"), {
         method: "PATCH",
         headers: this._headers,
         body: JSON.stringify({
           name: name,
-          about: about
+          about: job
         })
       }).then(function (res) {
         return res.ok ? res.json() : Promise.reject(res.status);
@@ -1187,7 +1187,7 @@ var popupProfileEdit = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE
   popupProfileEdit.showLoading(true);
   _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.editProfile(name, job).then(function (res) {
     console.log('res', res);
-    userInfo.setUserInfo(values);
+    userInfo.setUserInfo(res);
     popupProfileEdit.close();
   }).catch(function (err) {
     return console.log(err);
