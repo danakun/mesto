@@ -6,7 +6,7 @@ import  Card  from '../components/Card.js';
 import  FormValidator  from '../components/FormValidator.js';
 import  PopupWithImage  from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-import PopupWithConfirm from '../components/PopupWithConfirm.js'
+import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import  Section  from '../components/Section.js';
 import  UserInfo  from '../components/UserInfo.js';
 
@@ -21,14 +21,52 @@ import {
 } from '../utils/constants.js';
 import { api } from '../components/Api.js'
 
-let userId
+
+// Объявляем по отдельности валидаторы для необходимых форм
+const profileValidator = new FormValidator(validationObject, profileForm);
+const photoAddValidator = new FormValidator(validationObject, photoForm);
+const avatarValidator = new FormValidator(validationObject, avatarForm);
+
+// Запускаем валидацию
+profileValidator.enableValidation();
+photoAddValidator.enableValidation();
+avatarValidator.enableValidation();
+
+// пример!!
+// Promise.all([ //в Promise.all передаем массив промисов которые нужно выполнить
+
+//     api.getUserData(),
+//     api.getInitialCards()
+// ])
+
+// .then((values)=>{ //попадаем сюда когда оба промиса будут выполнены
+//     // у нас есть все нужные данные, отрисовываем страницу
+// })
+
+// .catch((err)=>{ //попадаем сюда если один из промисов завершаться ошибкой
+//     console.log(err);
+// })
+
+let userId;
+
+// Promise.all([api.getUserProfile(), api.getInitialCards()])
+//   .then(([userData, cards]) => {
+//     userId = userData._id;
+//     userInfo.setUserInfo(userData);
+//     //cardsList.addItems(cards);
+//     newSection.renderItems(cards);
+//   })
+//   .catch((err) => console.log(err))
+//   .finally(() => {})
+
 
 // Вызов api для инфы профиля
 api.getUserProfile()
 .then(userData => {
   userInfo.setUserInfo(userData)
   userId = userData._id;
-});
+})
+//.catch(err => console.log(`Ошибка.....: ${err}`))
 
 // Вызов api для начальных карточек
 api.getInitialCards()
@@ -36,22 +74,15 @@ api.getInitialCards()
   cardList.forEach(cardData => {
     const card = createNewCard(cardData);
     newSection.addItem(card);
-  });
+  })
 })
+//.catch(err => console.log(`Ошибка.....: ${err}`))
 
-// Функция создания секции карточек
-const newSection = new Section({
-  items: [], //initialCards
-    renderer: (cardData) => {
-    const card = createNewCard( cardData);
-    newSection.addItem(card);
-    }
-}, '.photo-grid'
-);
 
 // Функция создания карточек
 const createNewCard = (cardData) => {
-  const card = new Card(cardData, '.card-template',  (name, link) => { popupLightbox.open(name, link)
+  const card = new Card(cardData, '.card-template',
+  (userData, link) => { popupLightbox.open(userData, link)
   },
   (id) => {
     popupConfirmDelete.open();
@@ -69,15 +100,17 @@ const createNewCard = (cardData) => {
 (id) => {
   if(card.isLiked()) {
     api.deleteLike(id)
-    .then(res => {
-      card.setLikes(res.likes)
+    .then(data => {
+      card.setLikes(data.likes)
     })
+    .catch((err) => console.log(err))
   }
   else {
     api.addLike(id)
-    .then(res => {
-      card.setLikes(res.likes)
+    .then(data => {
+      card.setLikes(data.likes)
     })
+    .catch((err) => console.log(err))
   }
 },
 userId,
@@ -85,58 +118,62 @@ userId,
 return card.createCard()
 }
 
+// Функция создания секции карточек
+const newSection = new Section((card) =>
+createNewCard(card),
+'.photo-grid'
+);
+//   {
+//   items: [], //initialCards
+//     renderer: (cardData) => {
+//     const card = createNewCard( cardData);
+//     newSection.addItem(card);
+//     }
+// }
+
 // Рендер начальных карточек с использованием публичного метода из класса Section
-newSection.renderItems()
-// eto nado dodelat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! newSection.renderItems(cards)
-
-// Объявляем по отдельности валидаторы для необходимых форм
-const profileValidator = new FormValidator(validationObject, profileForm);
-const photoAddValidator = new FormValidator(validationObject, photoForm);
-const avatarValidator = new FormValidator(validationObject, avatarForm);
-
-// Запускаем валидацию
-profileValidator.enableValidation();
-photoAddValidator.enableValidation();
-avatarValidator.enableValidation();
+//newSection.renderItems()
+                                                  // eto nado dodelat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // newSection.renderItems(cards) убираем это в промис? !!!!!!!!!!!!
 
 // userInfo создаем экземпляр класса инфо профиля
 const userInfo = new UserInfo({
-  profileNameSelector: '.profile__name',
+  profileNauserDataSelector: '.profile__nauserData',
   profileJobSelector: '.profile__job',
   profilePictureSelector: '.profile__change-avatar-button'
 });
 
 // popup ProfileOverlay редактируем профиль
-const popupProfileEdit = new PopupWithForm('.popup-profile', (values) => {
-  const { name, job } = values
+const popupProfileEdit = new PopupWithForm('.popup-profile', (data) => {
+  const { userData, job } = data
   popupProfileEdit.showLoading(true);
-  api.editProfile(name, job)
-   .then(res => {
-    userInfo.setUserInfo(res);
+  api.editProfile(userData, job)
+   .then(data => {
+    userInfo.setUserInfo(data);
     popupProfileEdit.close();
    })
     .catch((err) => console.log(err))
     .finally(() => popupProfileEdit.showLoading(false));
 });
+
 popupProfileEdit.setEventListeners();
 
 
 // popup OverlayPhoto добавляем новое фото и подпись
 const popupAddPhoto = new PopupWithForm('.popup-add-photo', (cardData) => {
  popupAddPhoto.showLoading(true);
-  const { name, link } = cardData
-  api.addCard(name, link)
+  const { userData, link } = cardData          //сначала собираем из формы инфо и посылаем на сервер
+  api.addCard(userData, link)
     .then(newCardData => {
-      const card = createNewCard(
-      newCardData
-      );
-      newSection.addItem(card);
+      const card = createNewCard(newCardData); //потом, когда вернется, присваиваются данные и создается новая карточка
+      newSection.addItem(card);                //метод добавляет карточку в разметку
       popupAddPhoto.close();
       photoAddValidator.deactivateButton();
     })
     .catch((err) => console.log(err))
     .finally(() => popupAddPhoto.showLoading(false));
 });
+
 popupAddPhoto.setEventListeners();
 
 //popup Lightbox создаем экземпдяр попапа с фото
@@ -150,9 +187,9 @@ popupConfirmDelete.setEventListeners(); //проставляем слушате�
 
 //popup Смены Аватара
 const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
-  (value) => {
+  (data) => {
     popupProfilePicture.showLoading(true);
-      api.updateProfilePicture(value)
+      api.updateProfilePicture(data)
         .then(userData => {
         userInfo.setUserInfo(userData);
         popupProfilePicture.close();
@@ -165,7 +202,7 @@ popupProfilePicture.setEventListeners();  //проставляем слушат�
 
 // Слушатель кнопки открытия редактирования аватара
 buttonAvatarEditing.addEventListener('click', () => {
-  avatarValidator.resetErrors()
+  avatarValidator.resetErrors();
   popupProfilePicture.open();
 });
 

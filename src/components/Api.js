@@ -4,12 +4,19 @@ class Api {
     this._baseUrl = baseUrl;
   }
 
+  getResponseData(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
+    .then(this.getResponseData);
+    //.catch(console.log)
   }
 
   // другие методы работы с API
@@ -17,8 +24,9 @@ class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
+    .then(this.getResponseData);
+    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
+    //.catch(console.log)
   }
 
   editProfile(name, job) {
@@ -28,10 +36,10 @@ class Api {
       body: JSON.stringify({
         name: name,
         about: job,
-      })
-    })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
+      }),
+    }) .then(this.getResponseData);
+    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
+    //catch(console.log)
   }
 
   addCard(name, link) {
@@ -41,10 +49,10 @@ class Api {
       body: JSON.stringify({
         name,
         link
-      })
-    })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
+      }),
+    }).then(this.getResponseData);
+    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
+    //.catch(console.log)
   }
 
   deleteCard(id) {
@@ -52,8 +60,9 @@ class Api {
       method: "DELETE",
       headers: this._headers
     })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
+    .then(this.getResponseData);
+    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
+    //.catch(console.log)
   }
 
   deleteLike(id) {
@@ -61,8 +70,9 @@ class Api {
       method: "DELETE",
       headers: this._headers
     })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
+    .then(this.getResponseData);
+    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
+   // .catch(console.log)
   }
 
   addLike(id) {
@@ -70,8 +80,9 @@ class Api {
       method: "PUT",
       headers: this._headers
     })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
+    .then(this.getResponseData);
+    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
+    //.catch(console.log)
   }
 
   updateProfilePicture(avatar) {
@@ -80,12 +91,12 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({
         avatar: avatar.link
-      })
+      }),
     })
-    .then(res => res.ok ? res.json() : Promise.reject(res.status))
-    .catch(console.log)
+    .then(this.getResponseData);
+    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
+    //.catch(console.log)
   }
-
 }
 
 export const api = new Api({

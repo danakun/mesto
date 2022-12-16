@@ -34,7 +34,7 @@ export default class Card {
 
   // ставим слушатели на все кнопку лайка и удаления, и на картинку
   _setEventListeners() {
-    this._buttonDelete = this._element.querySelector('.photo-grid__delete');
+    //this._buttonDelete = this._element.querySelector('.photo-grid__delete');
     this._buttonLike = this._element.querySelector('.photo-grid__like');
     this._cardImage.addEventListener('click', () =>  this._handlePhotoClick(this._name, this._link));
     this._buttonLike.addEventListener('click', () => this._handleLikeClick(this._id));
@@ -88,7 +88,7 @@ export default class Card {
     this._setEventListeners(); // Ставим слушатели
     this.setLikes(this._likes); // Ставим счетсчик лайков
     if(this._ownerId !== this._userId) {   // Проверяем, кто оунер, чтобы поставить корзинку удаления
-      this._buttonDelete.style.display = 'none';
+      //this._buttonDelete.style.display = 'none';
       this._buttonDelete = null;
     };
 

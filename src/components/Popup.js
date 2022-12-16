@@ -4,33 +4,33 @@ export default class Popup {
     this._handleEscClose = this._handleEscClose.bind(this);
   }
 
-// метод открытия попапа
+  // метод открытия попапа
   open() {
-    this._popup.classList.add('popup_opened');
-    document.addEventListener('keydown', this._handleEscClose);
-  };
+    this._popup.classList.add("popup_opened");
+    document.addEventListener("keydown", this._handleEscClose);
+  }
 
-// метод закрытия попапа
+  // метод закрытия попапа
   close() {
-    this._popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', this._handleEscClose);
-  };
+    this._popup.classList.remove("popup_opened");
+    document.removeEventListener("keydown", this._handleEscClose);
+  }
 
-// метод закрытия по нажатию на esc
+  // метод закрытия по нажатию на esc
   _handleEscClose(evt) {
     if (evt.key === "Escape") {
-        this.close();
-      };
-      };
+      this.close();
+    }
+  }
 
-// метод устанавливает слушатели, проверяя, присутствует ли кнопка закрытия или оверлей, и закрывает его по клику
+  // метод устанавливает слушатели, проверяя, присутствует ли кнопка закрытия или оверлей, и закрывает его по клику
   setEventListeners() {
-this._popup.addEventListener('click', (event) => {
-    if (
-      event.target.classList.contains('popup_opened') || event.target.classList.contains('popup__close')
-    )
-      {
-      this.close()
+    this._popup.addEventListener("click", (event) => {
+      if (
+        event.target.classList.contains("popup_opened") ||
+        event.target.classList.contains("popup__close")
+      ) {
+        this.close();
       }
     });
   }
