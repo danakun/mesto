@@ -807,46 +807,6 @@ var UserInfo = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./src/utils/cards.js":
-/*!****************************!*\
-  !*** ./src/utils/cards.js ***!
-  \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "initialCards": () => (/* binding */ initialCards)
-/* harmony export */ });
-// Дефолтные карточки в массиве
-
-var moscow = new URL(/* asset import */ __webpack_require__(/*! ../images/moscow.jpg */ "./src/images/moscow.jpg"), __webpack_require__.b);
-var spb = new URL(/* asset import */ __webpack_require__(/*! ../images/spb.jpg */ "./src/images/spb.jpg"), __webpack_require__.b);
-var ural = new URL(/* asset import */ __webpack_require__(/*! ../images/ural.jpg */ "./src/images/ural.jpg"), __webpack_require__.b);
-var karelia = new URL(/* asset import */ __webpack_require__(/*! ../images/karelia.jpg */ "./src/images/karelia.jpg"), __webpack_require__.b);
-var elbrus = new URL(/* asset import */ __webpack_require__(/*! ../images/elbrus.jpg */ "./src/images/elbrus.jpg"), __webpack_require__.b);
-var finskizaliv = new URL(/* asset import */ __webpack_require__(/*! ../images/finskizaliv.jpg */ "./src/images/finskizaliv.jpg"), __webpack_require__.b);
-var initialCards = [{
-  name: 'Москва',
-  link: moscow
-}, {
-  name: 'Урал',
-  link: ural
-}, {
-  name: 'Санкт-Петербург',
-  link: spb
-}, {
-  name: 'Карелия',
-  link: karelia
-}, {
-  name: 'Эльбрус',
-  link: elbrus
-}, {
-  name: 'Финский Залив',
-  link: finskizaliv
-}];
-
-/***/ }),
-
 /***/ "./src/utils/constants.js":
 /*!********************************!*\
   !*** ./src/utils/constants.js ***!
@@ -906,66 +866,6 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 
-/***/ }),
-
-/***/ "./src/images/elbrus.jpg":
-/*!*******************************!*\
-  !*** ./src/images/elbrus.jpg ***!
-  \*******************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "4ba0acb36ac9ebd1f4a1.jpg";
-
-/***/ }),
-
-/***/ "./src/images/finskizaliv.jpg":
-/*!************************************!*\
-  !*** ./src/images/finskizaliv.jpg ***!
-  \************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "d89f3b33e199fc13127a.jpg";
-
-/***/ }),
-
-/***/ "./src/images/karelia.jpg":
-/*!********************************!*\
-  !*** ./src/images/karelia.jpg ***!
-  \********************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "5cfd703d4e49bbdfe0e6.jpg";
-
-/***/ }),
-
-/***/ "./src/images/moscow.jpg":
-/*!*******************************!*\
-  !*** ./src/images/moscow.jpg ***!
-  \*******************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "3e4c935dac44af143a6b.jpg";
-
-/***/ }),
-
-/***/ "./src/images/spb.jpg":
-/*!****************************!*\
-  !*** ./src/images/spb.jpg ***!
-  \****************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "f25b71c147c8f1254ed8.jpg";
-
-/***/ }),
-
-/***/ "./src/images/ural.jpg":
-/*!*****************************!*\
-  !*** ./src/images/ural.jpg ***!
-  \*****************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "469d401f6c1af01a07d1.jpg";
-
 /***/ })
 
 /******/ 	});
@@ -993,9 +893,6 @@ module.exports = __webpack_require__.p + "469d401f6c1af01a07d1.jpg";
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = __webpack_modules__;
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/define property getters */
@@ -1026,37 +923,6 @@ module.exports = __webpack_require__.p + "469d401f6c1af01a07d1.jpg";
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/publicPath */
-/******/ 	(() => {
-/******/ 		__webpack_require__.p = "";
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/jsonp chunk loading */
-/******/ 	(() => {
-/******/ 		__webpack_require__.b = document.baseURI || self.location.href;
-/******/ 		
-/******/ 		// object to store loaded and loading chunks
-/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
-/******/ 		var installedChunks = {
-/******/ 			"main": 0
-/******/ 		};
-/******/ 		
-/******/ 		// no chunk on demand loading
-/******/ 		
-/******/ 		// no prefetching
-/******/ 		
-/******/ 		// no preloaded
-/******/ 		
-/******/ 		// no HMR
-/******/ 		
-/******/ 		// no HMR manifest
-/******/ 		
-/******/ 		// no on chunks loaded
-/******/ 		
-/******/ 		// no jsonp function
-/******/ 	})();
-/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
@@ -1068,15 +934,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.css */ "./src/pages/index.css");
 /* harmony import */ var _components_Card_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Card.js */ "./src/components/Card.js");
 /* harmony import */ var _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/FormValidator.js */ "./src/components/FormValidator.js");
-/* harmony import */ var _utils_cards_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/cards.js */ "./src/utils/cards.js");
-/* harmony import */ var _components_PopupWithImage_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/PopupWithImage.js */ "./src/components/PopupWithImage.js");
-/* harmony import */ var _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/PopupWithForm.js */ "./src/components/PopupWithForm.js");
-/* harmony import */ var _components_PopupWithConfirm_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/PopupWithConfirm.js */ "./src/components/PopupWithConfirm.js");
-/* harmony import */ var _components_Section_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/Section.js */ "./src/components/Section.js");
-/* harmony import */ var _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/UserInfo.js */ "./src/components/UserInfo.js");
-/* harmony import */ var _utils_constants_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/constants.js */ "./src/utils/constants.js");
-/* harmony import */ var _components_Api_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/Api.js */ "./src/components/Api.js");
-
+/* harmony import */ var _components_PopupWithImage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/PopupWithImage.js */ "./src/components/PopupWithImage.js");
+/* harmony import */ var _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/PopupWithForm.js */ "./src/components/PopupWithForm.js");
+/* harmony import */ var _components_PopupWithConfirm_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/PopupWithConfirm.js */ "./src/components/PopupWithConfirm.js");
+/* harmony import */ var _components_Section_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Section.js */ "./src/components/Section.js");
+/* harmony import */ var _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/UserInfo.js */ "./src/components/UserInfo.js");
+/* harmony import */ var _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/constants.js */ "./src/utils/constants.js");
+/* harmony import */ var _components_Api_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/Api.js */ "./src/components/Api.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -1088,15 +958,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var userId;
+Promise.all([_components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getUserProfile(), _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getInitialCards()]).then(function (_ref) {
+  var _ref2 = _slicedToArray(_ref, 2),
+    userData = _ref2[0],
+    cards = _ref2[1];
+  userId = userData._id;
+  userInfo.setUserInfo(userData);
+  cards.forEach(function (card) {
+    newSection.addItem(card);
+  });
+}).catch(function (err) {
+  return console.log(err);
+}).finally(function () {});
 
 // Вызов api для инфы профиля
-_components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.getUserProfile().then(function (userData) {
+_components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getUserProfile().then(function (userData) {
   userInfo.setUserInfo(userData);
   userId = userData._id;
 });
 
 // Вызов api для начальных карточек
-_components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.getInitialCards().then(function (cardList) {
+_components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getInitialCards().then(function (cardList) {
   cardList.forEach(function (cardData) {
     var card = createNewCard(cardData);
     newSection.addItem(card);
@@ -1104,7 +986,7 @@ _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.getInitialCards().then(func
 });
 
 // Функция создания секции карточек
-var newSection = new _components_Section_js__WEBPACK_IMPORTED_MODULE_7__["default"]({
+var newSection = new _components_Section_js__WEBPACK_IMPORTED_MODULE_6__["default"]({
   items: [],
   //initialCards
   renderer: function renderer(cardData) {
@@ -1121,7 +1003,7 @@ var createNewCard = function createNewCard(cardData) {
     popupConfirmDelete.open();
     popupConfirmDelete.changeSubmitHandlers(function () {
       popupConfirmDelete.showLoading(true);
-      _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.deleteCard(id).then(function (res) {
+      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.deleteCard(id).then(function (res) {
         card.deleteThisCard();
         popupConfirmDelete.close();
       }).catch(function (err) {
@@ -1132,11 +1014,11 @@ var createNewCard = function createNewCard(cardData) {
     });
   }, function (id) {
     if (card.isLiked()) {
-      _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.deleteLike(id).then(function (res) {
+      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.deleteLike(id).then(function (res) {
         card.setLikes(res.likes);
       });
     } else {
-      _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.addLike(id).then(function (res) {
+      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.addLike(id).then(function (res) {
         card.setLikes(res.likes);
       });
     }
@@ -1148,9 +1030,9 @@ var createNewCard = function createNewCard(cardData) {
 newSection.renderItems();
 
 // Объявляем по отдельности валидаторы для необходимых форм
-var profileValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.profileForm);
-var photoAddValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.photoForm);
-var avatarValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.avatarForm);
+var profileValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.profileForm);
+var photoAddValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.photoForm);
+var avatarValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.avatarForm);
 
 // Запускаем валидацию
 profileValidator.enableValidation();
@@ -1158,18 +1040,18 @@ photoAddValidator.enableValidation();
 avatarValidator.enableValidation();
 
 // userInfo создаем экземпляр класса инфо профиля
-var userInfo = new _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_8__["default"]({
+var userInfo = new _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_7__["default"]({
   profileNameSelector: '.profile__name',
   profileJobSelector: '.profile__job',
   profilePictureSelector: '.profile__change-avatar-button'
 });
 
 // popup ProfileOverlay редактируем профиль
-var popupProfileEdit = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-profile', function (values) {
+var popupProfileEdit = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.popup-profile', function (values) {
   var name = values.name,
     job = values.job;
   popupProfileEdit.showLoading(true);
-  _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.editProfile(name, job).then(function (res) {
+  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.editProfile(name, job).then(function (res) {
     userInfo.setUserInfo(res);
     popupProfileEdit.close();
   }).catch(function (err) {
@@ -1181,21 +1063,12 @@ var popupProfileEdit = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE
 popupProfileEdit.setEventListeners();
 
 // popup OverlayPhoto добавляем новое фото и подпись
-var popupAddPhoto = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-add-photo', function (cardData) {
+var popupAddPhoto = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.popup-add-photo', function (cardData) {
   popupAddPhoto.showLoading(true);
   var name = cardData.name,
     link = cardData.link;
-  _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.addCard(name, link).then(function (newCardData) {
-    var card = createNewCard(
-    //   {
-    //   name: newCardData.name,
-    //   link: newCardData.link,
-    //   likes: newCardData.likes,
-    //   id: newCardData._id,
-    //   userId: userId,
-    //   ownerId: newCardData.owner._id
-    // }
-    newCardData);
+  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.addCard(name, link).then(function (newCardData) {
+    var card = createNewCard(newCardData);
     newSection.addItem(card);
     popupAddPhoto.close();
     photoAddValidator.deactivateButton();
@@ -1208,17 +1081,17 @@ var popupAddPhoto = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5_
 popupAddPhoto.setEventListeners();
 
 //popup Lightbox создаем экземпдяр попапа с фото
-var popupLightbox = new _components_PopupWithImage_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.popup-photo');
+var popupLightbox = new _components_PopupWithImage_js__WEBPACK_IMPORTED_MODULE_3__["default"]('.popup-photo');
 popupLightbox.setEventListeners();
 
 //popup Подтверждение удаления карточки
-var popupConfirmDelete = new _components_PopupWithConfirm_js__WEBPACK_IMPORTED_MODULE_6__["default"]('.popup-confirm-del');
+var popupConfirmDelete = new _components_PopupWithConfirm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-confirm-del');
 popupConfirmDelete.setEventListeners(); //проставляем слушатель на попап подтверждения удаления
 
 //popup Смены Аватара
-var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-change-avatar', function (value) {
+var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.popup-change-avatar', function (value) {
   popupProfilePicture.showLoading(true);
-  _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.updateProfilePicture(value).then(function (userData) {
+  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.updateProfilePicture(value).then(function (userData) {
     userInfo.setUserInfo(userData);
     popupProfilePicture.close();
   }).catch(function (err) {
@@ -1229,42 +1102,14 @@ var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MOD
 });
 popupProfilePicture.setEventListeners(); //проставляем слушатель на попап аватара
 
-// const popupProfilePicture = new PopupWithForm('.popup-change-avatar',
-// api.updateProfilePicture(avatar)
-//   .then(res => {
-//     console.log('res eto', res)
-//     userInfo.setUserInfo(res.name, res.about, res.avatar);
-//     popupProfilePicture.close()
-//   })
-// )
-
-//dopisat func suda!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// const popupProfileEdit = new PopupWithForm('.popup-profile', (values) => {
-//   const { name, job } = values
-//   api.editProfile(name, job)
-//    .then(res => {
-//     console.log('res', res);
-//     userInfo.setUserInfo(values);
-//     popupProfileEdit.close();
-//    })
-// });
-
-// const popupProfilePicture = new PopupWithForm('.popup-change-avatar', (value) => {
-//   api.updateProfilePicture(value)
-//     .then(res => {
-//     userInfo.setUserInfo(res);
-//     popupProfilePicture.close();
-//  })
-// })
-
 // Слушатель кнопки открытия редактирования аватара
-_utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.buttonAvatarEditing.addEventListener('click', function () {
+_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonAvatarEditing.addEventListener('click', function () {
   avatarValidator.resetErrors();
   popupProfilePicture.open();
 }); // dodelat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // Слушатель кнопки открытия редактирования профиля
-_utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.buttonProfileEditing.addEventListener('click', function () {
+_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonProfileEditing.addEventListener('click', function () {
   popupProfileEdit.setInputValues(userInfo.getUserInfo());
   profileValidator.deactivateButton();
   profileValidator.resetErrors();
@@ -1272,7 +1117,7 @@ _utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.buttonProfileEditing.addEventLi
 });
 
 // Слушатель кнопки открытия добавления фото
-_utils_constants_js__WEBPACK_IMPORTED_MODULE_9__.buttonPicAddition.addEventListener('click', function () {
+_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonPicAddition.addEventListener('click', function () {
   photoAddValidator.resetErrors();
   popupAddPhoto.open();
 });
