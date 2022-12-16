@@ -128,8 +128,8 @@ const popupAddPhoto = new PopupWithForm('.popup-add-photo', (cardData) => {
       newCardData
       );
       newSection.addItem(card);
-   popupAddPhoto.close();
-  photoAddValidator.deactivateButton();
+      popupAddPhoto.close();
+      photoAddValidator.deactivateButton();
     })
     .catch((err) => console.log(err))
     .finally(() => popupAddPhoto.showLoading(false));
