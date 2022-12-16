@@ -773,7 +773,6 @@ var UserInfo = /*#__PURE__*/function () {
     key: "setUserInfo",
     value: function setUserInfo(user) {
       //принимает новые данные пользователя и добавляет их на страницу
-      console.log(user);
       this._name.textContent = user.name;
       this._job.textContent = user.about;
       this._avatar.style.backgroundImage = "url(".concat(user.avatar, ")");
@@ -1089,17 +1088,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var userId;
+
+// Вызов api для инфы профиля
 _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.getUserProfile().then(function (userData) {
-  // console.log('responce', res)
-  // const newRes = {
-  //   name: userData.name,
-  //   job: userData.about,
-  //   avatar: userData.avatar
-  // }
   userInfo.setUserInfo(userData);
   userId = userData._id;
-  console.log(userData);
 });
+
+// Вызов api для начальных карточек
 _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.getInitialCards().then(function (cardList) {
   cardList.forEach(function (cardData) {
     var card = createNewCard(cardData);
@@ -1107,23 +1103,12 @@ _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.getInitialCards().then(func
   });
 });
 
-// Функция создания секции карточек по новому заданию
-
+// Функция создания секции карточек
 var newSection = new _components_Section_js__WEBPACK_IMPORTED_MODULE_7__["default"]({
   items: [],
   //initialCards
   renderer: function renderer(cardData) {
-    var card = createNewCard(cardData
-    //   {
-    //   name: cardData.name,
-    //   link: cardData.link,
-    //   likes: cardData.likes,
-    //   id: cardData._id,
-    //   userId: userId,
-    //   ownerId: cardData.owner._id
-    // }
-    );
-
+    var card = createNewCard(cardData);
     newSection.addItem(card);
   }
 }, '.photo-grid');
@@ -1139,7 +1124,6 @@ var createNewCard = function createNewCard(cardData) {
       _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.deleteCard(id).then(function (res) {
         card.deleteThisCard();
         popupConfirmDelete.close();
-        //console.log(res)
       }).catch(function (err) {
         return console.log(err);
       }).finally(function () {
@@ -1186,7 +1170,6 @@ var popupProfileEdit = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE
     job = values.job;
   popupProfileEdit.showLoading(true);
   _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.editProfile(name, job).then(function (res) {
-    console.log('res', res);
     userInfo.setUserInfo(res);
     popupProfileEdit.close();
   }).catch(function (err) {
@@ -1234,10 +1217,8 @@ popupConfirmDelete.setEventListeners(); //проставляем слушате�
 
 //popup Смены Аватара
 var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-change-avatar', function (value) {
-  console.log(value);
   popupProfilePicture.showLoading(true);
   _components_Api_js__WEBPACK_IMPORTED_MODULE_10__.api.updateProfilePicture(value).then(function (userData) {
-    console.log(userData);
     userInfo.setUserInfo(userData);
     popupProfilePicture.close();
   }).catch(function (err) {
