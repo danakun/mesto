@@ -4,17 +4,16 @@ export default class PopupWithForm extends Popup {
   constructor(popupSelector, handleFormSubmit) {
     super(popupSelector);
     this._handleFormSubmit = handleFormSubmit;
-    this._form = this._popup.querySelector('.popup__form');
-    this._inputList = this._form.querySelectorAll('.popup__input');
-    this._submitButton = this._form.querySelector('.popup__save-button');
-  };
+    this._form = this._popup.querySelector(".popup__form");
+    this._inputList = this._form.querySelectorAll(".popup__input");
+    this._submitButton = this._form.querySelector(".popup__save-button");
+  }
 
   // публичный метод изменения текста при лоадинге после нажатия кнопки
   showLoading(loading) {
     if (loading) {
       this._submitButton.textContent = "Сохранение...";
-    }
-      else {
+    } else {
       this._submitButton.textContent = "Сохранить";
     }
   }
@@ -22,23 +21,23 @@ export default class PopupWithForm extends Popup {
   // собирает данные всех полей формы
   _getInputValues() {
     this._inputsValues = {};
-        this._inputList.forEach((input) => {
-          this._inputsValues[input.name] = input.value;
-        });
-        return this._inputsValues;
-      }
+    this._inputList.forEach((input) => {
+      this._inputsValues[input.name] = input.value;
+    });
+    return this._inputsValues;
+  }
 
   // вставляет данные в импуты формы
   setInputValues(data) {
-    this._inputList.forEach(input => {
+    this._inputList.forEach((input) => {
       input.value = data[input.name];
-    })
+    });
   }
 
   setEventListeners() {
-// наследует логику родителя и обрабатывает также сабмит формы
+    // наследует логику родителя и обрабатывает также сабмит формы
     super.setEventListeners();
-    this._form.addEventListener('submit', (event) => {
+    this._form.addEventListener("submit", (event) => {
       event.preventDefault();
       this._handleFormSubmit(this._getInputValues());
       //this.close();
@@ -46,7 +45,7 @@ export default class PopupWithForm extends Popup {
   }
 
   close() {
-// сбрасывает форму и потом выполняет логику родительского класса
+    // сбрасывает форму и потом выполняет логику родительского класса
     this._form.reset();
     super.close();
   }
