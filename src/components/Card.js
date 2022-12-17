@@ -89,7 +89,7 @@ export default class Card {
     this._setEventListeners(); // Ставим слушатели
     this.setLikes(this._likes); // Ставим счетсчик лайков
     if(this._ownerId !== this._userId) {   // Проверяем, кто оунер, чтобы поставить корзинку удаления
-      //this._buttonDelete.style.display = 'none';
+      this._buttonDelete.style.display = 'none';
       this._buttonDelete = null;
     };
 

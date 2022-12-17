@@ -13,20 +13,15 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers
-    })
-    .then(this.getResponseData);
-    //.catch(console.log)
+      headers: this._headers,
+    }).then(this.getResponseData);
   }
 
   // другие методы работы с API
   getUserProfile() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers
-    })
-    .then(this.getResponseData);
-    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
-    //.catch(console.log)
+      headers: this._headers,
+    }).then(this.getResponseData);
   }
 
   editProfile(name, job) {
@@ -37,9 +32,7 @@ class Api {
         name: name,
         about: job,
       }),
-    }) .then(this.getResponseData);
-    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
-    //catch(console.log)
+    }).then(this.getResponseData);
   }
 
   addCard(name, link) {
@@ -48,41 +41,30 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({
         name,
-        link
+        link,
       }),
     }).then(this.getResponseData);
-    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
-    //.catch(console.log)
   }
 
   deleteCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
-      headers: this._headers
-    })
-    .then(this.getResponseData);
-    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
-    //.catch(console.log)
+      headers: this._headers,
+    }).then(this.getResponseData);
   }
 
   deleteLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: "DELETE",
-      headers: this._headers
-    })
-    .then(this.getResponseData);
-    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
-   // .catch(console.log)
+      headers: this._headers,
+    }).then(this.getResponseData);
   }
 
   addLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: "PUT",
-      headers: this._headers
-    })
-    .then(this.getResponseData);
-    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
-    //.catch(console.log)
+      headers: this._headers,
+    }).then(this.getResponseData);
   }
 
   updateProfilePicture(avatar) {
@@ -90,19 +72,16 @@ class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: avatar.link
+        avatar: avatar.link,
       }),
-    })
-    .then(this.getResponseData);
-    //.then(res => res.ok ? res.json() : Promise.reject(res.status))
-    //.catch(console.log)
+    }).then(this.getResponseData);
   }
 }
 
 export const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-54',
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-54",
   headers: {
-    authorization: 'e95edce0-fc31-46d4-a095-2c86db687d23',
-    'Content-Type': 'application/json'
-  }
+    authorization: "e95edce0-fc31-46d4-a095-2c86db687d23",
+    "Content-Type": "application/json",
+  },
 });

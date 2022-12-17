@@ -32,18 +32,6 @@ profileValidator.enableValidation();
 photoAddValidator.enableValidation();
 avatarValidator.enableValidation();
 
-// пример промиса
-// Promise.all([ //в Promise.all передаем массив промисов которые нужно выполнить
-//     api.getUserData(),
-//     api.getInitialCards()
-// ])
-// .then((values)=>{ //попадаем сюда когда оба промиса будут выполнены
-//     // у нас есть все нужные данные, отрисовываем страницу
-// })
-// .catch((err)=>{ //попадаем сюда если один из промисов завершаться ошибкой
-//     console.log(err);
-// })
-
 let userId;
 
 Promise.all([api.getUserProfile(), api.getInitialCards()])    //промис гарантирует, что карточки придут после профиля
@@ -51,7 +39,6 @@ Promise.all([api.getUserProfile(), api.getInitialCards()])    //промис г�
     userId = userData._id;                                        //после отрендери карточки
     userInfo.setUserInfo(userData);
 
-    //cardsList.addItems(cards);
     newSection.renderItems(cards);
   })
   .catch((err) => console.log(err))                               //выведи ошибку если не пришла инфо
@@ -83,18 +70,6 @@ createNewCard(card),
 '.photo-grid'
 );
 
-//   {
-//   items: [], //initialCards
-//     renderer: (cardData) => {
-//     const card = createNewCard( cardData);
-//     newSection.addItem(card);
-//     }
-// }
-
-// Рендер начальных карточек с использованием публичного метода из класса Section
-//newSection.renderItems()
-                                                  // eto nado dodelat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // newSection.renderItems(cards) убираем это в промис? !!!!!!!!!!!!
 
 // userInfo создаем экземпляр класса инфо профиля
 const userInfo = new UserInfo({
