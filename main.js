@@ -24,13 +24,19 @@ var Api = /*#__PURE__*/function () {
     this._baseUrl = baseUrl;
   }
   _createClass(Api, [{
+    key: "getResponseData",
+    value: function getResponseData(res) {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject("\u041E\u0448\u0438\u0431\u043A\u0430: ".concat(res.status));
+    }
+  }, {
     key: "getInitialCards",
     value: function getInitialCards() {
       return fetch("".concat(this._baseUrl, "/cards"), {
         headers: this._headers
-      }).then(function (res) {
-        return res.ok ? res.json() : Promise.reject(res.status);
-      }).catch(console.log);
+      }).then(this.getResponseData);
     }
 
     // другие методы работы с API
@@ -39,9 +45,7 @@ var Api = /*#__PURE__*/function () {
     value: function getUserProfile() {
       return fetch("".concat(this._baseUrl, "/users/me"), {
         headers: this._headers
-      }).then(function (res) {
-        return res.ok ? res.json() : Promise.reject(res.status);
-      }).catch(console.log);
+      }).then(this.getResponseData);
     }
   }, {
     key: "editProfile",
@@ -53,9 +57,7 @@ var Api = /*#__PURE__*/function () {
           name: name,
           about: job
         })
-      }).then(function (res) {
-        return res.ok ? res.json() : Promise.reject(res.status);
-      }).catch(console.log);
+      }).then(this.getResponseData);
     }
   }, {
     key: "addCard",
@@ -67,9 +69,7 @@ var Api = /*#__PURE__*/function () {
           name: name,
           link: link
         })
-      }).then(function (res) {
-        return res.ok ? res.json() : Promise.reject(res.status);
-      }).catch(console.log);
+      }).then(this.getResponseData);
     }
   }, {
     key: "deleteCard",
@@ -77,9 +77,7 @@ var Api = /*#__PURE__*/function () {
       return fetch("".concat(this._baseUrl, "/cards/").concat(id), {
         method: "DELETE",
         headers: this._headers
-      }).then(function (res) {
-        return res.ok ? res.json() : Promise.reject(res.status);
-      }).catch(console.log);
+      }).then(this.getResponseData);
     }
   }, {
     key: "deleteLike",
@@ -87,9 +85,7 @@ var Api = /*#__PURE__*/function () {
       return fetch("".concat(this._baseUrl, "/cards/").concat(id, "/likes"), {
         method: "DELETE",
         headers: this._headers
-      }).then(function (res) {
-        return res.ok ? res.json() : Promise.reject(res.status);
-      }).catch(console.log);
+      }).then(this.getResponseData);
     }
   }, {
     key: "addLike",
@@ -97,9 +93,7 @@ var Api = /*#__PURE__*/function () {
       return fetch("".concat(this._baseUrl, "/cards/").concat(id, "/likes"), {
         method: "PUT",
         headers: this._headers
-      }).then(function (res) {
-        return res.ok ? res.json() : Promise.reject(res.status);
-      }).catch(console.log);
+      }).then(this.getResponseData);
     }
   }, {
     key: "updateProfilePicture",
@@ -110,18 +104,16 @@ var Api = /*#__PURE__*/function () {
         body: JSON.stringify({
           avatar: avatar.link
         })
-      }).then(function (res) {
-        return res.ok ? res.json() : Promise.reject(res.status);
-      }).catch(console.log);
+      }).then(this.getResponseData);
     }
   }]);
   return Api;
 }();
 var api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-54',
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-54",
   headers: {
-    authorization: 'e95edce0-fc31-46d4-a095-2c86db687d23',
-    'Content-Type': 'application/json'
+    authorization: "e95edce0-fc31-46d4-a095-2c86db687d23",
+    "Content-Type": "application/json"
   }
 });
 
@@ -165,19 +157,13 @@ var Card = /*#__PURE__*/function () {
   // метод обработки клика по кнопке удаления
   _createClass(Card, [{
     key: "_activateLike",
-    value:
-    // метод обработки клика по кнопке лайка
-    // _handleLikeCard = () => {
-    //   this._buttonLike.classList.toggle('photo-grid__like_active');
-    // }
-
-    function _activateLike() {
-      this._buttonLike.classList.add('photo-grid__like_active');
+    value: function _activateLike() {
+      this._buttonLike.classList.add("photo-grid__like_active");
     }
   }, {
     key: "_deactivateLike",
     value: function _deactivateLike() {
-      this._buttonLike.classList.remove('photo-grid__like_active');
+      this._buttonLike.classList.remove("photo-grid__like_active");
     }
 
     // ставим слушатели на все кнопку лайка и удаления, и на картинку
@@ -185,15 +171,13 @@ var Card = /*#__PURE__*/function () {
     key: "_setEventListeners",
     value: function _setEventListeners() {
       var _this2 = this;
-      this._buttonDelete = this._element.querySelector('.photo-grid__delete');
-      this._buttonLike = this._element.querySelector('.photo-grid__like');
-      this._cardImage.addEventListener('click', function () {
+      this._cardImage.addEventListener("click", function () {
         return _this2._handlePhotoClick(_this2._name, _this2._link);
       });
-      this._buttonLike.addEventListener('click', function () {
+      this._buttonLike.addEventListener("click", function () {
         return _this2._handleLikeClick(_this2._id);
       });
-      this._buttonDelete.addEventListener('click', function () {
+      this._buttonDelete.addEventListener("click", function () {
         return _this2._handleDeleteClick(_this2._id);
       });
     }
@@ -212,7 +196,7 @@ var Card = /*#__PURE__*/function () {
     key: "setLikes",
     value: function setLikes(newLikes) {
       this._likes = newLikes;
-      var likeCounter = this._element.querySelector('.photo-grid__like-counter');
+      var likeCounter = this._element.querySelector(".photo-grid__like-counter");
       likeCounter.textContent = this._likes.length;
 
       // Проверяем, пролайкал ли юзер карточку и закрашиваем сердечко
@@ -227,7 +211,7 @@ var Card = /*#__PURE__*/function () {
   }, {
     key: "_getTemplate",
     value: function _getTemplate() {
-      var cardElement = document.querySelector(this._templateSelector).content.querySelector('.photo-grid__element').cloneNode(true);
+      var cardElement = document.querySelector(this._templateSelector).content.querySelector(".photo-grid__element").cloneNode(true);
 
       // вернём DOM-элемент карточки
       return cardElement;
@@ -238,9 +222,10 @@ var Card = /*#__PURE__*/function () {
     key: "createCard",
     value: function createCard() {
       this._element = this._getTemplate();
-      this._cardTitle = this._element.querySelector('.photo-grid__text');
-      this._cardImage = this._element.querySelector('.photo-grid__image');
-      this._buttonDelete = this._element.querySelector('.photo-grid__delete');
+      this._cardTitle = this._element.querySelector(".photo-grid__text");
+      this._cardImage = this._element.querySelector(".photo-grid__image");
+      this._buttonDelete = this._element.querySelector(".photo-grid__delete");
+      this._buttonLike = this._element.querySelector(".photo-grid__like");
       this._cardImage.src = this._link; // Говорим, что источник равен параметру link
       this._cardImage.alt = this._name; // Говорим, что название равно параметру name
       this._cardTitle.textContent = this._name; // Говорим, что текст из переменной cardTitle равно параметру name
@@ -249,10 +234,9 @@ var Card = /*#__PURE__*/function () {
       this.setLikes(this._likes); // Ставим счетсчик лайков
       if (this._ownerId !== this._userId) {
         // Проверяем, кто оунер, чтобы поставить корзинку удаления
-        this._buttonDelete.style.display = 'none';
+        this._buttonDelete.style.display = "none";
         this._buttonDelete = null;
       }
-      ;
       return this._element;
     }
   }]);
@@ -424,35 +408,34 @@ var Popup = /*#__PURE__*/function () {
   _createClass(Popup, [{
     key: "open",
     value: function open() {
-      this._popup.classList.add('popup_opened');
-      document.addEventListener('keydown', this._handleEscClose);
+      this._popup.classList.add("popup_opened");
+      document.addEventListener("keydown", this._handleEscClose);
     }
+
+    // метод закрытия попапа
   }, {
     key: "close",
-    value:
-    // метод закрытия попапа
-    function close() {
-      this._popup.classList.remove('popup_opened');
-      document.removeEventListener('keydown', this._handleEscClose);
+    value: function close() {
+      this._popup.classList.remove("popup_opened");
+      document.removeEventListener("keydown", this._handleEscClose);
     }
+
+    // метод закрытия по нажатию на esc
   }, {
     key: "_handleEscClose",
-    value:
-    // метод закрытия по нажатию на esc
-    function _handleEscClose(evt) {
+    value: function _handleEscClose(evt) {
       if (evt.key === "Escape") {
         this.close();
       }
-      ;
     }
+
+    // метод устанавливает слушатели, проверяя, присутствует ли кнопка закрытия или оверлей, и закрывает его по клику
   }, {
     key: "setEventListeners",
-    value:
-    // метод устанавливает слушатели, проверяя, присутствует ли кнопка закрытия или оверлей, и закрывает его по клику
-    function setEventListeners() {
+    value: function setEventListeners() {
       var _this = this;
-      this._popup.addEventListener('click', function (event) {
-        if (event.target.classList.contains('popup_opened') || event.target.classList.contains('popup__close')) {
+      this._popup.addEventListener("click", function (event) {
+        if (event.target.classList.contains("popup_opened") || event.target.classList.contains("popup__close")) {
           _this.close();
         }
       });
@@ -496,15 +479,15 @@ var PopupWithConfirm = /*#__PURE__*/function (_Popup) {
     var _this;
     _classCallCheck(this, PopupWithConfirm);
     _this = _super.call(this, popupSelector);
-    _this._confirmButton = _this._popup.querySelector('.popup__save-button');
-    _this._form = _this._popup.querySelector('.popup__form');
+    _this._confirmButton = _this._popup.querySelector(".popup__save-button");
+    _this._form = _this._popup.querySelector(".popup__form");
     return _this;
   }
+
+  // публичный метод изменения текста при лоадинге после нажатия кнопки
   _createClass(PopupWithConfirm, [{
     key: "showLoading",
-    value:
-    // публичный метод изменения текста при лоадинге после нажатия кнопки
-    function showLoading(loading) {
+    value: function showLoading(loading) {
       if (loading) {
         this._confirmButton.textContent = "Удаление...";
       } else {
@@ -524,18 +507,11 @@ var PopupWithConfirm = /*#__PURE__*/function (_Popup) {
       var _this2 = this;
       // наследует логику родителя и обрабатывает также сабмит формы
       _get(_getPrototypeOf(PopupWithConfirm.prototype), "setEventListeners", this).call(this);
-      this._form.addEventListener('submit', function (event) {
+      this._form.addEventListener("submit", function (event) {
         event.preventDefault();
         _this2._handleFormSubmit();
-        //this.close();
       });
     }
-
-    //   close() {
-    // // сбрасывает форму и потом выполняет логику родительского класса
-    //     this._form.reset();
-    //     super.close();
-    //   }
   }]);
   return PopupWithConfirm;
 }(_components_Popup_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
@@ -576,16 +552,16 @@ var PopupWithForm = /*#__PURE__*/function (_Popup) {
     _classCallCheck(this, PopupWithForm);
     _this = _super.call(this, popupSelector);
     _this._handleFormSubmit = handleFormSubmit;
-    _this._form = _this._popup.querySelector('.popup__form');
-    _this._inputList = _this._form.querySelectorAll('.popup__input');
-    _this._submitButton = _this._form.querySelector('.popup__save-button');
+    _this._form = _this._popup.querySelector(".popup__form");
+    _this._inputList = _this._form.querySelectorAll(".popup__input");
+    _this._submitButton = _this._form.querySelector(".popup__save-button");
     return _this;
   }
+
+  // публичный метод изменения текста при лоадинге после нажатия кнопки
   _createClass(PopupWithForm, [{
     key: "showLoading",
-    value:
-    // публичный метод изменения текста при лоадинге после нажатия кнопки
-    function showLoading(loading) {
+    value: function showLoading(loading) {
       if (loading) {
         this._submitButton.textContent = "Сохранение...";
       } else {
@@ -619,10 +595,10 @@ var PopupWithForm = /*#__PURE__*/function (_Popup) {
       var _this3 = this;
       // наследует логику родителя и обрабатывает также сабмит формы
       _get(_getPrototypeOf(PopupWithForm.prototype), "setEventListeners", this).call(this);
-      this._form.addEventListener('submit', function (event) {
+      this._form.addEventListener("submit", function (event) {
         event.preventDefault();
         _this3._handleFormSubmit(_this3._getInputValues());
-        _this3.close();
+        //this.close();
       });
     }
   }, {
@@ -705,29 +681,26 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 var Section = /*#__PURE__*/function () {
-  function Section(_ref, containerSelector) {
-    var items = _ref.items,
-      renderer = _ref.renderer;
+  function Section(renderer, containerSelector) {
     _classCallCheck(this, Section);
-    this._items = items;
     this._renderer = renderer;
-    this.container = document.querySelector(containerSelector);
+    this._container = document.querySelector(containerSelector);
   }
   _createClass(Section, [{
     key: "addItem",
     value: function addItem(element) {
       //попадает готовая разметка
       //публичный метод принимает элемент и добавляет его в разметку
-      this.container.prepend(element);
+      this._container.prepend(element);
     }
   }, {
     key: "renderItems",
-    value: function renderItems() {
+    value: function renderItems(items) {
       var _this = this;
       //публичный метод проходит циклом forEach по всем (initial) items и рендерит элементы
       // использует renderer
-      this._items.forEach(function (item) {
-        _this._renderer(item);
+      items.forEach(function (item) {
+        _this._container.append(_this._renderer(item));
       });
     }
   }]);
@@ -779,30 +752,7 @@ var UserInfo = /*#__PURE__*/function () {
     }
   }]);
   return UserInfo;
-}(); // export default class UserInfo {
-//   constructor({ profileNameSelector, profileJobSelector }) {
-// this._name = profileNameSelector;
-// this._job = profileJobSelector;
-// this._nameInput = document.querySelector(this._name);
-// this._jobInput = document.querySelector(this._job);
-//   }
-//   getUserInfo(profileName, profileJob) {
-// //возвращает объект с данными пользователя, используется при открытие попапа
-//  this._nameInput.value = profileName.textContent ;
-//  this._jobInput.value = profileJob.textContent;
-//  console.log(this._nameInput.value);
-//  console.log(this._jobInput.value);
-//   }
-//     //  newName.value = profileName.textContent;
-//     //  newJob.value = profileJob.textContent;
-//   setUserInfo(profileName, profileJob) {
-//     //принимает новые данные пользователя и добавляет их на страницу
-//     profileName.textContent = this._nameInput.value;
-//     profileJob.textContent = this._jobInput.value;
-//     console.log(this._nameInput.value);
-//     console.log(this._jobInput.value);
-//   }
-// }
+}();
 
 
 /***/ }),
@@ -941,6 +891,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/UserInfo.js */ "./src/components/UserInfo.js");
 /* harmony import */ var _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/constants.js */ "./src/utils/constants.js");
 /* harmony import */ var _components_Api_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/Api.js */ "./src/components/Api.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -951,35 +907,102 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+// Объявляем по отдельности валидаторы для необходимых форм
+var profileValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.profileForm);
+var photoAddValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.photoForm);
+var avatarValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.avatarForm);
+
+// Запускаем валидацию
+profileValidator.enableValidation();
+photoAddValidator.enableValidation();
+avatarValidator.enableValidation();
 var userId;
-
-// Вызов api для инфы профиля
-_components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getUserProfile().then(function (userData) {
+Promise.all([_components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getUserProfile(), _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getInitialCards()]) //промис гарантирует, что карточки придут после профиля
+.then(function (_ref) {
+  var _ref2 = _slicedToArray(_ref, 2),
+    userData = _ref2[0],
+    cards = _ref2[1];
+  //после получения ответа возьми id и проставь инфо о юзере,
+  userId = userData._id; //после отрендери карточки
   userInfo.setUserInfo(userData);
-  userId = userData._id;
+  newSection.renderItems(cards);
+}).catch(function (err) {
+  return console.log(err);
+}) //выведи ошибку если не пришла инфо
+.finally(function () {});
+
+//Функция создания секции карточек
+var newSection = new _components_Section_js__WEBPACK_IMPORTED_MODULE_6__["default"](function (card) {
+  return createNewCard(card);
+}, ".photo-grid");
+
+// userInfo создаем экземпляр класса инфо профиля
+var userInfo = new _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_7__["default"]({
+  profileNameSelector: ".profile__name",
+  profileJobSelector: ".profile__job",
+  profilePictureSelector: ".profile__change-avatar-button"
 });
 
-// Вызов api для начальных карточек
-_components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.getInitialCards().then(function (cardList) {
-  cardList.forEach(function (cardData) {
-    var card = createNewCard(cardData);
-    newSection.addItem(card);
+// popup ProfileOverlay редактируем профиль
+var popupProfileEdit = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_4__["default"](".popup-profile", function (data) {
+  var name = data.name,
+    job = data.job;
+  popupProfileEdit.showLoading(true);
+  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.editProfile(name, job).then(function (data) {
+    userInfo.setUserInfo(data);
+    popupProfileEdit.close();
+  }).catch(function (err) {
+    return console.log(err);
+  }).finally(function () {
+    return popupProfileEdit.showLoading(false);
   });
 });
+popupProfileEdit.setEventListeners();
 
-// Функция создания секции карточек
-var newSection = new _components_Section_js__WEBPACK_IMPORTED_MODULE_6__["default"]({
-  items: [],
-  //initialCards
-  renderer: function renderer(cardData) {
-    var card = createNewCard(cardData);
-    newSection.addItem(card);
-  }
-}, '.photo-grid');
+// popup OverlayPhoto добавляем новое фото и подпись
+var popupAddPhoto = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_4__["default"](".popup-add-photo", function (cardData) {
+  popupAddPhoto.showLoading(true);
+  var name = cardData.name,
+    link = cardData.link; //сначала собираем из формы инфо и посылаем на сервер
+  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.addCard(name, link).then(function (newCardData) {
+    var card = createNewCard(newCardData); //потом, когда вернется, присваиваются данные и создается новая карточка
+    newSection.addItem(card); //метод добавляет карточку в разметку
+    popupAddPhoto.close();
+    photoAddValidator.deactivateButton();
+  }).catch(function (err) {
+    return console.log(err);
+  }).finally(function () {
+    return popupAddPhoto.showLoading(false);
+  });
+});
+popupAddPhoto.setEventListeners();
+
+//popup Lightbox создаем экземпдяр попапа с фото
+var popupLightbox = new _components_PopupWithImage_js__WEBPACK_IMPORTED_MODULE_3__["default"](".popup-photo");
+popupLightbox.setEventListeners();
+
+//popup Подтверждение удаления карточки
+var popupConfirmDelete = new _components_PopupWithConfirm_js__WEBPACK_IMPORTED_MODULE_5__["default"](".popup-confirm-del");
+popupConfirmDelete.setEventListeners(); //проставляем слушатель на попап подтверждения удаления
+
+//popup Смены Аватара
+var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_4__["default"](".popup-change-avatar", function (data) {
+  popupProfilePicture.showLoading(true);
+  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.updateProfilePicture(data).then(function (userData) {
+    userInfo.setUserInfo(userData);
+    popupProfilePicture.close();
+  }).catch(function (err) {
+    return console.log(err);
+  }).finally(function () {
+    return popupProfilePicture.showLoading(false);
+  });
+});
+popupProfilePicture.setEventListeners(); //проставляем слушатель на попап аватара
 
 // Функция создания карточек
 var createNewCard = function createNewCard(cardData) {
-  var card = new _components_Card_js__WEBPACK_IMPORTED_MODULE_1__["default"](cardData, '.card-template', function (name, link) {
+  var card = new _components_Card_js__WEBPACK_IMPORTED_MODULE_1__["default"](cardData, ".card-template", function (name, link) {
     popupLightbox.open(name, link);
   }, function (id) {
     popupConfirmDelete.open();
@@ -996,102 +1019,30 @@ var createNewCard = function createNewCard(cardData) {
     });
   }, function (id) {
     if (card.isLiked()) {
-      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.deleteLike(id).then(function (res) {
-        card.setLikes(res.likes);
+      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.deleteLike(id).then(function (data) {
+        card.setLikes(data.likes);
+      }).catch(function (err) {
+        return console.log(err);
       });
     } else {
-      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.addLike(id).then(function (res) {
-        card.setLikes(res.likes);
+      _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.addLike(id).then(function (data) {
+        card.setLikes(data.likes);
+      }).catch(function (err) {
+        return console.log(err);
       });
     }
   }, userId);
   return card.createCard();
 };
 
-// Рендер начальных карточек с использованием публичного метода из класса Section
-newSection.renderItems();
-
-// Объявляем по отдельности валидаторы для необходимых форм
-var profileValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.profileForm);
-var photoAddValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.photoForm);
-var avatarValidator = new _components_FormValidator_js__WEBPACK_IMPORTED_MODULE_2__["default"](_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.validationObject, _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.avatarForm);
-
-// Запускаем валидацию
-profileValidator.enableValidation();
-photoAddValidator.enableValidation();
-avatarValidator.enableValidation();
-
-// userInfo создаем экземпляр класса инфо профиля
-var userInfo = new _components_UserInfo_js__WEBPACK_IMPORTED_MODULE_7__["default"]({
-  profileNameSelector: '.profile__name',
-  profileJobSelector: '.profile__job',
-  profilePictureSelector: '.profile__change-avatar-button'
-});
-
-// popup ProfileOverlay редактируем профиль
-var popupProfileEdit = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.popup-profile', function (values) {
-  var name = values.name,
-    job = values.job;
-  popupProfileEdit.showLoading(true);
-  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.editProfile(name, job).then(function (res) {
-    userInfo.setUserInfo(res);
-    popupProfileEdit.close();
-  }).catch(function (err) {
-    return console.log(err);
-  }).finally(function () {
-    return popupProfileEdit.showLoading(false);
-  });
-});
-popupProfileEdit.setEventListeners();
-
-// popup OverlayPhoto добавляем новое фото и подпись
-var popupAddPhoto = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.popup-add-photo', function (cardData) {
-  popupAddPhoto.showLoading(true);
-  var name = cardData.name,
-    link = cardData.link;
-  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.addCard(name, link).then(function (newCardData) {
-    var card = createNewCard(newCardData);
-    newSection.addItem(card);
-    popupAddPhoto.close();
-    photoAddValidator.deactivateButton();
-  }).catch(function (err) {
-    return console.log(err);
-  }).finally(function () {
-    return popupAddPhoto.showLoading(false);
-  });
-});
-popupAddPhoto.setEventListeners();
-
-//popup Lightbox создаем экземпдяр попапа с фото
-var popupLightbox = new _components_PopupWithImage_js__WEBPACK_IMPORTED_MODULE_3__["default"]('.popup-photo');
-popupLightbox.setEventListeners();
-
-//popup Подтверждение удаления карточки
-var popupConfirmDelete = new _components_PopupWithConfirm_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.popup-confirm-del');
-popupConfirmDelete.setEventListeners(); //проставляем слушатель на попап подтверждения удаления
-
-//popup Смены Аватара
-var popupProfilePicture = new _components_PopupWithForm_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.popup-change-avatar', function (value) {
-  popupProfilePicture.showLoading(true);
-  _components_Api_js__WEBPACK_IMPORTED_MODULE_9__.api.updateProfilePicture(value).then(function (userData) {
-    userInfo.setUserInfo(userData);
-    popupProfilePicture.close();
-  }).catch(function (err) {
-    return console.log(err);
-  }).finally(function () {
-    return popupProfilePicture.showLoading(false);
-  });
-});
-popupProfilePicture.setEventListeners(); //проставляем слушатель на попап аватара
-
 // Слушатель кнопки открытия редактирования аватара
-_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonAvatarEditing.addEventListener('click', function () {
+_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonAvatarEditing.addEventListener("click", function () {
   avatarValidator.resetErrors();
   popupProfilePicture.open();
 });
 
 // Слушатель кнопки открытия редактирования профиля
-_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonProfileEditing.addEventListener('click', function () {
+_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonProfileEditing.addEventListener("click", function () {
   popupProfileEdit.setInputValues(userInfo.getUserInfo());
   profileValidator.deactivateButton();
   profileValidator.resetErrors();
@@ -1099,7 +1050,7 @@ _utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonProfileEditing.addEventLi
 });
 
 // Слушатель кнопки открытия добавления фото
-_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonPicAddition.addEventListener('click', function () {
+_utils_constants_js__WEBPACK_IMPORTED_MODULE_8__.buttonPicAddition.addEventListener("click", function () {
   photoAddValidator.resetErrors();
   popupAddPhoto.open();
 });
